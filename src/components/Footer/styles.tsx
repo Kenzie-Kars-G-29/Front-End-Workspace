@@ -5,12 +5,15 @@ const FooterStyled = styled.footer`
   width: 100%;
   height: 140px;
   color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 10px 20px;
   position: absolute;
   bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    height: 200px;
 
   .logo img {
     height: 40px;
@@ -31,6 +34,13 @@ const FooterStyled = styled.footer`
     width: 100%;
     height: auto;
     margin-left: 5px;
+  }
+  @media (min-width: 769px) {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   }
 `;
 
