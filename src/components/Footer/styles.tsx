@@ -36,6 +36,7 @@ const FooterStyled = styled.footer`
     margin-left: 5px;
   }
   @media (min-width: 769px) {
+    padding: 0 50px
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -44,4 +45,4 @@ const FooterStyled = styled.footer`
   }
 `;
 
-export default FooterStyled 
+export default FooterStyled;

@@ -41,7 +41,7 @@ const HeaderStyled = styled.header`
 
   .menuWrapper {
     display: flex;
-/*     flex-direction: column; */
+    /*     flex-direction: column; */
     align-items: flex-end;
     position: absolute;
     top: 100%;
@@ -53,14 +53,14 @@ const HeaderStyled = styled.header`
   }
 
   .menuWrapper.show {
-  display: flex;
-}
+    display: flex;
+  }
   .menuWrapper button {
     width: 100%;
   }
 
   @media (min-width: 769px) {
-    .divContainer{
+    .divContainer {
       display: flex;
     }
     .menuWrapper {
@@ -80,10 +80,7 @@ const HeaderStyled = styled.header`
       display: none;
     }
   }
-
-  
 `;
-
 
 /* 
 const HeaderStyled = styled.header`
