@@ -6,14 +6,13 @@ const FooterStyled = styled.footer`
   height: 140px;
   color: white;
   padding: 10px 20px;
-  position: absolute;
   bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-    flex-direction: column;
-    padding: 20px;
-    height: 200px;
+  flex-direction: column;
+  padding: 20px;
+  height: 200px;
 
   .logo img {
     height: 40px;
@@ -23,12 +22,11 @@ const FooterStyled = styled.footer`
   .text {
     font-size: 14px;
   }
-  .seta{
+  .seta {
     width: 53px;
     height: 50px;
     cursor: pointer;
   }
-
 
   .button img {
     width: 100%;
@@ -36,12 +34,12 @@ const FooterStyled = styled.footer`
     margin-left: 5px;
   }
   @media (min-width: 769px) {
-    padding: 0 50px
+    padding: 0 50px;
     width: 100%;
     display: flex;
     flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 
