@@ -1,9 +1,12 @@
+import { AsideProvider } from "../contexts/AsideContext";
 import RoutesMain from "../routes/routes";
 
 const App = () => {
   return (
     <>
-      <RoutesMain />
+      <AsideProvider>
+        <RoutesMain />
+      </AsideProvider>
     </>
   );
 };
