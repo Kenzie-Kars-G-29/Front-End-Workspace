@@ -7,6 +7,7 @@ interface iInputProps {
   bgColor: boolean;
   border: boolean;
   id: string;
+  register: any
 }
 
 const Input = ({
@@ -16,13 +17,14 @@ const Input = ({
   bgColor,
   border,
   id,
+  register
 }: iInputProps) => {
   switch (type) {
     default:
       return (
         <StyledInput bgColor={bgColor} border={border}>
           <label htmlFor={id}>{label}</label>
-          <input type={type} placeholder={placeholder} id={id} />
+          <input type={type} placeholder={placeholder} id={id} {...register(id)}/>
         </StyledInput>
       );
   }
