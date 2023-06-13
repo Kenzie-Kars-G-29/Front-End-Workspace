@@ -1,8 +1,7 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 interface ButtonProps {
-  variant?: "black" | "gray" | "blue" | "white" | "brand";
+  variant?: "black" | "gray" | "white" | "brand" | "brandBorder";
   color?: string;
 }
 
@@ -11,26 +10,42 @@ const Button = styled.button<ButtonProps>`
   border-radius: 5px;
   font-size: 14px;
   cursor: pointer;
-  color: ${(props) =>
-    props.variant === "white" ? "black" : "white"}; // Define a cor do texto
+  color: ${(props) => {
+    switch (props.variant) {
+      case "black":
+        return "var(--color-grey0)";
+      case "brandBorder":
+        return "var(--color-brand1)";
+      default:
+        return "var(--color-whiteFixed)";
+    }
+  }};
   background-color: ${(props) => {
     switch (props.variant) {
       case "black":
-        return "black";
+        return "var(--color-grey0)";
       case "gray":
-        return "gray";
-      case "blue":
-        return "blue";
+        return "var(--color-grey1)";
       case "white":
-        return "white";
+        return "var(--color-whiteFixed)";
       case "brand":
         return "var(--color-brand1)";
+      case "brandBorder":
+        return "var(--color-whiteFixed)";
       default:
         return "black";
     }
   }};
-  border: ${(props) =>
-    props.variant === "white" ? "1px solid black" : "none"};
+  border: ${(props) => {
+    switch (props.variant) {
+      case "white":
+        return "1px solid var(--color-grey0)";
+      case "brandBorder":
+        return "1px solid var(--color-brand1)";
+      default:
+        return "none";
+    }
+  }};
   white-space: nowrap;
 `;
 

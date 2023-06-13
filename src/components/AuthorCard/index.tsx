@@ -1,5 +1,7 @@
-import React from 'react';
-import StyledAuthorCard from './style';
+import React, { useContext } from "react";
+import StyledAuthorCard from "./style";
+import { UserContext } from "../../contexts/UserContext";
+import Button from "../Button/Button";
 
 interface Author {
   name: string;
@@ -11,10 +13,14 @@ interface AuthorCardProps {
 }
 
 const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
+  const { isProfileOwner } = useContext(UserContext);
+
+  const path = window.location.pathname;
+
   return (
     <StyledAuthorCard>
       <div className="author-image">
-        <img src="profilePictureUrl" alt={`${author.name}`} /> 
+        <img src="profilePictureUrl" alt={`${author.name}`} />
       </div>
       <div className="author-name">
         <h2>{author.name}</h2>
@@ -23,7 +29,11 @@ const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
         <p>{author.bio}</p>
       </div>
       <div className="author-button">
-        <button>Ver todos os anúncios</button>
+        {isProfileOwner && path === "/profile" ? (
+          <Button variant="brandBorder">Criar Anúncio</Button>
+        ) : (
+          <Button variant="black">Ver todos os anúncios</Button>
+        )}
       </div>
     </StyledAuthorCard>
   );

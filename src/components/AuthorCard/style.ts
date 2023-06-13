@@ -1,11 +1,11 @@
 // AuthorCard/style.ts
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledAuthorCard = styled.div`
-background-color: #FDFDFD;
+  background-color: #fdfdfd;
   width: 20%;
-  min-width: 300px; 
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +38,7 @@ background-color: #FDFDFD;
   .author-button {
     margin-top: 10px;
 
-    button {
+    /* button {
       padding: 10px 20px;
       border: none;
       border-radius: 4px;
@@ -49,8 +49,8 @@ background-color: #FDFDFD;
 
       &:hover {
         background-color: var(--color-grey4);
-      }
-    }
+      } */
+    /* } */
   }
 `;
 
