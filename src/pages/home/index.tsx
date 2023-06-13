@@ -7,6 +7,7 @@ import Button from "../../components/Button/Button";
 import { AsideContext } from "../../contexts/AsideContext";
 import { useContext } from "react";
 import AsideDesktop from "../../components/Asides/AsideDesktop";
+import BaseModal from "../../components/modal";
 
 const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
@@ -36,6 +37,9 @@ const Home = () => {
         </div>
       </StyledHome>
       <Footer />
+      <BaseModal>
+        <p>Conteudo do modal</p>
+      </BaseModal>
     </>
   );
 };
