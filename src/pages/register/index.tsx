@@ -4,6 +4,7 @@ import Button from "../../components/Button/Button";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../../components/Footer/Footer";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -168,6 +169,7 @@ const Register = () => {
           </Button>
         </form>
       </StyledRegister>
+      {/* <Footer /> */}
     </>
   );
 };
