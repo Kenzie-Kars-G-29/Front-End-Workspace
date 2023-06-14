@@ -1,5 +1,6 @@
 import React from "react";
 import StyledProductInfoCard from "./style";
+import Button from "../Button/Button";
 
 interface Product {
   name: string;
@@ -25,7 +26,7 @@ const ProductInfoCard: React.FC<ProductInfoCardProps> = ({ product }) => {
         </div>
         <div className="price">R$ {product.price}</div>
       </div>
-      <button className="cta-button">Comprar</button>
+      <Button variant="brand">Comprar</Button>
     </StyledProductInfoCard>
   );
 };
