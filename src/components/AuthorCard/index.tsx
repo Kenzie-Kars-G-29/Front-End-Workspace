@@ -1,5 +1,6 @@
 import React from 'react';
 import StyledAuthorCard from './style';
+import Button from '../Button/Button';
 
 interface Author {
   name: string;
@@ -23,7 +24,7 @@ const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
         <p>{author.bio}</p>
       </div>
       <div className="author-button">
-        <button>Ver todos os anúncios</button>
+        <Button variant="black">Ver todos os anúncios</Button>
       </div>
     </StyledAuthorCard>
   );
