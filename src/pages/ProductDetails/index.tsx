@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import StyledProductDetails from "./style";
 import ProductInfoCard from "../../components/ProductInfoCard/index";
 import DescriptionCard from "../../components/DescriptionCard/index";
@@ -12,49 +12,67 @@ import MainImage from "../../components/MainImage/index";
 import image5 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import ImageGallery from "../../components/ImageGallery";
 import image6 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
+import { Header } from "../../components/Header/Header";
+import { Footer } from "../../components/Footer/Footer";
 
 const ProductDetailsPage: React.FC = () => {
   const images = [image1, image2, image3, image4, image5, image6];
+
+  const [selectedImage, setSelectedImage] = useState(images[0]);
+
+  const handleImageClick = (newImage: string) => {
+    setSelectedImage(newImage);
+  };
+
   const product = {
     name: "Nome do produto",
     year: 2023,
     mileage: 10000,
     price: 20000,
-  }; 
-  const description = "Esta é a descrição do produto"; 
+  };
+  const description =
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of";
   const comments = [
     {
       name: "João",
       time: "1 hora atrás",
-      comment: "Este produto é ótimo!",
+      comment:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
     {
       name: "Maria",
       time: "2 dias atrás",
-      comment: "Adorei este produto!",
+      comment:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
-  ]; 
+  ];
   const author = {
     name: "Autor",
-    bio: "Esta é a bio do autor",
-  }; 
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+  };
 
   return (
-    <StyledProductDetails>
-      
-        <div className="left-column">
-          <h1>Página de Detalhes do Produto</h1>
-          <MainImage image={images[0]} />
-          <ProductInfoCard product={product} />
-          <DescriptionCard description={description} />
-          <CommentsCard comments={comments} />
+    <>
+      <Header />
+      <StyledProductDetails>
+        <div className="content">
+          <div className="left-column">
+            <MainImage image={selectedImage} />{" "}
+            <ProductInfoCard product={product} />
+            <DescriptionCard description={description} />
+            <CommentsCard comments={comments} />
+          </div>
+          <div className="right-column">
+            <ImageGallery
+              images={images.slice(1)}
+              onImageClick={handleImageClick}
+            />{" "}
+            <AuthorCard author={author} />
+          </div>
         </div>
-        <div className="right-column">
-          <ImageGallery images={images.slice(1)} />
-          <AuthorCard author={author} />
-        </div>
-     
-    </StyledProductDetails>
+      </StyledProductDetails>
+      <Footer />
+    </>
   );
 };
 
