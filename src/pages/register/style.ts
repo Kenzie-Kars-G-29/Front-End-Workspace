@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledRegister = styled.main`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   font-size: 16px;
@@ -43,7 +43,7 @@ const StyledRegister = styled.main`
 
     .divCityState, .divNumberComplement{
         display:flex;
-        width: 88vw;
+        width: 100%;
         gap: 10px;
     }
     .divCityState div, .divNumberComplement div{
@@ -68,9 +68,10 @@ const StyledRegister = styled.main`
       margin: 0 auto; 
       padding: 40px; 
       margin-top: 40px;
+      margin-bottom: 40px;
       width: 410px;
       font-size: 16px;
-
+    }
       p{
         margin: 10px 0;
       }
