@@ -31,6 +31,10 @@ const StyledRegister = styled.main`
       font-weight: 100;
 
     }
+    span{
+      color: red;
+      font-size: 12px;
+    }
     textarea {
         height: 70px;
         padding-top: 10px;
