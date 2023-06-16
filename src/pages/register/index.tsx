@@ -8,99 +8,66 @@ import { Modal } from "../../components/ModalRegister/ModalRegister";
 import { useForm, SubmitHandler } from "react-hook-form";
 import api from "../../services/api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { z } from "zod";
 
 const Register = () => {
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    name: " ",
-    email: "",
-    password: "",
-    cpf: "",
-    phone: "",
-    birthday: "",
-    description: "",
-    cep: "",
-    state: "",
-    city: "",
-    street: "",
-    number: "",
-    complement: "",
-    isSeller: false,
-  });
+  const [isSeller, setIsSeller] = useState(false);
 
   const formSchema = z.object({
-    name: z.string().nonempty("Nome obrigatório"),
+    name: z.string().min(3, "Nome precisa ter no mínimo 3 caracteres").max(100),
     email: z.string().nonempty("Email obrigatório").email("Email inválido"),
     password: z
       .string()
-      .nonempty("Senha obrigatória com 4 a 8 caracteres")
+      .nonempty("Senha obrigatória com no mínimo 4 caracteres")
       .min(4)
-      .max(8),
-    cpf: z.string().nonempty("CPF obrigatório"),
+      .max(50),
+    confirmPassword: z.string().nonempty("Confirmação de senha obrigatória"),
+    cpf: z
+      .string()
+      .nonempty("CPF obrigatório com no mínimo 3 caracteres")
+      .min(3)
+      .max(12),
     phone: z.string().nonempty("Telefone obrigatório"),
     birthday: z.string().nonempty("Data de nascimento obrigatória"),
-    description: z.string().nonempty("Descrição obrigatória"),
-    cep: z.string().nonempty("CEP obrigatório"),
+    description: z.string(),
+    cep: z.string().nonempty("CEP obrigatório, com apenas números"),
     state: z.string().nonempty("Estado obrigatório"),
     city: z.string().nonempty("Cidade obrigatória"),
     street: z.string().nonempty("Rua obrigatória"),
     number: z.string().nonempty("Número obrigatório"),
     complement: z.string(),
-    isSeller: z.boolean(),
+    isSeller: z.boolean().default(false),
   });
+
+  type formData = z.infer<typeof formSchema>;
 
   const {
     handleSubmit,
     register,
     formState: { errors },
     reset,
-  } = useForm<typeof formData>({
+  } = useForm<formData>({
     resolver: zodResolver(formSchema),
   });
+  console.log(errors);
 
-  /*  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const handleTextAreaChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  }; */
-
-  const onSubmit: SubmitHandler<typeof formData> = async (data) => {
+  const onSubmit: SubmitHandler<formData> = async (data) => {
     console.log(data);
+    data.isSeller = isSeller;
+
+    if (!data.password || !data.confirmPassword) {
+      console.log("Por favor, preencha os campos de senha");
+      return;
+    }
+    if (data.password !== data.confirmPassword) {
+      console.log("As senhas não coincidem");
+      return;
+    }
+
     try {
       const response = await api.post("/users", data);
       reset();
-
-      /*    setFormData({
-        name: " ",
-        email: "",
-        password: "",
-        cpf: "",
-        phone: "",
-        birthday: "",
-        description: "",
-        cep: "",
-        state: "",
-        city: "",
-        street: "",
-        number: "",
-        complement: "",
-        isSeller: false,
-      }); */
-
       setIsModalOpen(true);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -130,81 +97,70 @@ const Register = () => {
           <input
             type="text"
             placeholder="Ex. Samuel Leão"
-            required
             {...register("name")}
           />
-          {/* {errors.name? <p>{errors.name.message}</p>: null} */}
+          {errors?.name && <span>{errors.name.message}</span>}
           <label>Email</label>
           <input
             type="email"
             placeholder="Ex. samuel@kenzie.com.br"
-            required
             {...register("email")}
           />
-          {/*  {errors.email && <p>{errors.email.message}</p>} */}
+          {errors.email && <span>{errors.email.message}</span>}
           <label>CPF</label>
-          <input placeholder="000.000.000-00" required {...register("cpf")} />
-          {/*  {errors.cpf && <p>{errors.cpf.message}</p>} */}
+          <input placeholder="00000000000" {...register("cpf")} />
+          {errors.cpf && <span>{errors.cpf.message}</span>}
           <label>Celular</label>
-          <input
-            placeholder="(DDD) 90000-0000"
-            required
-            {...register("phone")}
-          />
-          {/*  {errors.phone && <p>{errors.phone.message}</p>} */}
+          <input placeholder="DDD900000000" {...register("phone")} />
+          {errors.phone && <span>{errors.phone.message}</span>}
           <label>Data de nascimento</label>
-          <input type="date" required {...register("birthday")} />
-          {/*   {errors.birthday && <p>{errors.birthday.message}</p>} */}
+          <input type="date" {...register("birthday")} />
+          {errors.birthday && <span>{errors.birthday.message}</span>}
           <label>Descrição</label>
           <textarea
             placeholder="Digitar descrição"
             {...register("description")}
           />
-          {/*   {errors.description && <p>{errors.description.message}</p>} */}
           <p>Informações de endereço</p>
           <label>CEP</label>
-          <input placeholder="00000-000" required {...register("cep")} />
-          {/*  {errors.cep && <p>{errors.cep.message}</p>} */}
+          <input placeholder="00000000" {...register("cep")} />
+          {errors.cep && <span>{errors.cep.message}</span>}
           <div className="divCityState">
             <div>
               <label>Estado</label>
               <input
                 type="text"
                 placeholder="Digitar Estado"
-                required
                 {...register("state")}
               />
-              {/*   {errors.state && <p>{errors.state.message}</p>} */}
+              {errors.state && <span>{errors.state.message}</span>}
             </div>
             <div>
               <label>Cidade</label>
               <input
                 type="text"
                 placeholder="Digitar Cidade"
-                required
                 {...register("city")}
               />
-              {/*     {errors.city && <p>{errors.city.message}</p>} */}
+              {errors.city && <span>{errors.city.message}</span>}
             </div>
           </div>
           <label>Rua</label>
           <input
             type="text"
             placeholder="Digitar Rua"
-            required
             {...register("street")}
           />
-          {/*  {errors.street && <p>{errors.street.message}</p>} */}
+          {errors.street && <span>{errors.street.message}</span>}
           <div className="divNumberComplement">
             <div>
               <label>Número</label>
               <input
                 type="text"
                 placeholder="Digitar número"
-                required
                 {...register("number")}
               />
-              {/*       {errors.number && <p>{errors.number.message}</p>} */}
+              {errors.number && <span>{errors.number.message}</span>}
             </div>
             <div>
               <label>Complemento</label>
@@ -213,24 +169,24 @@ const Register = () => {
                 placeholder="Ex. apart 307"
                 {...register("complement")}
               />
-              {/*   {errors.complement && <p>{errors.complement.message}</p>} */}
+              {errors.complement && <span>{errors.complement.message}</span>}
             </div>
           </div>
           <p>Tipo de conta</p>
           <div className="buttonBuyerSeller">
             <Button
               variant="blue"
-              className={formData.isSeller === false ? "active" : ""}
+              className={isSeller === false ? "active" : ""}
               type="button"
-              onClick={() => setFormData({ ...formData, isSeller: false })}
+              onClick={() => setIsSeller(false)}
             >
               Comprador
             </Button>
             <Button
               variant="white"
-              className={formData.isSeller === true ? "active" : ""}
+              className={isSeller === true ? "active" : ""}
               type="button"
-              onClick={() => setFormData({ ...formData, isSeller: true })}
+              onClick={() => setIsSeller(true)}
             >
               Anunciante
             </Button>
@@ -239,15 +195,18 @@ const Register = () => {
           <input
             type="password"
             placeholder="Digitar Senha"
-            required={true}
             {...register("password")}
           />
+          {errors.password && <span>{errors.password.message}</span>}
           <label>Confirmar Senha</label>
           <input
             type="password"
             placeholder="Digitar Senha"
-            {...register("password")}
+            {...register("confirmPassword")}
           />
+          {errors.confirmPassword && (
+            <span>{errors.confirmPassword.message}</span>
+          )}
           <Button variant="blue" type="submit">
             Finalizar Cadastro
           </Button>
@@ -369,7 +328,7 @@ const Register = () => {
           <input
             type="text"
             placeholder="Ex. Samuel Leão"
-            required
+          
             name="name"
             value={formData.name}
             onChange={handleInputChange}
@@ -378,7 +337,7 @@ const Register = () => {
           <input
             type="email"
             placeholder="Ex. samuel@kenzie.com.br"
-            required
+          
             name="email"
             value={formData.email}
             onChange={handleInputChange}
