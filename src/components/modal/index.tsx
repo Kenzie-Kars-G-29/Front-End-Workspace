@@ -1,22 +1,36 @@
 import { ReactNode } from "react";
-import StyledBaseModal from "./style";
+import StyledModal from "./style";
 
 interface iBaseModalProps {
   children: ReactNode;
+  isOpen: boolean;
+  onClose: any;
+  title: string;
 }
 
-const BaseModal = ({ children }: iBaseModalProps) => {
+const Modal = ({ children, isOpen, onClose, title }: iBaseModalProps) => {
+  if (!isOpen) return null;
+
+  const handleBackgroundClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (event.currentTarget === event.target) {
+      onClose();
+    }
+  };
+
   return (
-    <StyledBaseModal>
+    <StyledModal onClick={handleBackgroundClick}>
       <div className="modal">
         <div className="modal-closeModalContainer">
-          <a>X</a>
+          <p>{title}</p>
+          <button onClick={onClose}>X</button>
         </div>
 
         <div className="modal-content">{children}</div>
       </div>
-    </StyledBaseModal>
+    </StyledModal>
   );
 };
 
-export default BaseModal;
+export default Modal;

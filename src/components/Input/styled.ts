@@ -3,11 +3,12 @@ import styled, { css } from "styled-components";
 interface iStyledInputProps {
   bgColor: boolean;
   border: boolean;
+  size: "largue" | "normal" | "small";
+  type?: "text" | "email" | "password" | "select" | "number" | string;
 }
 
 const StyledInput = styled.div<iStyledInputProps>`
   width: 100%;
-  max-width: 19.6875rem;
   height: 4.6875rem;
   display: flex;
   flex-direction: column;
@@ -26,6 +27,17 @@ const StyledInput = styled.div<iStyledInputProps>`
     padding: 0rem 1rem;
     background-color: var(--color-brand4);
   }
+  input[type="textarea"] {
+    height: 5rem;
+  }
+
+  ${({ type }) => {
+    if (type == "textarea") {
+      return css`
+        height: 6.5625rem;
+      `;
+    }
+  }}
 
   ${({ bgColor }) => {
     switch (bgColor) {
@@ -44,6 +56,29 @@ const StyledInput = styled.div<iStyledInputProps>`
         return css`
           input {
             border-color: var(--color-grey5);
+          }
+        `;
+    }
+  }}
+
+  ${({ size }) => {
+    switch (size) {
+      case "largue":
+        return css`
+          input {
+            max-width: 29.125rem;
+          }
+        `;
+      case "small":
+        return css`
+          input {
+            max-width: 14.125rem;
+          }
+        `;
+      default:
+        return css`
+          input {
+            max-width: 19.6875rem;
           }
         `;
     }
