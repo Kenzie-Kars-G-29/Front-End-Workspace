@@ -19,7 +19,7 @@ const StyledInput = styled.div<iStyledInputProps>`
     font-weight: var(--font-weight-500);
     color: var(--color-grey0);
   }
-  input {
+  input, select {
     width: 100%;
     height: 3rem;
     border-radius: 0.25rem;
@@ -27,15 +27,19 @@ const StyledInput = styled.div<iStyledInputProps>`
     padding: 0rem 1rem;
     background-color: var(--color-brand4);
   }
-  input[type="textarea"] {
-    height: 5rem;
-  }
 
   ${({ type }) => {
-    if (type == "textarea") {
-      return css`
-        height: 6.5625rem;
-      `;
+    switch (type) {
+      case "textarea":
+        return css`
+          height: 6.5625rem;
+          input[type="textarea"] {
+            height: 5rem;
+          }
+        `;
+
+      case "select":
+        return css``;
     }
   }}
 

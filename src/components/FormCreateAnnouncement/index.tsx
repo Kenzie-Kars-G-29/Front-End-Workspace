@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import api from "../../services/api";
 import Button from "../Button/Button";
 import Input from "../Input";
 import StyledFormCreateAnnouncement from "./style";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SellerContext } from "../../contexts/Seller";
+import { iCar } from "../../contexts/Seller/interfaces";
 
 // Schema
 const announcementFormResolver = z.object({
@@ -22,25 +24,50 @@ const announcementFormResolver = z.object({
 });
 
 // Tipagem
-type announcement = z.infer<typeof announcementFormResolver>;
+type announcementForm = z.infer<typeof announcementFormResolver>;
 
-const FormCreateAnnouncement = () => {  
-  const [inputImage, setInputImage] = useState<number | null>(null)
+const FormCreateAnnouncement = () => {
+  const { setBrand, cars } = useContext(SellerContext);
+  // const [inputImage, setInputImage] = useState<number | null>(null);
 
   const {
     handleSubmit,
     register,
-    reset,
-    formState: { errors },
+    setValue,
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(announcementFormResolver),
   });
 
-  const createAnnoucement = async (data: announcement): Promise<void> => {
+  const selectCar = (car: string) => {
+    const findCar: iCar | undefined = cars.find((c) => c.name == car);
+
+    if (findCar) {
+      setValue("year", findCar.year);
+      setValue("fipeTablePrice", findCar.value);
+
+      switch (findCar.fuel) {
+        case 1:
+          setValue("fuel", "flex");
+          break;
+        case 2:
+          setValue("fuel", "hibrido");
+          break;
+        case 3:
+          setValue("fuel", "eletrico");
+          break;
+      }
+    }
+  };
+
+  const createAnnoucement = async (data: announcementForm): Promise<void> => {
+    const token = "";
+
     try {
       const response = await api.post("/announcement", data, {
-      
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       console.log(response);
@@ -49,15 +76,12 @@ const FormCreateAnnouncement = () => {
       console.log(error);
       //menssagem de erro
     }
-  }//Adicionar token
-
-  const submit = (formData: any) => {
-    createAnnoucement(formData)
-    console.log(formData);
-    // createAnnoucement(formData);
   };
 
-  console.log(errors ? errors : null);
+  const submit = (formData: any) => {
+    console.log(formData);
+    // createAnnoucement(formData)
+  };
 
   return (
     <>
@@ -67,31 +91,61 @@ const FormCreateAnnouncement = () => {
         <div className="inputContainer first">
           <Input
             id="brand"
-            type="text"
+            type="select"
             size="largue"
             label="Marca"
             placeholder="Mercedes Benz"
             bgColor={true}
             border={true}
             register={register}
-          />
+            onChange={setBrand}
+          >
+            <option value="" selected disabled>
+              Selecione
+            </option>
+            <option value="chevrolet">Chevrolet</option>
+            <option value="citroën">Citroën</option>
+            <option value="fiat">Fiat</option>
+            <option value="ford">Ford</option>
+            <option value="honda">Honda</option>
+            <option value="hyundai">Hyundai</option>
+            <option value="nissan">Nissan</option>
+            <option value="peugeot">Peugeot</option>
+            <option value="renault">Renault</option>
+            <option value="toyota">Toyota</option>
+            <option value="volkswagen">Volkswagen</option>
+          </Input>
 
           <Input
             id="model"
-            type="text"
+            type="select"
             size="largue"
             label="Modelo"
             placeholder="A 200 CGI ADVANCE SEDAN"
             bgColor={true}
             border={true}
             register={register}
-          />
+            onChange={selectCar}
+          >
+            <option value="" selected disabled>
+              Selecione
+            </option>
+            {cars
+              ? cars.map((car: iCar) => {
+                  return (
+                    <option key={car.id} value={car.name}>
+                      {car.name}
+                    </option>
+                  );
+                })
+              : null}
+          </Input>
         </div>
 
         <div className="inputContainer second">
           <Input
             id="year"
-            type="number"
+            type="text"
             size="small"
             label="Ano"
             placeholder="2018"
@@ -205,27 +259,8 @@ const FormCreateAnnouncement = () => {
             register={register}
           />
 
-          {
-          // inputImage.map(element => {
-          //   return (
-          //     <Input
-          //       key={element}
-          //       // id="secondImage"
-          //       type="text"
-          //       size="largue"
-          //       label="2 Imagem da galeria"
-          //       placeholder="https://image.com"
-          //       bgColor={true}
-          //       border={true}
-          //       register={register}
-          //     />
-          //   );
-          // })
-
-          }
-
           <div className="addImageInput">
-            <Button variant="white" onClick={() => setInputImage(3)}>
+            <Button variant="white">
               Adicionar campo para imagem da galeria
             </Button>
           </div>

@@ -1,11 +1,14 @@
 import { AsideProvider } from "../contexts/AsideContext";
+import { SellerProvider } from "../contexts/Seller";
 import RoutesMain from "../routes/routes";
 
 const App = () => {
   return (
     <>
       <AsideProvider>
-        <RoutesMain />
+        <SellerProvider>
+          <RoutesMain />
+        </SellerProvider>
       </AsideProvider>
     </>
   );
