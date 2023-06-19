@@ -2,7 +2,9 @@ import StyledCard from "./style"
 import Carro from "../../assets/car.png"
 
 
+
 export const CardAd = () => {
+
     
     return (
         <StyledCard>
