@@ -74,17 +74,19 @@ const StyledCard = styled.li`
 }
 
 .infoCar2 > div > span {
-    width: 3.188rem;
+    width: max-content;
     height: 2rem;
     font-size: 0.875rem;
     display: flex;
     flex-direction: row;
+    -webkit-box-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
     align-items: center;
     border-radius: 0.25rem;
-    padding: 0.25rem, 0.5rem, 0.25rem, 0.5rem;
     background-color: var(--color-brand4);
     color: var(--color-brand1);
+    padding: 0.313rem;
 }
 `
 
