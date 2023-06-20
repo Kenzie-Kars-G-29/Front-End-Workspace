@@ -1,6 +1,5 @@
 import { Footer } from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
-import { CardAd } from "../../components/Card";
 import StyledHome from "./style";
 import AsideMobile from "../../components/Asides/AsideMobile";
 import Button from "../../components/Button/Button";
