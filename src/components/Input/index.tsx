@@ -7,7 +7,7 @@ interface iInputProps {
   bgColor: boolean;
   border: boolean;
   id: string;
-  register: any
+  register: any;
 }
 
 const Input = ({
@@ -17,7 +17,7 @@ const Input = ({
   bgColor,
   border,
   id,
-  register
+  register,
 }: iInputProps) => {
   switch (type) {
     default:
