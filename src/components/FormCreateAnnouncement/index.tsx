@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { z } from "zod";
 import api from "../../services/api";
 import Button from "../Button/Button";
 import Input from "../Input";
 import StyledFormCreateAnnouncement from "./style";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SellerContext } from "../../contexts/Seller";
 import { iCar } from "../../contexts/Seller/interfaces";
@@ -20,7 +20,13 @@ const announcementFormResolver = z.object({
   km: z.string().min(4, "km very small").nullable().default("0"),
   price: z.string(),
   fipeTablePrice: z.string(),
-  // isPublic: z.boolean(),
+  coverImage: z.string().url(),
+  firstImage: z.string().url(),
+  secondImage: z.string().url(),
+  thirdImage: z.string().url().nullable().default(null),
+  fourthImage: z.string().url().nullable().default(null),
+  fifthImage: z.string().url().nullable().default(null),
+  sixthImage: z.string().url().nullable().default(null),
 });
 
 // Tipagem
@@ -28,7 +34,6 @@ type announcementForm = z.infer<typeof announcementFormResolver>;
 
 const FormCreateAnnouncement = () => {
   const { setBrand, cars } = useContext(SellerContext);
-  // const [inputImage, setInputImage] = useState<number | null>(null);
 
   const {
     handleSubmit,
@@ -80,7 +85,7 @@ const FormCreateAnnouncement = () => {
 
   const submit = (formData: any) => {
     console.log(formData);
-    // createAnnoucement(formData)
+    createAnnoucement(formData)
   };
 
   return (

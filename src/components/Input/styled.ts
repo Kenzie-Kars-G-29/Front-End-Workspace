@@ -19,13 +19,26 @@ const StyledInput = styled.div<iStyledInputProps>`
     font-weight: var(--font-weight-500);
     color: var(--color-grey0);
   }
-  input, select {
+
+  input {
     width: 100%;
     height: 3rem;
     border-radius: 0.25rem;
     border: 0.125rem solid;
     padding: 0rem 1rem;
     background-color: var(--color-brand4);
+  }
+
+  select {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 3rem;
+    line-height: 3;
+    background-color: var(--color-brand4);
+    overflow: hidden;
+    border: 0.125rem solid;
+    border-radius: 0.25em;
   }
 
   ${({ type }) => {
@@ -37,9 +50,6 @@ const StyledInput = styled.div<iStyledInputProps>`
             height: 5rem;
           }
         `;
-
-      case "select":
-        return css``;
     }
   }}
 
@@ -47,7 +57,8 @@ const StyledInput = styled.div<iStyledInputProps>`
     switch (bgColor) {
       case true:
         return css`
-          input {
+          input,
+          select {
             background-color: var(--color-grey7);
           }
         `;
@@ -58,7 +69,8 @@ const StyledInput = styled.div<iStyledInputProps>`
     switch (border) {
       case true:
         return css`
-          input {
+          input,
+          select {
             border-color: var(--color-grey5);
           }
         `;
