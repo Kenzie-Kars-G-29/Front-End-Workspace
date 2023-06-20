@@ -7,7 +7,6 @@ import { ModalResetPass } from "../../components/ModalResetPass";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
 import api from "../../services/api";
 
 const formSchema = z.object({
