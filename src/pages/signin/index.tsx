@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/index";
 import { SigninContainer, StyledFormContainer } from "./style";
+import { ModalResetPass } from "../../components/ModalResetPass";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
@@ -25,6 +27,10 @@ type ApiResponse = {
 const Signin = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | null>(null);
+   const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  
   const {
     register,
     handleSubmit,
@@ -66,7 +72,7 @@ const Signin = () => {
             register={register}
             error={errors.password?.message}
           />
-          <a href="/forgot-password">Esqueci minha senha</a>
+          <button onClick={toggleModal}>Esqueci minha senha</button>
           <Button variant="brand">Entrar</Button>
           <a className="conta" href="/register">
             Ainda não possui conta?
@@ -76,6 +82,7 @@ const Signin = () => {
           </Button>
         </form>
         {serverError && <p>{serverError}</p>}
+        {isModalOpen && (<ModalResetPass toggleModal={toggleModal} />)}
       </StyledFormContainer>
     </SigninContainer>
   );

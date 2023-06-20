@@ -8,7 +8,7 @@ import HeaderStyled from "./styles";
 export const Header = () => {
   const navigate = useNavigate();
   const navigateLogin = () => {
-    navigate("/login");
+    navigate("/signin");
   };
 
   const navigateRegister = () => {
