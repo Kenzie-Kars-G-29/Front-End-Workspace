@@ -12,7 +12,7 @@ const RoutesMain = () => {
       <Route path="/" element={<Home />} />
       <Route path="/announcement" element={<ProductDetailsPage />} />
       <Route path="/signin" element={<Signin/>} />
-      <Route path="/forget-password" element={<ForgetPassword/>}/>
+      <Route path="/forget-password/:token" element={<ForgetPassword/>}/>
     </Routes>
   );
 };
