@@ -5,21 +5,49 @@ import { Header } from "../../components/Header/Header"
 import { forgetPasswordSchema } from "./schema"
 import { ForgetPassContainer, ContainerFormStyled, MessageError } from "./style"
 import { useForm } from "react-hook-form"
+import { useNavigate, useParams } from "react-router-dom"
+import api from "../../services/api"
+import { toast } from "react-toastify"
 
 interface ForgotPasswordData {
     password: string,
     confirmPassword: string
 }
 
+interface ResetPassData {
+    newPassword: string
+}
+
 const ForgetPassword = () => {
-    const { register, handleSubmit, reset, formState: { errors }} = useForm<ForgotPasswordData>({
+    const { register, handleSubmit, formState: { errors }} = useForm<ForgotPasswordData>({
         mode: "onBlur",
         resolver: zodResolver(forgetPasswordSchema)
     })
 
+    const navigate = useNavigate();
+    const { token } = useParams()
+
+    const forgetPassword = async (data: ResetPassData) => {
+        try {
+            await api.patch(`login/reset-password/${token}`, data)
+
+            toast.success("Senha atualizada com sucesso")
+            navigate("/signin")
+            
+        } catch (error) {
+            console.log(error)
+            toast.error("Algo deu errado tente novamente")
+            
+        }
+    }
+
+    
     const submit = (data: ForgotPasswordData) => {
-        console.log(data)
-        reset()
+        const obj = {
+            newPassword: data.confirmPassword
+        }
+
+        forgetPassword(obj)
         
     }
     return (
