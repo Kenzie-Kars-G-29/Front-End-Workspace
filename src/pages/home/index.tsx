@@ -8,61 +8,67 @@ import { useContext, useEffect, useState } from "react";
 import AsideDesktop from "../../components/Asides/AsideDesktop";
 import api from "../../services/api";
 import StyledCard from "../../components/Card/style";
-import Carro from "../../assets/car.png"
-
+import Carro from "../../assets/car.png";
+import Modal from "../../components/modal";
+import FormCreateAnnouncement from "../../components/FormCreateAnnouncement";
 
 interface AnnouncementInfo {
-  id: string,
-  description: string,
-  brand: string,
-  model: string,
-  color: string,
-  year: string,
-  fuel: string,
-  km: string,
-  price: string,
-  fipeTablePrice: string,
-  isPublic: boolean,
+  id: string;
+  description: string;
+  brand: string;
+  model: string;
+  color: string;
+  year: string;
+  fuel: string;
+  km: string;
+  price: string;
+  fipeTablePrice: string;
+  isPublic: boolean;
   images: {
-    id: string,
-    coverImage: string,
-    firstImage: string | null,
-    secondImage: string | null,
-    thirdImage: string | null,
-    fourthImage: string | null,
-    fifthImage: string | null,
-    sixthImage: string | null
-  },
+    id: string;
+    coverImage: string;
+    firstImage: string | null;
+    secondImage: string | null;
+    thirdImage: string | null;
+    fourthImage: string | null;
+    fifthImage: string | null;
+    sixthImage: string | null;
+  };
   user: {
-    id: string,
-    name: string
-  }
+    id: string;
+    name: string;
+  };
 }
 
 const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
-  const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([])
+  const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-    const listAnnouncements = async () => {
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
+
+  const listAnnouncements = async () => {
     try {
-      const response = await api.get("/announcement")
+      const response = await api.get("/announcement");
 
-      const announData = response.data
-      
-      setIsDataAnnoun(announData)
+      const announData = response.data;
 
+      setIsDataAnnoun(announData);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    listAnnouncements()
-  }, isDataAnnoun)
-
+    listAnnouncements();
+  }, []);
 
   return (
     <>
+      <Modal isOpen={isOpen} onClose={handleClose} title="Criar anuncio">
+        <FormCreateAnnouncement />
+      </Modal>
       <Header />
       <StyledHome>
         {showAside && <AsideMobile />}
@@ -75,30 +81,37 @@ const Home = () => {
         <section>
           <AsideDesktop />
           <ul>
-            {!isDataAnnoun.length ? <h3>A plataforma ainda não possui nenhum anuncio disponível</h3>: 
-            isDataAnnoun.map(announcement => 
-              (<StyledCard key={announcement.id} id={announcement.id}>
+            {!isDataAnnoun.length ? (
+              <h3>A plataforma ainda não possui nenhum anuncio disponível</h3>
+            ) : (
+              isDataAnnoun.map((announcement) => (
+                <StyledCard key={announcement.id} id={announcement.id}>
                   <div className="infoCar">
-                  <div className="divImgCar">
-                      <img src={Carro} alt="Image Not Found"/>
+                    <div className="divImgCar">
+                      {/* <img src={announcement.image.coverImage} alt="Image Not Found" /> */}
+                      <img src={Carro} alt="Image Not Found" />
+                    </div>
+                    <h2>
+                      {announcement.brand} - {announcement.model}
+                    </h2>
+                    <p>{announcement.description}</p>
                   </div>
-                      <h2>{announcement.brand} - {announcement.model}</h2>
-                      <p>{announcement.description}</p>
-                  </div>
-          
+
                   <div className="infoUser">
-                      <span>SL</span>
-                      <p>{announcement.user.name}</p>
+                    <span>SL</span>
+                    <p>{announcement.user.name}</p>
                   </div>
-                    
+
                   <div className="infoCar2">
-                  <div>
+                    <div>
                       <span>{announcement.km} KM</span>
                       <span>{announcement.year}</span>
+                    </div>
+                    <p>R$ {announcement.price}</p>
                   </div>
-                  <p>R$ {announcement.price}</p>
-                  </div>
-              </StyledCard>))}
+                </StyledCard>
+              ))
+            )}
           </ul>
         </section>
         <div>
@@ -107,6 +120,9 @@ const Home = () => {
           </Button>
         </div>
       </StyledHome>
+      <Button variant="brand" onClick={() => handleOpen()}>
+        Criar anuncio
+      </Button>
       <Footer />
     </>
   );
