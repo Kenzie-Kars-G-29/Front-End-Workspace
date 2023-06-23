@@ -13,7 +13,7 @@ import image5 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import ImageGallery from "../../components/ImageGallery";
 import image6 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import { Header } from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
+
 
 const ProductDetailsPage: React.FC = () => {
   const images = [image1, image2, image3, image4, image5, image6];
@@ -71,8 +71,9 @@ const ProductDetailsPage: React.FC = () => {
           </div>
         </div>
       </StyledProductDetails>
-      <Footer />
+     
     </>
+    
   );
 };
 
