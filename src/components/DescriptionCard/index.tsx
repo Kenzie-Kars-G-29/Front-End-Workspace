@@ -1,5 +1,5 @@
-import React from 'react';
-import StyledDescriptionCard from './style';
+import React from "react";
+import StyledDescriptionCard from "./style";
 
 interface DescriptionCardProps {
   description: string;
