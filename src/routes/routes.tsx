@@ -3,9 +3,10 @@ import ProductDetailsPage from "../pages/ProductDetails";
 import Home from "../pages/home";
 import Signin from "../pages/signin";
 import Register from "../pages/register";
- ProfileViewUserimport ProfileViewUser from "../pages/ProfileViewUser";
+
 
 import ForgetPassword from "../pages/resetPassword";
+import ProfileViewUser from "../pages/ProfileViewUser";
 const RoutesMain = () => {
   return (
     <Routes>
