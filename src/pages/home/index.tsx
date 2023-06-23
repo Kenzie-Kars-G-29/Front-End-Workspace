@@ -1,6 +1,5 @@
 import { Footer } from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
-import { CardAd } from "../../components/Card";
 import StyledHome from "./style";
 import AsideMobile from "../../components/Asides/AsideMobile";
 import Button from "../../components/Button/Button";
@@ -8,8 +7,7 @@ import { AsideContext } from "../../contexts/AsideContext";
 import { useContext, useEffect, useState } from "react";
 import AsideDesktop from "../../components/Asides/AsideDesktop";
 import api from "../../services/api";
-import StyledCard from "../../components/Card/style";
-import Carro from "../../assets/car.png"
+import { CardAd } from "../../components/Card";
 
 
 interface AnnouncementInfo {
@@ -44,6 +42,7 @@ const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
   const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([])
 
+
     const listAnnouncements = async () => {
     try {
       const response = await api.get("/announcement")
@@ -62,6 +61,7 @@ const Home = () => {
   }, isDataAnnoun)
 
 
+
   return (
     <>
       <Header />
@@ -77,29 +77,7 @@ const Home = () => {
           <AsideDesktop />
           <ul>
             {!isDataAnnoun.length ? <h3>A plataforma ainda não possui nenhum anuncio disponível</h3>: 
-            isDataAnnoun.map(announcement => 
-              (<StyledCard key={announcement.id} id={announcement.id}>
-                  <div className="infoCar">
-                  <div className="divImgCar">
-                      <img src={Carro} alt="Image Not Found"/>
-                  </div>
-                      <h2>{announcement.brand} - {announcement.model}</h2>
-                      <p>{announcement.description}</p>
-                  </div>
-          
-                  <div className="infoUser">
-                      <span>SL</span>
-                      <p>{announcement.user.name}</p>
-                  </div>
-                    
-                  <div className="infoCar2">
-                  <div>
-                      <span>{announcement.km} KM</span>
-                      <span>{announcement.year}</span>
-                  </div>
-                  <p>R$ {announcement.price}</p>
-                  </div>
-              </StyledCard>))}
+            isDataAnnoun.map(announcement => (<CardAd announcement={announcement}/>))}
           </ul>
         </section>
         <div>
