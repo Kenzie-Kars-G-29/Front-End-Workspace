@@ -5,7 +5,9 @@ import Signin from "../pages/signin";
 import Register from "../pages/register";
 import ProfileViewUser from "../pages/ProfileViewUser";
 
+
 import ForgetPassword from "../pages/resetPassword";
+import ProfileViewUser from "../pages/ProfileViewUser";
 const RoutesMain = () => {
   return (
     <Routes>
