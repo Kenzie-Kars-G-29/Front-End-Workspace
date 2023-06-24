@@ -67,8 +67,16 @@ const Home = () => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={handleClose} title="Criar anuncio">
-        <FormCreateAnnouncement />
+        <FormCreateAnnouncement onClose={handleClose} />
       </Modal>
+      {/* <Modal
+        isOpen={isOpen}
+        onClose={handleClose}
+        title="Sucesso!"
+      >
+        <h3>Seu anúncio foi criado com sucesso!</h3>
+        <p>Agora você poderá ver seus negócios crescendo em grande escala</p>
+      </Modal> */}
       <Header />
       <StyledHome>
         {showAside && <AsideMobile />}

@@ -9,7 +9,7 @@ const announcementFormResolver = z.object({
   fuel: z.string().min(3, "fuel very small").max(9, "fuel very largue"),
   km: z.string().min(4, "km very small").nullable().default("0"),
   price: z.string(),
-  fipeTablePrice: z.string(),
+  fipeTablePrice: z.coerce.string(),
   coverImage: z.string().url(),
   firstImage: z.string().url(),
   secondImage: z.string().url(),

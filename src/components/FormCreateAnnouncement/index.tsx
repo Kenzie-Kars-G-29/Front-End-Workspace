@@ -10,17 +10,25 @@ import { SellerContext } from "../../contexts/Seller";
 import { iCar } from "../../contexts/Seller/interfaces";
 import announcementFormResolver from "./formSchema";
 
-// Tipagem
 type announcementForm = z.infer<typeof announcementFormResolver>;
 
-const FormCreateAnnouncement = () => {
+interface iFormCreateAnnouncementProps {
+  onClose: () => void;
+}
+
+const FormCreateAnnouncement = ({ onClose }: iFormCreateAnnouncementProps) => {
   const { setBrand, cars } = useContext(SellerContext);
   const [inputImageThird, setInputImageThird] = useState(false);
   const [inputImageFourth, setInputImageFourth] = useState(false);
   const [inputImageFifth, setInputImageFifth] = useState(false);
   const [inputImageSixth, setInputImageSixth] = useState(false);
 
-  const { handleSubmit, register, reset, setValue } = useForm({
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm({
     mode: "onBlur",
     resolver: zodResolver(announcementFormResolver),
   });
@@ -62,8 +70,7 @@ const FormCreateAnnouncement = () => {
   };
 
   const createAnnoucement = async (data: announcementForm): Promise<void> => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1NlbGxlciI6dHJ1ZSwiaWQiOiI4MjI4ZGZjNS01ZjFkLTRmMWMtYjFhYS0yZTEzNTZjM2MyYjUiLCJpYXQiOjE2ODc0NDc0OTEsImV4cCI6MTY4NzUzMzg5MSwic3ViIjoiODIyOGRmYzUtNWYxZC00ZjFjLWIxYWEtMmUxMzU2YzNjMmI1In0.BdzW20ug8TSU-d_3w6agzfP96ZCXklbBmPk6Z7YawCA";
+    const token = localStorage.getItem("token");
 
     try {
       const response = await api.post("/announcement", data, {
@@ -72,10 +79,9 @@ const FormCreateAnnouncement = () => {
           "Content-Type": "Application/json",
         },
       });
-
-      if (response.status == 200) {
-        reset();
-        //menssagem de sucesso
+ 
+      if(response.status == 201){
+        onClose();
       }
     } catch (error) {
       console.log(error);
@@ -371,7 +377,7 @@ const FormCreateAnnouncement = () => {
         </div>
 
         <div className="buttonContainer">
-          <Button variant="gray" type="button">
+          <Button variant="gray" type="button" onClick={onClose}>
             Cancelar
           </Button>
           <Button variant="blue" type="submit">

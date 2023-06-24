@@ -8,7 +8,12 @@ interface iBaseModalProps {
   title: string;
 }
 
-const Modal = ({ children, isOpen, onClose, title }: iBaseModalProps) => {
+const Modal = ({
+  children,
+  isOpen,
+  onClose,
+  title,
+}: iBaseModalProps) => {
   if (!isOpen) return null;
 
   const handleBackgroundClick = (
@@ -20,7 +25,9 @@ const Modal = ({ children, isOpen, onClose, title }: iBaseModalProps) => {
   };
 
   return (
-    <StyledModal onClick={handleBackgroundClick}>
+    <StyledModal
+      onClick={handleBackgroundClick}
+    >
       <div className="modal">
         <div className="modal-closeModalContainer">
           <p>{title}</p>
