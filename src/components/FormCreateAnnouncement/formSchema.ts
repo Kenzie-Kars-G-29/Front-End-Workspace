@@ -7,7 +7,7 @@ const announcementFormResolver = z.object({
   color: z.string().min(3, "color very small").max(20, "color very largue"),
   year: z.string().min(4, "year very small").max(4, "year very largue"),
   fuel: z.string().min(3, "fuel very small").max(9, "fuel very largue"),
-  km: z.string().min(4, "km very small").nullable().default("0"),
+  km: z.string().min(4, "km very small").default("0"),
   price: z.string(),
   fipeTablePrice: z.coerce.string(),
   coverImage: z.string().url(),
@@ -17,7 +17,7 @@ const announcementFormResolver = z.object({
   fourthImage: z.string().url().nullable().default(null),
   fifthImage: z.string().url().nullable().default(null),
   sixthImage: z.string().url().nullable().default(null),
-  isPublic: z.boolean().nullable().default(true)
+  isPublic: z.boolean().default(true)
 });
 
 export default announcementFormResolver;

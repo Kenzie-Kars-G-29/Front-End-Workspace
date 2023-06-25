@@ -9,7 +9,7 @@ import AsideDesktop from "../../components/Asides/AsideDesktop";
 import api from "../../services/api";
 import StyledCard from "../../components/Card/style";
 import Carro from "../../assets/car.png";
-import Modal from "../../components/modal";
+import Modal from "../../components/Modal";
 import FormCreateAnnouncement from "../../components/FormCreateAnnouncement";
 
 interface AnnouncementInfo {
@@ -43,10 +43,6 @@ interface AnnouncementInfo {
 const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
   const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
 
   const listAnnouncements = async () => {
     try {
@@ -66,17 +62,6 @@ const Home = () => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={handleClose} title="Criar anuncio">
-        <FormCreateAnnouncement onClose={handleClose} />
-      </Modal>
-      {/* <Modal
-        isOpen={isOpen}
-        onClose={handleClose}
-        title="Sucesso!"
-      >
-        <h3>Seu anúncio foi criado com sucesso!</h3>
-        <p>Agora você poderá ver seus negócios crescendo em grande escala</p>
-      </Modal> */}
       <Header />
       <StyledHome>
         {showAside && <AsideMobile />}
@@ -128,9 +113,6 @@ const Home = () => {
           </Button>
         </div>
       </StyledHome>
-      <Button variant="brand" onClick={() => handleOpen()}>
-        Criar anuncio
-      </Button>
       <Footer />
     </>
   );

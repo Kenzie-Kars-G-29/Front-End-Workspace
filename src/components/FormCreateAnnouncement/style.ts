@@ -1,7 +1,29 @@
 import styled from "styled-components";
 
+const StyledSucess = styled.div`
+  width: 100%;
+  height: 8.8125rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  h1{
+    font-size: var(--font-body-1);
+    color: var(--color-grey1);
+    font-weight: var(--font-weight-500);
+  }
+  p{
+    font-size: var(--font-body-1);
+    color: var(--color-grey3);
+    font-weight: var(--font-weight-400);
+  }
+`;
+
 const StyledFormCreateAnnouncement = styled.form`
   display: flex;
+  width: 100%;
+  min-height: 72.125rem;
+
   flex-direction: column;
   justify-content: center;
   gap: 24px;
@@ -56,4 +78,4 @@ const StyledFormCreateAnnouncement = styled.form`
   }
 `;
 
-export default StyledFormCreateAnnouncement;
+export { StyledFormCreateAnnouncement, StyledSucess };

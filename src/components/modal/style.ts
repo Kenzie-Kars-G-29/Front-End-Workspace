@@ -16,7 +16,7 @@ const StyledModal = styled.div`
   .modal {
     width: 100%;
     max-width: 32.5rem;
-    min-height: 72.125rem;
+    height: fit-content;
     padding: 1rem 1.5rem;
     margin: 10px;
     background-color: white;
