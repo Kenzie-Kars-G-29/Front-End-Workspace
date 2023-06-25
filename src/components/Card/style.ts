@@ -19,6 +19,18 @@ const StyledCard = styled.li`
     margin-bottom: 1rem;
 }
 
+.goodAnnoun {
+    background: green;
+    color: white;
+    width: max-content;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.badAnnoun {
+    display: none;
+}
+
 .infoCar > h2 {
     font-size: var(--font-heading-7);
     font-weight: 600;

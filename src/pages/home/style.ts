@@ -5,11 +5,13 @@ const StyledHome = styled.main`
   > section {
     display: flex;
     > ul {
+      width: 80%;
+      list-style: none;
+      padding: 0;
+      margin: 0;
       display: flex;
-      /* flex-wrap: row; */
       flex-wrap: wrap;
-      gap: 10px;
-      /* overflow-y: auto; */
+      padding: 5px;
     }
   }
 
