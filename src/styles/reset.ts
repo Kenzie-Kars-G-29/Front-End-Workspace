@@ -32,6 +32,11 @@ button{
 ul, ol, li{
     list-style: none;
 }
+.errorMessage{
+    font-size: var(--font-body-2);
+    color: var(--color-alert1);
+    font-weight: var(--font-weight-500);
+}
 `;
 
 export default Reset;

@@ -20,7 +20,7 @@ const UserAdsSection: React.FC<{ ads: Ad[] }> = ({ ads }) => {
       <AdsContainer>
         {ads.map((ad) => (
           <CardContainer key={ad.id}>
-            <CardAd />
+            {/* <CardAd /> */}
           </CardContainer>
         ))}
       </AdsContainer>

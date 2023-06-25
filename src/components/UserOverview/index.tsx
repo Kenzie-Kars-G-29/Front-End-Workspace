@@ -1,30 +1,39 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import FormCreateAnnouncement from "../FormCreateAnnouncement";
-import Modal from "../Modal";
+import Modal from "../modal";
 import StyledUserOverview from "./style";
-import ProfileConfig from "../ProfileConfig";
+import FormProfileConfig from "../FormProfileConfig";
 
 const UserOverview = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenFormCreateAnnouncement, setIsOpenFormCreateAnnouncement] =
+    useState(false);
+  const [isOpenFormProfileConfig, setIsOpenFormProfileConfig] = useState(false);
 
-  const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
+  const handleOpenFormCreateAnnouncement = () =>
+    setIsOpenFormCreateAnnouncement(true);
+  const handleCloseFormCreateAnnouncement = () =>
+    setIsOpenFormCreateAnnouncement(false);
+
+  const handleOpenFormProfileConfig = () => setIsOpenFormProfileConfig(true);
+  const handleCloseFormProfileConfig = () => setIsOpenFormProfileConfig(false);
 
   return (
     <>
-      {/* <Modal isOpen={isOpen} onClose={handleClose} title="Criar anuncio">
-        <FormCreateAnnouncement
-          onClose={handleClose}
-        />
-      </Modal> */}
+      <Modal
+        isOpen={isOpenFormCreateAnnouncement}
+        onClose={handleCloseFormCreateAnnouncement}
+        title="Criar anuncio"
+      >
+        <FormCreateAnnouncement onClose={handleCloseFormCreateAnnouncement} />
+      </Modal>
 
       <Modal
-        isOpen={isOpen}
-        onClose={handleClose}
+        isOpen={isOpenFormProfileConfig}
+        onClose={handleCloseFormProfileConfig}
         title="Editar perfil"
       >
-        <ProfileConfig/>
+        <FormProfileConfig onClose={handleCloseFormProfileConfig} />
       </Modal>
 
       <StyledUserOverview>
@@ -40,8 +49,11 @@ const UserOverview = () => {
             ever since the 1500s
           </p>
 
-          <Button variant="brand" onClick={() => handleOpen()}>
-            Criar anuncio
+          <Button variant="brand" onClick={() => handleOpenFormCreateAnnouncement()}>
+            Criar anúncio
+          </Button>
+          <Button variant="brand" onClick={() => handleOpenFormProfileConfig()}>
+            Editar perfil
           </Button>
         </div>
       </StyledUserOverview>

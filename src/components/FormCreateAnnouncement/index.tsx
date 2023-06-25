@@ -11,7 +11,7 @@ import { iAnnouncementWithImage, iCar } from "../../contexts/Seller/interfaces";
 import announcementFormResolver from "./formSchema";
 import { toast } from "react-toastify";
 
-type announcementForm = z.infer<typeof announcementFormResolver>;
+type tAnnouncementForm = z.infer<typeof announcementFormResolver>;
 interface iFormCreateAnnouncementProps {
   onClose: () => void;
 }
@@ -25,7 +25,7 @@ const FormCreateAnnouncement = ({ onClose }: iFormCreateAnnouncementProps) => {
   const [inputImageFifth, setInputImageFifth] = useState(false);
   const [inputImageSixth, setInputImageSixth] = useState(false);
 
-  const { handleSubmit, register, setValue } = useForm<announcementForm>({
+  const { handleSubmit, register, setValue } = useForm<tAnnouncementForm>({
     resolver: zodResolver(announcementFormResolver),
   });
 
@@ -87,7 +87,7 @@ const FormCreateAnnouncement = ({ onClose }: iFormCreateAnnouncementProps) => {
     }
   };
 
-  const submit: SubmitHandler<announcementForm> = (formData) => {
+  const submit: SubmitHandler<tAnnouncementForm> = (formData) => {
     const data = formData;
 
     const {

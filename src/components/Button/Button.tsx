@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 interface ButtonProps {
-  variant?: "black" | "gray" | "blue" | "white" | "brand";
+  variant?: "black" | "gray" | "blue" | "white" | "brand" | "red";
   color?: string;
 }
 
@@ -25,6 +25,8 @@ const Button = styled.button<ButtonProps>`
         return "white";
       case "brand":
         return "var(--color-brand1)";
+      case "red":
+        return "var(--color-alert2)";
       default:
         return "black";
     }
