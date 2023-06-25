@@ -26,7 +26,6 @@ const FormCreateAnnouncement = ({ onClose }: iFormCreateAnnouncementProps) => {
   const [inputImageSixth, setInputImageSixth] = useState(false);
 
   const { handleSubmit, register, setValue } = useForm<announcementForm>({
-    mode: "onBlur",
     resolver: zodResolver(announcementFormResolver),
   });
 
