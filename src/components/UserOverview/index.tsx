@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import FormCreateAnnouncement from "../FormCreateAnnouncement";
 import Modal from "../Modal";
 import StyledUserOverview from "./style";
+import ProfileConfig from "../ProfileConfig";
 
 const UserOverview = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,11 +13,20 @@ const UserOverview = () => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={handleClose} title="Criar anuncio">
+      {/* <Modal isOpen={isOpen} onClose={handleClose} title="Criar anuncio">
         <FormCreateAnnouncement
           onClose={handleClose}
         />
+      </Modal> */}
+
+      <Modal
+        isOpen={isOpen}
+        onClose={handleClose}
+        title="Editar perfil"
+      >
+        <ProfileConfig/>
       </Modal>
+
       <StyledUserOverview>
         <div className="user-image" />
         <div className="user-info">
@@ -29,7 +39,7 @@ const UserOverview = () => {
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s
           </p>
-          
+
           <Button variant="brand" onClick={() => handleOpen()}>
             Criar anuncio
           </Button>
