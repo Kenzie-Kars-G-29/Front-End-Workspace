@@ -11,55 +11,53 @@ import { CardAd } from "../../components/Card";
 
 
 interface AnnouncementInfo {
-  id: string,
-  description: string,
-  brand: string,
-  model: string,
-  color: string,
-  year: string,
-  fuel: string,
-  km: string,
-  price: string,
-  fipeTablePrice: string,
-  isPublic: boolean,
+  id: string;
+  description: string;
+  brand: string;
+  model: string;
+  color: string;
+  year: string;
+  fuel: string;
+  km: string;
+  price: string;
+  fipeTablePrice: string;
+  isPublic: boolean;
   images: {
-    id: string,
-    coverImage: string,
-    firstImage: string | null,
-    secondImage: string | null,
-    thirdImage: string | null,
-    fourthImage: string | null,
-    fifthImage: string | null,
-    sixthImage: string | null
-  },
+    id: string;
+    coverImage: string;
+    firstImage: string | null;
+    secondImage: string | null;
+    thirdImage: string | null;
+    fourthImage: string | null;
+    fifthImage: string | null;
+    sixthImage: string | null;
+  };
   user: {
-    id: string,
-    name: string
-  }
+    id: string;
+    name: string;
+  };
 }
 
 const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
-  const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([])
+  const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([]);
 
 
     const listAnnouncements = async () => {
     try {
-      const response = await api.get("/announcement")
+      const response = await api.get("/announcement");
 
-      const announData = response.data
-      
-      setIsDataAnnoun(announData)
+      const announData = response.data;
 
+      setIsDataAnnoun(announData);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    listAnnouncements()
-  }, isDataAnnoun)
-
+    listAnnouncements();
+  }, []);
 
 
   return (
