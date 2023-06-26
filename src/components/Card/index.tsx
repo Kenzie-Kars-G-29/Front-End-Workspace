@@ -1,5 +1,7 @@
-import Button from "../Button/Button"
+import { useContext } from "react"
 import StyledCard from "./style"
+import { UserContext } from "../../contexts/User"
+
 
 interface cardProps {
     announcement: {
@@ -32,6 +34,7 @@ interface cardProps {
 }
 
 export const CardAd = ({announcement}: cardProps) => {
+    const {isSeller} = useContext(UserContext)
   
     const isGoodAnnouncement = (value1: string, value2: string) => {
         const difference = Math.abs(Number(value1) - Number(value2));
@@ -57,7 +60,7 @@ export const CardAd = ({announcement}: cardProps) => {
 
                 <div className="infoUser">
                     <span>SL</span>
-                    <p>{announcement.user.name}</p>
+                    <p>{announcement.user?.name}</p>
                 </div>
                 
                 <div className="infoCar2">
@@ -67,6 +70,11 @@ export const CardAd = ({announcement}: cardProps) => {
                 </div>
                 <p>R$ {announcement.price}</p>
                 </div>
+                
+                {isSeller? <div className="divBtns">
+                  <button className="btnDetails">Editar</button> 
+                  <button className="btnDetails">Ver Detalhes</button>
+                </div> : <></>}
         </StyledCard>
     )
 }

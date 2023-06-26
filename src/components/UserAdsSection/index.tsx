@@ -1,28 +1,22 @@
+import { useContext, useEffect } from 'react';
 import { CardAd } from '../../components/Card/index';
-import { MainContainer, AdsContainer, CardContainer, AdsTitle } from './style';
+import { MainContainer, AdsContainer, AdsTitle } from './style';
+import { UserContext } from '../../contexts/User';
 
-type Ad = {
-    id: number;
-    image?: string;
-    title?: string;
-    description?: string;
-    userInitials?: string;
-    userName?: string;
-    mileage?: number;
-    year?: number;
-    price?: string;
-};
 
-const UserAdsSection: React.FC<{ ads: Ad[] }> = ({ ads }) => {
+const UserAdsSection = () => {
+  const {isAnnounUser, infosUserLogged} = useContext(UserContext)
+
+  useEffect(() => {
+    infosUserLogged()
+  }, []);
+  
   return (
     <MainContainer>
       <AdsTitle>Anúncios</AdsTitle>
       <AdsContainer>
-        {ads.map((ad) => (
-          <CardContainer key={ad.id}>
-            <CardAd />
-          </CardContainer>
-        ))}
+        {!isAnnounUser.length ? <h3>Este usuário ainda não possui nenhum anuncio disponível</h3>: 
+          isAnnounUser.map(announcement =>  { return <CardAd announcement={announcement}/>})}
       </AdsContainer>
     </MainContainer>
   );
