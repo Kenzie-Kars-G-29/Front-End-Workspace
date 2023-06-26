@@ -19,6 +19,10 @@ const StyledCard = styled.li`
     margin-bottom: 1rem;
 }
 
+.divImgCar > img {
+    width: 80%;
+}
+
 .goodAnnoun {
     background: green;
     color: white;

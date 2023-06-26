@@ -1,5 +1,5 @@
+import Button from "../Button/Button"
 import StyledCard from "./style"
-import Carro from "../../assets/car.png"
 
 interface cardProps {
     announcement: {
@@ -14,7 +14,7 @@ interface cardProps {
         price: string,
         fipeTablePrice: string,
         isPublic: boolean,
-        images: {
+        image: {
           id: string,
           coverImage: string,
           firstImage: string | null,
@@ -32,7 +32,7 @@ interface cardProps {
 }
 
 export const CardAd = ({announcement}: cardProps) => {
-
+  
     const isGoodAnnouncement = (value1: string, value2: string) => {
         const difference = Math.abs(Number(value1) - Number(value2));
         const fivePerCent = 0.05 * Math.max(Number(value1), Number(value2));
@@ -44,19 +44,17 @@ export const CardAd = ({announcement}: cardProps) => {
         }
       }
 
-    
     return (
         <StyledCard key={announcement.id} id={announcement.id}>
             <div className="infoCar">
                 <div className="divImgCar">
-                    <img src={Carro} alt="Image Not Found"/>
+                    <img src={announcement.image.coverImage} alt="Image Not Found"/>
                     {isGoodAnnouncement(announcement.price, announcement.fipeTablePrice)}
                 </div>
                     <h2>{announcement.brand} - {announcement.model}</h2>
                     <p>{announcement.description}</p>
                 </div>
 
-        
                 <div className="infoUser">
                     <span>SL</span>
                     <p>{announcement.user.name}</p>
