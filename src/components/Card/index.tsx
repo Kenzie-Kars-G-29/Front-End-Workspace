@@ -1,9 +1,8 @@
-import { useContext } from "react"
 import StyledCard from "./style"
-import { UserContext } from "../../contexts/User"
 
 
 interface cardProps {
+  isSeller?: boolean,
     announcement: {
         id: string,
         description: string,
@@ -33,8 +32,7 @@ interface cardProps {
     }
 }
 
-export const CardAd = ({announcement}: cardProps) => {
-    const {isSeller} = useContext(UserContext)
+export const CardAd = ({announcement, isSeller}: cardProps) => {
   
     const isGoodAnnouncement = (value1: string, value2: string) => {
         const difference = Math.abs(Number(value1) - Number(value2));
@@ -75,6 +73,7 @@ export const CardAd = ({announcement}: cardProps) => {
                   <button className="btnDetails">Editar</button> 
                   <button className="btnDetails">Ver Detalhes</button>
                 </div> : <></>}
+
         </StyledCard>
     )
 }

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import api from "../../services/api";
 import { AnnouncementInfo, InfoUserLogged } from "./interfaces";
+import { useNavigate } from "react-router";
 
 
 interface UserContextProps {
@@ -12,7 +13,8 @@ interface UserContextProps {
     isSeller: boolean,
     setIsSeller: React.Dispatch<React.SetStateAction<boolean>>,
     isAnnounUser: AnnouncementInfo[],
-    setIsAnnounUser:React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>
+    setIsAnnounUser:React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>,
+    handleLogout: () => void
 }
 
 interface UserProviderProps {
@@ -22,10 +24,11 @@ interface UserProviderProps {
 const UserContext = createContext({} as UserContextProps);
 
 const UserProvider = ({ children }: UserProviderProps) => {
-    const [isUserInfo, setIsUserInfo] = useState<InfoUserLogged>()
+    const [isUserInfo, setIsUserInfo] = useState<InfoUserLogged | undefined>(undefined)
     const [isAnnounUser, setIsAnnounUser] = useState<AnnouncementInfo[]>([]);
     const [isLoading, setIsLoading] = useState(true)
     const [isSeller, setIsSeller]= useState(false)
+    const navigate = useNavigate()
   
     
     const infosUserLogged = async () => {        
@@ -48,6 +51,15 @@ const UserProvider = ({ children }: UserProviderProps) => {
         }
       };
 
+
+      const handleLogout = () => {
+        // Limpar o localStorage
+        localStorage.removeItem("token");
+      
+        // Navegar para a página inicial
+        navigate("/");
+      };
+
   return (
     <UserContext.Provider value={{infosUserLogged, 
     isUserInfo, 
@@ -57,7 +69,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
     isSeller, 
     setIsSeller,
     isAnnounUser,
-    setIsAnnounUser 
+    setIsAnnounUser,
+    handleLogout 
     }}>
       {children}
     </UserContext.Provider>

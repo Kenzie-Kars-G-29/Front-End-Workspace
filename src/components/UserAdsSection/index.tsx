@@ -5,7 +5,7 @@ import { UserContext } from '../../contexts/User';
 
 
 const UserAdsSection = () => {
-  const {isAnnounUser, infosUserLogged} = useContext(UserContext)
+  const {isAnnounUser, infosUserLogged, isSeller} = useContext(UserContext)
 
   useEffect(() => {
     infosUserLogged()
@@ -16,7 +16,7 @@ const UserAdsSection = () => {
       <AdsTitle>Anúncios</AdsTitle>
       <AdsContainer>
         {!isAnnounUser.length ? <h3>Este usuário ainda não possui nenhum anuncio disponível</h3>: 
-          isAnnounUser.map(announcement =>  { return <CardAd announcement={announcement}/>})}
+          isAnnounUser.map(announcement =>  { return <CardAd announcement={announcement} isSeller={isSeller}/>})}
       </AdsContainer>
     </MainContainer>
   );
