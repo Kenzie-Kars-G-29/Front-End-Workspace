@@ -4,11 +4,15 @@ import FormCreateAnnouncement from "../FormCreateAnnouncement";
 import Modal from "../modal";
 import StyledUserOverview from "./style";
 import FormProfileConfig from "../FormProfileConfig";
+import FormAddressUpdate from "../FormAddressUpdate";
 
 const UserOverview = () => {
   const [isOpenFormCreateAnnouncement, setIsOpenFormCreateAnnouncement] =
-    useState(false);
-  const [isOpenFormProfileConfig, setIsOpenFormProfileConfig] = useState(false);
+    useState<boolean>(false);
+  const [isOpenFormProfileConfig, setIsOpenFormProfileConfig] =
+    useState<boolean>(false);
+  const [isOpenFormAddressUpdate, setIsOpenFormAddressUpdate] =
+    useState<boolean>(false);
 
   const handleOpenFormCreateAnnouncement = () =>
     setIsOpenFormCreateAnnouncement(true);
@@ -17,6 +21,9 @@ const UserOverview = () => {
 
   const handleOpenFormProfileConfig = () => setIsOpenFormProfileConfig(true);
   const handleCloseFormProfileConfig = () => setIsOpenFormProfileConfig(false);
+
+  const handleOpenFormAddressUpdate = () => setIsOpenFormAddressUpdate(true);
+  const handleCloseFormAddressUpdate = () => setIsOpenFormAddressUpdate(false);
 
   return (
     <>
@@ -36,6 +43,14 @@ const UserOverview = () => {
         <FormProfileConfig onClose={handleCloseFormProfileConfig} />
       </Modal>
 
+      <Modal
+        isOpen={isOpenFormAddressUpdate}
+        onClose={handleCloseFormAddressUpdate}
+        title="Editar endereço"
+      >
+        <FormAddressUpdate onClose={handleCloseFormAddressUpdate} />
+      </Modal>
+
       <StyledUserOverview>
         <div className="user-image" />
         <div className="user-info">
@@ -49,12 +64,28 @@ const UserOverview = () => {
             ever since the 1500s
           </p>
 
-          <Button variant="brand" onClick={() => handleOpenFormCreateAnnouncement()}>
-            Criar anúncio
-          </Button>
-          <Button variant="brand" onClick={() => handleOpenFormProfileConfig()}>
-            Editar perfil
-          </Button>
+          <div className="buttonContainer">
+            <Button
+              variant="brand"
+              onClick={() => handleOpenFormCreateAnnouncement()}
+            >
+              Criar anúncio
+            </Button>
+
+            <Button
+              variant="brand"
+              onClick={() => handleOpenFormProfileConfig()}
+            >
+              Editar perfil
+            </Button>
+
+            <Button
+              variant="brand"
+              onClick={() => handleOpenFormAddressUpdate()}
+            >
+              Editar endereço
+            </Button>
+          </div>
         </div>
       </StyledUserOverview>
     </>

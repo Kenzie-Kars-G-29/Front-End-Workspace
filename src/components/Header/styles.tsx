@@ -22,6 +22,7 @@ const HeaderStyled = styled.header`
   .logo {
     margin-top: 10px;
     display: block;
+    cursor: pointer;
   }
 
   .menuIcon {

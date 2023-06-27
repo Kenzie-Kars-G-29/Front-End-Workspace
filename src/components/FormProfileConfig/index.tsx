@@ -55,7 +55,7 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
   //id do usuario mockado
   const deleteUser = async (): Promise<void> => {
     const token = localStorage.getItem("token");
-    const userId = "421c885e-47e4-41ab-9101-32abffa410cb";
+    const userId = "01ba16d9-66b7-4ffb-987e-8625c17c7194";
 
     try {
       const response = await api.delete(`/users/${userId}`, {
@@ -65,10 +65,11 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
         },
       });
 
-      //Fechar o modal e exibir redirecionar para home
+      //Fechar o modal, limpar o localStorage e redirecionar para home
       console.log(response);
       if (response.status == 204) {
         onClose();
+        localStorage.clear()
         navigate("/");
       }
     } catch (error) {
