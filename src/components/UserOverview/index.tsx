@@ -34,7 +34,7 @@ const UserOverview = () => {
   useEffect(() => {
     infosUserLogged();
     setIsLoading(false)
-  }, [infosUserLogged]);
+  }, []);
 
   return (
     <>
