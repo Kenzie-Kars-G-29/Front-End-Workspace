@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import StyledProductDetails from "./style";
 import ProductInfoCard from "../../components/ProductInfoCard/index";
 import DescriptionCard from "../../components/DescriptionCard/index";
@@ -13,16 +13,21 @@ import image5 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import ImageGallery from "../../components/ImageGallery";
 import image6 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import { Header } from "../../components/Header/Header";
-
+import { UserContext } from "../../contexts/User";
 
 const ProductDetailsPage: React.FC = () => {
   const images = [image1, image2, image3, image4, image5, image6];
 
   const [selectedImage, setSelectedImage] = useState(images[0]);
+  const { isUserInfo, infosUserLogged } = useContext(UserContext);
 
   const handleImageClick = (newImage: string) => {
     setSelectedImage(newImage);
   };
+
+  useEffect(() => {
+    infosUserLogged();
+  }, []);
 
   const product = {
     name: "Nome do produto",
@@ -53,7 +58,7 @@ const ProductDetailsPage: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header isUserInfo={isUserInfo} />
       <StyledProductDetails>
         <div className="content">
           <div className="left-column">
@@ -71,9 +76,7 @@ const ProductDetailsPage: React.FC = () => {
           </div>
         </div>
       </StyledProductDetails>
-     
     </>
-    
   );
 };
 

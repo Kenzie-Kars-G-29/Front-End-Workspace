@@ -71,6 +71,11 @@ const HeaderStyled = styled.header`
     display: flex;
   }
 
+  .logout {
+    width: 40px;
+    height: 40px;
+  }
+
   @media (min-width: 769px) {
     .divContainer {
       display: flex;
@@ -93,6 +98,7 @@ const HeaderStyled = styled.header`
     .menuButtons {
       flex-direction: row;
       align-items: center;
+      width: 0%;
     }
 
     .menuIcon {
