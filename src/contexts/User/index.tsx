@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import api from "../../services/api";
-import { AnnouncementInfo, InfoUserLogged } from "./interfaces";
+import { AnnouncementInfo, InfoUser, InfoUserLogged } from "./interfaces";
 import { useNavigate } from "react-router";
 
 
 interface UserContextProps {
     infosUserLogged: () => void,
+    getUserId: (id: string) => void,
+    isGetUser: InfoUser | undefined,
     isUserInfo: InfoUserLogged | undefined,
     setIsUserInfo:  React.Dispatch<React.SetStateAction<InfoUserLogged | undefined>>,
     isLoading: boolean,
@@ -14,7 +16,8 @@ interface UserContextProps {
     setIsSeller: React.Dispatch<React.SetStateAction<boolean>>,
     isAnnounUser: AnnouncementInfo[],
     setIsAnnounUser:React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>,
-    handleLogout: () => void
+    isAnnouncements: AnnouncementInfo[],
+    setIsAnnouncements: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>
 }
 
 interface UserProviderProps {
@@ -28,8 +31,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
     const [isAnnounUser, setIsAnnounUser] = useState<AnnouncementInfo[]>([]);
     const [isLoading, setIsLoading] = useState(true)
     const [isSeller, setIsSeller]= useState(false)
-    const navigate = useNavigate()
-  
+    const [isGetUser, setIsGetUser] = useState<InfoUser| undefined>(undefined)
+    const [isAnnouncements, setIsAnnouncements] = useState<AnnouncementInfo[]>([])
     
     const infosUserLogged = async () => {        
         const token = localStorage.getItem("token")
@@ -51,14 +54,26 @@ const UserProvider = ({ children }: UserProviderProps) => {
         }
       };
 
+    const getUserId = async (id: string) => {
+      const token = localStorage.getItem("token")
+        try {
+          api.defaults.headers.common.Authorization = `Bearer ${token}`
+          const response = await api.get(`/users/${id}`);
 
-      const handleLogout = () => {
-        // Limpar o localStorage
-        localStorage.removeItem("token");
+          console.log(response)
+    
+          const userData = response.data;
+          setIsGetUser(userData)
+          setIsAnnouncements(userData.announcement)
+          setIsLoading(false)
+         
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+
       
-        // Navegar para a página inicial
-        navigate("/");
-      };
 
   return (
     <UserContext.Provider value={{infosUserLogged, 
@@ -70,7 +85,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
     setIsSeller,
     isAnnounUser,
     setIsAnnounUser,
-    handleLogout 
+    getUserId,
+    isGetUser,
+    isAnnouncements,
+    setIsAnnouncements 
     }}>
       {children}
     </UserContext.Provider>
