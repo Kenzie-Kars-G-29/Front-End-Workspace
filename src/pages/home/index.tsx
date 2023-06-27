@@ -22,7 +22,7 @@ interface AnnouncementInfo {
   price: string;
   fipeTablePrice: string;
   isPublic: boolean;
-  images: {
+  image: {
     id: string;
     coverImage: string;
     firstImage: string | null;
@@ -41,7 +41,7 @@ interface AnnouncementInfo {
 const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
   const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true)
 
     const listAnnouncements = async () => {
     try {
@@ -50,6 +50,8 @@ const Home = () => {
       const announData = response.data;
 
       setIsDataAnnoun(announData);
+      setIsLoading(false)
+  
     } catch (error) {
       console.log(error);
     }
@@ -72,11 +74,15 @@ const Home = () => {
         </div>
 
         <section>
-          <AsideDesktop />
-          <ul>
-            {!isDataAnnoun.length ? <h3>A plataforma ainda não possui nenhum anuncio disponível</h3>: 
-            isDataAnnoun.map(announcement => (<CardAd announcement={announcement}/>))}
-          </ul>
+        <AsideDesktop />
+          {isLoading? <h1>Carregando</h1>: 
+          <>
+            <ul>
+              {!isDataAnnoun.length ? <h3>A plataforma ainda não possui nenhum anuncio disponível</h3>: 
+              isDataAnnoun.map(announcement =>  { return <CardAd announcement={announcement}/>})}
+            </ul>
+          </>}
+          
         </section>
         <div>
           <Button variant="brand" onClick={() => setShowAside(true)}>

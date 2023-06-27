@@ -5,14 +5,6 @@ import {StyledProfileView, Background} from './style';
 import UserAdsSection from '../../components/UserAdsSection';
 
 
-const dummyAds = [
-  { id: 1, title: 'Anúncio 1' },
-  { id: 2, title: 'Anúncio 2' },
-  { id: 3, title: 'Anúncio 3' },
-  { id: 4, title: 'Anúncio 4' },
-  { id: 5, title: 'Anúncio 5' },
-];
-
 
 const ProfileViewUser = () => {
   return (
@@ -21,7 +13,7 @@ const ProfileViewUser = () => {
       <Background />
       <StyledProfileView>
         <UserOverview />
-        <UserAdsSection ads={dummyAds} />
+        <UserAdsSection />
       </StyledProfileView>
       <Footer/>
     </>

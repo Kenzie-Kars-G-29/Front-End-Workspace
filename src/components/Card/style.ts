@@ -19,6 +19,10 @@ const StyledCard = styled.li`
     margin-bottom: 1rem;
 }
 
+.divImgCar > img {
+    width: 80%;
+}
+
 .goodAnnoun {
     background: green;
     color: white;
@@ -100,6 +104,19 @@ const StyledCard = styled.li`
     color: var(--color-brand1);
     padding: 0.313rem;
 }
+
+.divBtns {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btnDetails {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
 `
 
 export default StyledCard
