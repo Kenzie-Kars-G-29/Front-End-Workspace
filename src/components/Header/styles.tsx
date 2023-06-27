@@ -71,6 +71,11 @@ const HeaderStyled = styled.header`
     display: flex;
   }
 
+  .logout {
+    width: 40px;
+    height: 40px;
+  }
+
   @media (min-width: 769px) {
     .divContainer {
       display: flex;
