@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import FormCreateAnnouncement from "../FormCreateAnnouncement";
-import Modal from "../modal";
-import StyledUserOverview from "./style";
 import FormProfileConfig from "../FormProfileConfig";
 import FormAddressUpdate from "../FormAddressUpdate";
+import StyledUserOverview from "./style";
+import Modal from "../modal";
+import { UserContext } from "../../contexts/User";
 
 const UserOverview = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  
+  const {infosUserLogged, isUserInfo} = useContext(UserContext)
+  
   const [isOpenFormCreateAnnouncement, setIsOpenFormCreateAnnouncement] =
     useState<boolean>(false);
   const [isOpenFormProfileConfig, setIsOpenFormProfileConfig] =
@@ -24,6 +29,12 @@ const UserOverview = () => {
 
   const handleOpenFormAddressUpdate = () => setIsOpenFormAddressUpdate(true);
   const handleCloseFormAddressUpdate = () => setIsOpenFormAddressUpdate(false);
+
+  
+  useEffect(() => {
+    infosUserLogged();
+    setIsLoading(false)
+  }, [infosUserLogged]);
 
   return (
     <>
@@ -52,19 +63,17 @@ const UserOverview = () => {
       </Modal>
 
       <StyledUserOverview>
-        <div className="user-image" />
-        <div className="user-info">
-          <h2>
-            Nome do Usuário
-            <span>Anunciante</span>
-          </h2>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s
-          </p>
-
-          <div className="buttonContainer">
+        {isLoading? <h1>Carregando</h1> : <>
+          <div className="user-image" />
+          <div className="user-info">
+            <h2>
+              {isUserInfo?.name}
+              <span>Anunciante</span>
+            </h2>
+            <p>
+              {isUserInfo?.description}
+            </p>
+             <div className="buttonContainer">
             <Button
               variant="brand"
               onClick={() => handleOpenFormCreateAnnouncement()}
@@ -86,7 +95,8 @@ const UserOverview = () => {
               Editar endereço
             </Button>
           </div>
-        </div>
+          </div>
+        </>}
       </StyledUserOverview>
     </>
   );

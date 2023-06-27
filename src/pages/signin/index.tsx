@@ -26,7 +26,7 @@ type ApiResponse = {
 const Signin = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | null>(null);
-   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   
@@ -39,7 +39,9 @@ const Signin = () => {
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
     try {
       const response = await api.post<ApiResponse>("/login", data);
+      const { token } = response.data
       localStorage.setItem("token", response.data.token);
+      api.defaults.headers.common.Authorization = `Bearer ${token}`
       navigate("/");
     } catch (error) {
       setServerError("Erro no servidor!");

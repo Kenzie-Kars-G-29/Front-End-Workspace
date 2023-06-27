@@ -1,7 +1,11 @@
+import { useState } from "react"
 import StyledCard from "./style"
-import Carro from "../../assets/car.png"
+import { ModalEditAnnoun } from "../ModalEditAnnoun"
+import api from "../../services/api"
+
 
 interface cardProps {
+  isSeller?: boolean,
     announcement: {
         id: string,
         description: string,
@@ -14,7 +18,7 @@ interface cardProps {
         price: string,
         fipeTablePrice: string,
         isPublic: boolean,
-        images: {
+        image: {
           id: string,
           coverImage: string,
           firstImage: string | null,
@@ -31,8 +35,26 @@ interface cardProps {
     }
 }
 
-export const CardAd = ({announcement}: cardProps) => {
+export interface InfoAnnoun {
+  id: string,
+	description: string,
+	brand: string,
+	model: string,
+	color: string,
+	year: string,
+	fuel: string,
+	km: string,
+	price: string,
+	fipeTablePrice: string,
+	isPublic: boolean
+}
 
+export const CardAd = ({announcement, isSeller}: cardProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isInfoAnnoun, setIsInfoAnnoun] = useState<InfoAnnoun | null>(null)
+  
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  
     const isGoodAnnouncement = (value1: string, value2: string) => {
         const difference = Math.abs(Number(value1) - Number(value2));
         const fivePerCent = 0.05 * Math.max(Number(value1), Number(value2));
@@ -44,22 +66,37 @@ export const CardAd = ({announcement}: cardProps) => {
         }
       }
 
-    
+      const infoAnnoun = async (id: any) => {
+        try {
+          const response = await api.get(`/announcement/${id}`)
+            setIsInfoAnnoun(response.data)
+            console.log(response.data)
+            
+        } catch (error) {
+          console.log(error)
+          
+        }
+      }
+
+      const handleClick = (id: any) => {
+        toggleModal();
+        infoAnnoun(id);
+      };
+
     return (
         <StyledCard key={announcement.id} id={announcement.id}>
             <div className="infoCar">
                 <div className="divImgCar">
-                    <img src={Carro} alt="Image Not Found"/>
+                    <img src={announcement.image.coverImage} alt="Image Not Found"/>
                     {isGoodAnnouncement(announcement.price, announcement.fipeTablePrice)}
                 </div>
                     <h2>{announcement.brand} - {announcement.model}</h2>
                     <p>{announcement.description}</p>
                 </div>
 
-        
                 <div className="infoUser">
                     <span>SL</span>
-                    <p>{announcement.user.name}</p>
+                    <p>{announcement.user?.name}</p>
                 </div>
                 
                 <div className="infoCar2">
@@ -69,6 +106,15 @@ export const CardAd = ({announcement}: cardProps) => {
                 </div>
                 <p>R$ {announcement.price}</p>
                 </div>
+                
+                {isSeller? <div className="divBtns">
+                  <button className="btnDetails" onClick={() =>
+                    handleClick(announcement.id)
+                  }>Editar</button> 
+                  <button className="btnDetails">Ver Detalhes</button>
+                </div> : <></>}
+
+                {isModalOpen && (<ModalEditAnnoun toggleModal={toggleModal} isInfoAnnoun={isInfoAnnoun} />)}
         </StyledCard>
     )
 }
