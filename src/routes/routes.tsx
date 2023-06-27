@@ -17,6 +17,7 @@ const RoutesMain = () => {
       <Route path="/ProfileViewAdmin" element={<ProfileViewAdmin/>} />
       <Route path="/ProfileViewUser" element={<ProfileViewUser/>} />
       <Route path="/forget-password/:token" element={<ForgetPassword/>}/>
+
     </Routes>
   );
 };
