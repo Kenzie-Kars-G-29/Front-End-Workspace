@@ -4,14 +4,18 @@ import UserOverview from "../../components/UserOverview";
 import { StyledProfileView, Background } from "./style";
 import UserAdsSection from "../../components/UserAdsSection";
 import { UserContext } from "../../contexts/User";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const ProfileViewUser = () => {
-  const isUserInfo = useContext(UserContext);
+  const { infosUserLogged, isUserInfo } = useContext(UserContext);
+
+  useEffect(() => {
+    infosUserLogged();
+  }, []);
 
   return (
     <>
-      <Header key={"teste"} isUserInfo={isUserInfo} />
+      <Header isUserInfo={isUserInfo} />
       <Background />
       <StyledProfileView>
         <UserOverview />

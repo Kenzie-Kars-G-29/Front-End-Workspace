@@ -98,6 +98,7 @@ const HeaderStyled = styled.header`
     .menuButtons {
       flex-direction: row;
       align-items: center;
+      width: 0%;
     }
 
     .menuIcon {

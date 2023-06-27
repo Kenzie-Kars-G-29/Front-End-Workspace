@@ -22,19 +22,6 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      const isDesktop = window.matchMedia("(min-width: 769px)").matches;
-      setIsMenuOpen(isDesktop);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/signin");
@@ -49,13 +36,9 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
         </div>
         <div className={`menuWrapper ${isMenuOpen ? "show" : ""}`}>
           <div className="menuButtons">
-            {isUserInfo !== undefined &&
-            isUserInfo.isUserInfo &&
-            isUserInfo.isUserInfo.name ? (
+            {isUserInfo ? (
               <>
-                <span key={isUserInfo.isUserInfo.id} className="username">
-                  {isUserInfo.isUserInfo.name}
-                </span>
+                <span className="username">{isUserInfo.name}</span>
                 <button className="buttonLogout" onClick={handleLogout}>
                   <img className="logout" src={logout} alt="Menu" />
                 </button>
