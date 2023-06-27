@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import FormCreateAnnouncement from "../FormCreateAnnouncement";
-import Modal from "../Modal";
+import Modal from "../modal";
 import StyledUserOverview from "./style";
 
 const UserOverview = () => {
@@ -13,9 +13,7 @@ const UserOverview = () => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={handleClose} title="Criar anuncio">
-        <FormCreateAnnouncement
-          onClose={handleClose}
-        />
+        <FormCreateAnnouncement onClose={handleClose} />
       </Modal>
       <StyledUserOverview>
         <div className="user-image" />
@@ -29,7 +27,7 @@ const UserOverview = () => {
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s
           </p>
-          
+
           <Button variant="brand" onClick={() => handleOpen()}>
             Criar anuncio
           </Button>

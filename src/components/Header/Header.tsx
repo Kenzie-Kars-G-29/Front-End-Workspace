@@ -16,6 +16,7 @@ export const Header = () => {
   };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -33,6 +34,11 @@ export const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleLogin = () => {
+    const loggedInUserName = "Nome da Pessoa Logada"; // Obtenha o nome da pessoa logada do backend
+    setLoggedInUser(loggedInUserName);
+  };
 
   return (
     <HeaderStyled>
