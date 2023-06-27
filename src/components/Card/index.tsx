@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import StyledCard from "./style"
 import { ModalEditAnnoun } from "../ModalEditAnnoun"
 import api from "../../services/api"
+import { UserContext } from "../../contexts/User"
 
 
 interface cardProps {
@@ -52,6 +53,7 @@ export interface InfoAnnoun {
 export const CardAd = ({announcement, isSeller}: cardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isInfoAnnoun, setIsInfoAnnoun] = useState<InfoAnnoun | null>(null)
+  const {isUserInfo} = useContext(UserContext)
   
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   
@@ -83,6 +85,10 @@ export const CardAd = ({announcement, isSeller}: cardProps) => {
         infoAnnoun(id);
       };
 
+      
+    const firstLetter = isUserInfo?.name.charAt(0);
+    const firstLetter2 = announcement.user?.name.charAt(0)
+
     return (
         <StyledCard key={announcement.id} id={announcement.id}>
             <div className="infoCar">
@@ -95,8 +101,8 @@ export const CardAd = ({announcement, isSeller}: cardProps) => {
                 </div>
 
                 <div className="infoUser">
-                    <span>SL</span>
-                    <p>{announcement.user?.name}</p>
+                    <span>{firstLetter ? firstLetter : firstLetter2}</span>
+                    <p>{announcement.user?.name ? announcement.user.name : isUserInfo?.name}</p>
                 </div>
                 
                 <div className="infoCar2">
