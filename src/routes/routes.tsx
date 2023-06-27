@@ -3,8 +3,9 @@ import ProductDetailsPage from "../pages/ProductDetails";
 import Home from "../pages/home";
 import Signin from "../pages/signin";
 import Register from "../pages/register";
-import ProfileViewUser from "../pages/ProfileViewUser";
+import ProfileViewAdmin from "../pages/ProfileViewAdmin";
 import ForgetPassword from "../pages/resetPassword";
+import ProfileViewUser from "../pages/ProfileViewUser";
 
 const RoutesMain = () => {
   return (
@@ -12,9 +13,11 @@ const RoutesMain = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/" element={<Home />} />
       <Route path="/announcement" element={<ProductDetailsPage />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/ProfileViewUser" element={<ProfileViewUser />} />
-      <Route path="/forget-password/:token" element={<ForgetPassword />} />
+      <Route path="/signin" element={<Signin/>} />
+      <Route path="/ProfileViewAdmin" element={<ProfileViewAdmin/>} />
+      <Route path="/ProfileViewUser" element={<ProfileViewUser/>} />
+      <Route path="/forget-password/:token" element={<ForgetPassword/>}/>
+
     </Routes>
   );
 };
