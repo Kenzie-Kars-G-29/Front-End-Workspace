@@ -3,6 +3,7 @@ import StyledCard from "./style"
 import { ModalEditAnnoun } from "../ModalEditAnnoun"
 import api from "../../services/api"
 import { UserContext } from "../../contexts/User"
+import { useNavigate } from "react-router"
 
 
 interface cardProps {
@@ -54,6 +55,7 @@ export const CardAd = ({announcement, isSeller}: cardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isInfoAnnoun, setIsInfoAnnoun] = useState<InfoAnnoun | null>(null)
   const {isUserInfo} = useContext(UserContext)
+  const navigate = useNavigate()
   
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   
@@ -96,13 +98,13 @@ export const CardAd = ({announcement, isSeller}: cardProps) => {
                     <img src={announcement.image.coverImage} alt="Image Not Found"/>
                     {isGoodAnnouncement(announcement.price, announcement.fipeTablePrice)}
                 </div>
-                    <h2>{announcement.brand} - {announcement.model}</h2>
+                    <h2 onClick={() => navigate(`/announcement/${announcement.id}`)}>{announcement.brand} - {announcement.model}</h2>
                     <p>{announcement.description}</p>
                 </div>
 
                 <div className="infoUser">
                     <span>{firstLetter ? firstLetter : firstLetter2}</span>
-                    <p>{announcement.user?.name ? announcement.user.name : isUserInfo?.name}</p>
+                    <p onClick={() => navigate(`/announcement/${announcement.id}`)}>{announcement.user?.name ? announcement.user.name : isUserInfo?.name}</p>
                 </div>
                 
                 <div className="infoCar2">
@@ -117,7 +119,7 @@ export const CardAd = ({announcement, isSeller}: cardProps) => {
                   <button className="btnDetails" onClick={() =>
                     handleClick(announcement.id)
                   }>Editar</button> 
-                  <button className="btnDetails">Ver Detalhes</button>
+                  <button onClick={() => navigate(`/announcement/${announcement.id}`)} className="btnDetails">Ver Detalhes</button>
                 </div> : <></>}
 
                 {isModalOpen && (<ModalEditAnnoun toggleModal={toggleModal} isInfoAnnoun={isInfoAnnoun} />)}
