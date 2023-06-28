@@ -63,10 +63,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
     try {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await api.get(`/users/${id}`);
-
-      console.log(response);
-
       const userData = response.data;
+      
       setIsGetUser(userData);
       setIsAnnouncements(userData.announcement);
       setIsLoading(false);
