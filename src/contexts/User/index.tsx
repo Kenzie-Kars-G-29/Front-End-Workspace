@@ -1,7 +1,6 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import api from "../../services/api";
 import { AnnouncementInfo, InfoUser, InfoUserLogged } from "./interfaces";
-import { useNavigate } from "react-router";
 
 interface UserContextProps {
   infosUserLogged: () => void;

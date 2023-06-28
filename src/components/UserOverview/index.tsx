@@ -9,7 +9,6 @@ import { UserContext } from "../../contexts/User";
 
 const UserOverview = () => {
   const [isLoading, setIsLoading] = useState(true);
-
   const { infosUserLogged, isUserInfo } = useContext(UserContext);
 
   const [isOpenFormCreateAnnouncement, setIsOpenFormCreateAnnouncement] =

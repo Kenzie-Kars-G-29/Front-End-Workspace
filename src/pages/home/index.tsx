@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import AsideDesktop from "../../components/Asides/AsideDesktop";
 import api from "../../services/api";
 import { CardAd } from "../../components/Card";
-
+import { UserContext } from "../../contexts/User";
 
 interface AnnouncementInfo {
   id: string;
@@ -41,17 +41,21 @@ interface AnnouncementInfo {
 const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
   const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const { infosUserLogged, isUserInfo } = useContext(UserContext);
 
-    const listAnnouncements = async () => {
+  useEffect(() => {
+    infosUserLogged();
+  }, []);
+
+  const listAnnouncements = async () => {
     try {
       const response = await api.get("/announcement");
 
       const announData = response.data;
 
       setIsDataAnnoun(announData);
-      setIsLoading(false)
-  
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -61,10 +65,9 @@ const Home = () => {
     listAnnouncements();
   }, []);
 
-
   return (
     <>
-      <Header />
+      <Header isUserInfo={isUserInfo} />
       <StyledHome>
         {showAside && <AsideMobile />}
 
@@ -74,15 +77,24 @@ const Home = () => {
         </div>
 
         <section>
-        <AsideDesktop />
-          {isLoading? <h1>Carregando</h1>: 
-          <>
-            <ul>
-              {!isDataAnnoun.length ? <h3>A plataforma ainda não possui nenhum anuncio disponível</h3>: 
-              isDataAnnoun.map(announcement =>  { return <CardAd announcement={announcement}/>})}
-            </ul>
-          </>}
-          
+          <AsideDesktop />
+          {isLoading ? (
+            <h1>Carregando</h1>
+          ) : (
+            <>
+              <ul>
+                {!isDataAnnoun.length ? (
+                  <h3>
+                    A plataforma ainda não possui nenhum anuncio disponível
+                  </h3>
+                ) : (
+                  isDataAnnoun.map((announcement) => {
+                    return <CardAd announcement={announcement} />;
+                  })
+                )}
+              </ul>
+            </>
+          )}
         </section>
         <div>
           <Button variant="brand" onClick={() => setShowAside(true)}>
