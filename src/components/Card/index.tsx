@@ -48,7 +48,21 @@ export interface InfoAnnoun {
 	km: string,
 	price: string,
 	fipeTablePrice: string,
-	isPublic: boolean
+	isPublic: boolean,
+  image?: {
+    id: string,
+    coverImage?: string,
+    firstImage?: string | null,
+    secondImage?: string | null,
+    thirdImage?: string | null,
+    fourthImage?: string | null,
+    fifthImage?: string | null,
+    sixthImage?: string | null
+  },
+  user: {
+    id: string,
+    name: string
+  }
 }
 
 export const CardAd = ({announcement, isSeller}: cardProps) => {
