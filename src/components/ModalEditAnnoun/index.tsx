@@ -10,6 +10,7 @@ import Input from "../Input";
 import { SellerContext } from "../../contexts/Seller";
 import { iCar } from "../../contexts/Seller/interfaces";
 import { InfoAnnoun } from "../Card";
+import ModalDeleteAnnoun from "../../components/ModalDeleteAnnoun"
 
 interface ModalProps {
     toggleModal: () => void,
@@ -18,7 +19,8 @@ interface ModalProps {
 
 
 export const ModalEditAnnoun = ({ toggleModal, isInfoAnnoun }: ModalProps) => {
-    const { setBrand, cars } = useContext(SellerContext);
+  const [isModalOpen, setIsModalOpen] = useState(false)  
+  const { setBrand, cars } = useContext(SellerContext);
     const [inputImageThird, setInputImageThird] = useState(false);
     const [inputImageFourth, setInputImageFourth] = useState(false);
     const [inputImageFifth, setInputImageFifth] = useState(false);
@@ -28,6 +30,8 @@ export const ModalEditAnnoun = ({ toggleModal, isInfoAnnoun }: ModalProps) => {
     const { register, handleSubmit, reset, setValue} = useForm({
         // resolver: zodResolver(resetPassSchema)
     })
+
+    const toggleModalDelete = () => setIsModalOpen(!isModalOpen);
 
     const handleInputImages = () => {
         if (!inputImageThird) {
@@ -84,11 +88,9 @@ export const ModalEditAnnoun = ({ toggleModal, isInfoAnnoun }: ModalProps) => {
         <StyledFormEditAnnouncement>
             <h3>Infomações do veículo</h3>
             
-            
-    
 
             <div className="buttonContainer">
-            <Button variant="gray" type="button">
+            <Button variant="gray" type="button" onClick={toggleModalDelete}>
                 Excluir Anuncio
             </Button>
             <Button variant="blue" type="submit">
@@ -99,6 +101,7 @@ export const ModalEditAnnoun = ({ toggleModal, isInfoAnnoun }: ModalProps) => {
       
         </form>
       </ModalContent>
+      {isModalOpen && (<ModalDeleteAnnoun toggleModal={toggleModal} isInfoAnnoun={isInfoAnnoun}/>)}
     </ModalWrapper>
   );
 };

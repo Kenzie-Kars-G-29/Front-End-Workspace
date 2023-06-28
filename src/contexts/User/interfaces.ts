@@ -13,7 +13,25 @@ interface InfoUserLogged {
     number: string,
     complement: string,
     isSeller: boolean,
-    announcement: [] 
+    announcement: AnnouncementInfo[]
+  }
+
+  interface InfoUser {
+    id: string,
+    name: string,
+    email: string,
+    cpf: string,
+    phone: string,
+    birthday: string,
+    description: string,
+    cep: string,
+    state: string,
+    city: string,
+    street: string,
+    number: string,
+    complement: string,
+    isSeller: boolean,
+    announcement: AnnouncementInfo[]
   }
 
   interface AnnouncementInfo {
@@ -47,5 +65,6 @@ interface InfoUserLogged {
 
 export {
 InfoUserLogged,
-AnnouncementInfo
+AnnouncementInfo,
+InfoUser
 }
