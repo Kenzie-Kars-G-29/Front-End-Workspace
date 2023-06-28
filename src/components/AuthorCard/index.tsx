@@ -1,6 +1,7 @@
 import React from 'react';
 import StyledAuthorCard from './style';
 import Button from '../Button/Button';
+import { useNavigate } from 'react-router';
 
 interface Author {
   name: string;
@@ -12,6 +13,8 @@ interface AuthorCardProps {
 }
 
 const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
+  const navigate = useNavigate()
+
   return (
     <StyledAuthorCard>
       <div className="author-image">
@@ -24,7 +27,7 @@ const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
         <p>{author.bio}</p>
       </div>
       <div className="author-button">
-        <Button variant="black">Ver todos os anúncios</Button>
+        <Button variant="black" onClick={() => navigate("/ProfileViewUser")}>Ver todos os anúncios</Button>
       </div>
     </StyledAuthorCard>
   );
