@@ -21,6 +21,7 @@ const StyledInput = styled.div<iStyledInputProps>`
   }
 
   input {
+    outline: transparent solid 2px;
     width: 100%;
     height: 3rem;
     border-radius: 0.25rem;
@@ -28,8 +29,12 @@ const StyledInput = styled.div<iStyledInputProps>`
     padding: 0rem 1rem;
     background-color: var(--color-brand4);
   }
+  input:focus {
+    outline-color: var(--color-brand2);
+  }
 
   select {
+    outline: transparent solid 2px;
     position: relative;
     display: flex;
     width: 100%;
@@ -39,6 +44,9 @@ const StyledInput = styled.div<iStyledInputProps>`
     overflow: hidden;
     border: 0.125rem solid;
     border-radius: 0.25em;
+  }
+  select:focus {
+    outline-color: var(--color-brand2);
   }
 
   ${({ type }) => {

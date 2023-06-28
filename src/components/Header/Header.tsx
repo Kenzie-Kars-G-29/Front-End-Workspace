@@ -30,7 +30,7 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
   return (
     <HeaderStyled>
       <div className="divContainer">
-        <img className="logo" alt="" src={logo} />
+        <img className="logo" alt="" src={logo} onClick={() => navigate("/")}/>
         <div className="menuIcon" onClick={toggleMenu}>
           <img src={bars} alt="Menu" />
         </div>
@@ -95,7 +95,7 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
   return (
     <HeaderStyled>
       <div className="divContainer">
-        <img className="logo" alt="" src={logo} />
+        <img className="logo" alt="" src={logo} onClick={() => navigate("/")} />
         <div className="menuIcon" onClick={toggleMenu}>
           <img src={bars} alt="Menu" />
         </div>

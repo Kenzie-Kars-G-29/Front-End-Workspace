@@ -54,6 +54,13 @@ const StyledUserOverview = styled.div`
       line-height: 1.75rem;
     }
 
+    .buttonContainer{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
     @media (max-width: 411px) {
       h2 {
         font-size: 1rem;
