@@ -127,6 +127,7 @@ const HeaderStyled = styled.header`
     .menuWrapper button {
       margin: 10px;
     }
+
     .menuButtons {
       align-items: center;
       width: 100%;
