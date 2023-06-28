@@ -8,6 +8,10 @@ const HeaderStyled = styled.header`
   display: flex;
   justify-content: center;
 
+  .username{
+    cursor: pointer;
+  }
+
   .divContainer {
     position: relative;
     display: flex;
@@ -22,6 +26,7 @@ const HeaderStyled = styled.header`
   .logo {
     margin-top: 10px;
     display: block;
+    cursor: pointer;
   }
 
   .menuIcon {

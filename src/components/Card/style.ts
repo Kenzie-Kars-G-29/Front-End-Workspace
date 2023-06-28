@@ -40,6 +40,7 @@ const StyledCard = styled.li`
     font-weight: 600;
     color: var(--color-grey1);
     margin-bottom: 1rem;
+    cursor: pointer;
 }
 
 .infoCar > p {
@@ -71,6 +72,7 @@ const StyledCard = styled.li`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .infoCar2 {
