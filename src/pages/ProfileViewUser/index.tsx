@@ -12,8 +12,18 @@ import { UserContext } from "../../contexts/User";
 import { CardAd } from "../../components/Card";
 
 const ProfileViewUser = () => {
-  const { isUserInfo, getUserId, isGetUser, isAnnouncements, isLoading } =
-    useContext(UserContext);
+  const {
+    isUserInfo,
+    infosUserLogged,
+    getUserId,
+    isGetUser,
+    isAnnouncements,
+    isLoading,
+  } = useContext(UserContext);
+
+  useEffect(() => {
+    infosUserLogged();
+  });
 
   useEffect(() => {
     const userId = "e56571b1-0265-4a3a-a4d6-a08c02b0c760";
