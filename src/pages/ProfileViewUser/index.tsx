@@ -14,11 +14,16 @@ import { CardAd } from "../../components/Card";
 const ProfileViewUser = () => {
   const {
     isUserInfo,
+    infosUserLogged,
     getUserId,
     isGetUser,
     isAnnouncements,
     isLoading,
   } = useContext(UserContext);
+
+  useEffect(() => {
+    infosUserLogged();
+  });
 
   useEffect(() => {
     const userId = "e56571b1-0265-4a3a-a4d6-a08c02b0c760";
@@ -31,36 +36,47 @@ const ProfileViewUser = () => {
       <Background />
       <StyledProfileView>
         <StyledUserOverview>
-       {isLoading? <h2>Carregando</h2>: <>
-          <div className="user-image" />
-            <div className="user-info">
-                  <h2>
-                    {isGetUser?.name}
-                    <span>Anunciante</span>
-                  </h2>
-                  
-                  <p>{isGetUser?.description}</p>
-                </div>
-            </>}
+          {isLoading ? (
+            <h2>Carregando</h2>
+          ) : (
+            <>
+              <div className="user-image" />
+              <div className="user-info">
+                <h2>
+                  {isGetUser?.name}
+                  <span>Anunciante</span>
+                </h2>
+
+                <p>{isGetUser?.description}</p>
+              </div>
+            </>
+          )}
         </StyledUserOverview>
 
         <div>
           <MainContainer>
             <AdsTitle>Anúncios</AdsTitle>
             <AdsContainer>
-              {isLoading ? <h2>Carregando</h2>: <>
-              
-              {!isAnnouncements.length ? (
-                <h3>Este usuário ainda não possui nenhum anuncio disponível</h3>
+              {isLoading ? (
+                <h2>Carregando</h2>
               ) : (
-                isAnnouncements.map((announcement) => {
-                  return (
-                    <CardAd key={announcement.id} announcement={announcement} />
-                  );
-                })
+                <>
+                  {!isAnnouncements.length ? (
+                    <h3>
+                      Este usuário ainda não possui nenhum anuncio disponível
+                    </h3>
+                  ) : (
+                    isAnnouncements.map((announcement) => {
+                      return (
+                        <CardAd
+                          key={announcement.id}
+                          announcement={announcement}
+                        />
+                      );
+                    })
+                  )}
+                </>
               )}
-              
-              </>}
             </AdsContainer>
           </MainContainer>
         </div>

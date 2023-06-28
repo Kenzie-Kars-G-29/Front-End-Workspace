@@ -26,23 +26,33 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
     localStorage.removeItem("token");
     navigate("/signin");
   };
+  const getInitials = (name: string) => {
+    const names = name.split(" ");
+    return names
+      .map((name) => name.charAt(0))
+      .join("")
+      .toUpperCase();
+  };
 
   return (
     <HeaderStyled>
       <div className="divContainer">
-        <img className="logo" alt="" src={logo} onClick={() => navigate("/")}/>
+        <img className="logo" alt="" src={logo} />
         <div className="menuIcon" onClick={toggleMenu}>
           <img src={bars} alt="Menu" />
         </div>
         <div className={`menuWrapper ${isMenuOpen ? "show" : ""}`}>
           <div className="menuButtons">
             {isUserInfo ? (
-              <>
-                <span className="username" onClick={() => navigate("/ProfileViewAdmin")}>{isUserInfo.name}</span>
+              <div className="userContainer">
+                <span className="initialsCircle">
+                  {getInitials(isUserInfo.name)}
+                </span>
+                <span className="username">{isUserInfo.name}</span>
                 <button className="buttonLogout" onClick={handleLogout}>
                   <img className="logout" src={logout} alt="Menu" />
                 </button>
-              </>
+              </div>
             ) : (
               <>
                 <button className="buttonLogin" onClick={navigateLogin}>
