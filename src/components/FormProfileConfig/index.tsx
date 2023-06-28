@@ -39,14 +39,11 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
         },
       });
 
-      //Fechar o modal e exibir toast de sucesso!
-      console.log(response);
       if (response.status == 200) {
         onClose();
         toast.success("Perfil atualizado!");
       }
     } catch (error) {
-      //Mostra toast com mensagem de erro
       console.log(error);
       toast.error("Deu ruim!");
     }
@@ -65,8 +62,6 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
         },
       });
 
-      //Fechar o modal, limpar o localStorage e redirecionar para home
-      console.log(response);
       if (response.status == 204) {
         onClose();
         localStorage.clear()

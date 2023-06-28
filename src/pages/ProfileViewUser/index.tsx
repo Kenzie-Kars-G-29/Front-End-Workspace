@@ -25,7 +25,7 @@ const ProfileViewUser = () => {
   const { infosUserLogged, isUserInfo } = useContext(UserContext);
 
   useEffect(() => {
-    const userId = "e56571b1-0265-4a3a-a4d6-a08c02b0c760";
+    const userId = "c0d1f6a9-4271-4a03-895c-e2a1eba0c882";
     getUserId(userId);
   }, []);
 

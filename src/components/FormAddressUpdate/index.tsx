@@ -49,7 +49,6 @@ const FormAddressUpdate = ({ onClose }: iFormAddressUpdateProps) => {
   };
 
   const submit: SubmitHandler<tAddressUpdate> = (formData) => {
-    console.log(formData);
     updateUser(formData);
   };
 
