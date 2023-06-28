@@ -38,7 +38,7 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
           <div className="menuButtons">
             {isUserInfo ? (
               <>
-                <span className="username">{isUserInfo.name}</span>
+                <span className="username" onClick={() => navigate("/ProfileViewAdmin")}>{isUserInfo.name}</span>
                 <button className="buttonLogout" onClick={handleLogout}>
                   <img className="logout" src={logout} alt="Menu" />
                 </button>

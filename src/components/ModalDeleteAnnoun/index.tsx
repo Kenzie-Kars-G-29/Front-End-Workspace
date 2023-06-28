@@ -32,10 +32,8 @@ const ModalDeleteAnnoun = ({toggleModal, isInfoAnnoun}: ModalProps) => {
     const {handleSubmit} = useForm({})
     
     const submit = () => {
-
         deleteAnnoun(isInfoAnnoun?.id)
         toggleModal()
-    
       }
     
     return (
@@ -45,14 +43,14 @@ const ModalDeleteAnnoun = ({toggleModal, isInfoAnnoun}: ModalProps) => {
                 <h3>Excluir Anuncio</h3>
                 <button onClick={() => toggleModal()}>X</button>
             </div>
-                <FormDeleteAnnounStyled onClick={handleSubmit(submit)}>
+                <FormDeleteAnnounStyled onSubmit={handleSubmit(submit)}>
                     <h2>Tem certeza que deseja remover este anúncio?</h2>
                     <h3>
                     Essa ação não pode ser desfeita. Isso excluirá permanentemente sua conta e removerá seus dados de nossos servidores.
                     </h3>
                     <div className="divBtn">
-                        <Button onClick={toggleModal} variant="gray">Cancelar</Button>
-                        <Button className="btnDelete">Sim, excluir anúncio</Button>
+                        <Button type="button" variant="gray" onClick={toggleModal}>Cancelar</Button>
+                        <Button type="submit" className="btnDelete">Sim, excluir anúncio</Button>
                     </div>
                 </FormDeleteAnnounStyled>
             </ModalContent>
