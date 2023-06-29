@@ -19,11 +19,28 @@ const StyledCard = styled.li`
     margin-bottom: 1rem;
 }
 
+.divImgCar > img {
+    width: 80%;
+}
+
+.goodAnnoun {
+    background: green;
+    color: white;
+    width: max-content;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.badAnnoun {
+    display: none;
+}
+
 .infoCar > h2 {
     font-size: var(--font-heading-7);
     font-weight: 600;
     color: var(--color-grey1);
     margin-bottom: 1rem;
+    cursor: pointer;
 }
 
 .infoCar > p {
@@ -55,6 +72,7 @@ const StyledCard = styled.li`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .infoCar2 {
@@ -74,18 +92,33 @@ const StyledCard = styled.li`
 }
 
 .infoCar2 > div > span {
-    width: 3.188rem;
+    width: max-content;
     height: 2rem;
     font-size: 0.875rem;
     display: flex;
     flex-direction: row;
+    -webkit-box-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
     align-items: center;
     border-radius: 0.25rem;
-    padding: 0.25rem, 0.5rem, 0.25rem, 0.5rem;
     background-color: var(--color-brand4);
     color: var(--color-brand1);
+    padding: 0.313rem;
 }
+
+.divBtns {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btnDetails {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
 `
 
 export default StyledCard

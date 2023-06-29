@@ -8,6 +8,10 @@ const HeaderStyled = styled.header`
   display: flex;
   justify-content: center;
 
+  .username {
+    cursor: pointer;
+  }
+
   .divContainer {
     position: relative;
     display: flex;
@@ -22,6 +26,7 @@ const HeaderStyled = styled.header`
   .logo {
     margin-top: 10px;
     display: block;
+    cursor: pointer;
   }
 
   .menuIcon {
@@ -71,6 +76,38 @@ const HeaderStyled = styled.header`
     display: flex;
   }
 
+  .logout {
+    width: 40px;
+    height: 40px;
+  }
+  .userContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .initialsCircle {
+    width: 40px;
+    height: 40px;
+    background-color: blue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    color: white;
+  }
+
+  .username {
+    margin-right: 10px;
+  }
+
+  .buttonLogout {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
   @media (min-width: 769px) {
     .divContainer {
       display: flex;
@@ -90,9 +127,10 @@ const HeaderStyled = styled.header`
     .menuWrapper button {
       margin: 10px;
     }
+
     .menuButtons {
-      flex-direction: row;
       align-items: center;
+      width: 100%;
     }
 
     .menuIcon {

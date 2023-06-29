@@ -3,11 +3,12 @@ import styled, { css } from "styled-components";
 interface iStyledInputProps {
   bgColor: boolean;
   border: boolean;
+  size: "largue" | "normal" | "small";
+  type?: "text" | "email" | "password" | "select" | "number" | string;
 }
 
 const StyledInput = styled.div<iStyledInputProps>`
   width: 100%;
-  max-width: 19.6875rem;
   height: 4.6875rem;
   display: flex;
   flex-direction: column;
@@ -18,7 +19,9 @@ const StyledInput = styled.div<iStyledInputProps>`
     font-weight: var(--font-weight-500);
     color: var(--color-grey0);
   }
+
   input {
+    outline: transparent solid 2px;
     width: 100%;
     height: 3rem;
     border-radius: 0.25rem;
@@ -26,12 +29,44 @@ const StyledInput = styled.div<iStyledInputProps>`
     padding: 0rem 1rem;
     background-color: var(--color-brand4);
   }
+  input:focus {
+    outline-color: var(--color-brand2);
+  }
+
+  select {
+    outline: transparent solid 2px;
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 3rem;
+    line-height: 3;
+    background-color: var(--color-brand4);
+    overflow: hidden;
+    border: 0.125rem solid;
+    border-radius: 0.25em;
+  }
+  select:focus {
+    outline-color: var(--color-brand2);
+  }
+
+  ${({ type }) => {
+    switch (type) {
+      case "textarea":
+        return css`
+          height: 6.5625rem;
+          input[type="textarea"] {
+            height: 5rem;
+          }
+        `;
+    }
+  }}
 
   ${({ bgColor }) => {
     switch (bgColor) {
       case true:
         return css`
-          input {
+          input,
+          select {
             background-color: var(--color-grey7);
           }
         `;
@@ -42,8 +77,32 @@ const StyledInput = styled.div<iStyledInputProps>`
     switch (border) {
       case true:
         return css`
-          input {
+          input,
+          select {
             border-color: var(--color-grey5);
+          }
+        `;
+    }
+  }}
+
+  ${({ size }) => {
+    switch (size) {
+      case "largue":
+        return css`
+          input {
+            max-width: 29.125rem;
+          }
+        `;
+      case "small":
+        return css`
+          input {
+            max-width: 14.125rem;
+          }
+        `;
+      default:
+        return css`
+          input {
+            max-width: 19.6875rem;
           }
         `;
     }
