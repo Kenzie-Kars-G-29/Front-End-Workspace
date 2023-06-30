@@ -128,57 +128,5 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
     </StyledCommentsCard>
   );
 };
-/* const CommentsCard: React.FC<CommentsCardProps> = ({
-  comments,
-  announcementId,
-}) => {
-  const [fetchedComments, setFetchedComments] = useState<Comment[]>([]);
-
-  const getInitials = (name: string) => {
-    const names = name.split(" ");
-    return names
-      .map((name) => name.charAt(0))
-      .join("")
-      .toUpperCase();
-  };
-  const quickMessages = ["Ótimo produto!", "Adorei!", "Vou comprar novamente."];
-
-  const testes = comments.map((comment, index) => console.log(comment.text));
-  return (
-    <StyledCommentsCard>
-      <div className="comment">
-        <h2>Comentários</h2>
-        {comments.map((comment, index) => (
-          <div className="comment-box" key={index}>
-            <div className="user-info-comment">
-              <span className="initialsCircle">
-                {getInitials(comment.user.name)}
-              </span>
-              <p className="name">{comment.user.name}</p>
-              <p>•</p>
-              <p>{`${formatDistanceToNow(new Date(comment.createdAt), {
-                addSuffix: true,
-              })}`}</p>
-            </div>
-            <p>{comment.text}</p>
-          </div>
-        ))}
-      </div>
-      <div className="spacer" />
-      <div className="comment-form">
-        <div className="user-info">
-          <p className="name">Nome do usuário</p>
-        </div>
-        <textarea placeholder="Escreva seu comentário..."></textarea>
-        <Button variant="brand">Comentar</Button>
-        <div className="quick-messages">
-          {quickMessages.map((message, index) => (
-            <Button key={index}>{message}</Button>
-          ))}
-        </div>
-      </div>
-    </StyledCommentsCard>
-  );
-}; */
 
 export default CommentsCard;
