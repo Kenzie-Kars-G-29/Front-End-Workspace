@@ -1,10 +1,16 @@
 import styled from "styled-components";
 
+
 const StyledCommentsCard = styled.div`
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+</style>
+
   width: 80%;
   margin: auto;
   border-radius: 0.125rem;
   max-width: 500px;
+  font-family: 'Lexend', sans-serif;
 
   .comment {
     background-color: var(--color-grey10);
@@ -24,12 +30,16 @@ const StyledCommentsCard = styled.div`
       border-radius: 0.125rem;
       padding: 1rem;
       margin-bottom: 1rem;
+      
 
       .user-info-comment {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        margin-bottom: 10px;
 
+        .pontinho{
+          margin: 0 10px
+        }
         img {
           width: 30px;
           height: 30px;
@@ -63,6 +73,18 @@ const StyledCommentsCard = styled.div`
       }
     }
   }
+  .initialsCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: #fff;
+  margin-right: 8px;
+  background-color: blue;
+}
 
   .spacer {
     height: 2rem;
