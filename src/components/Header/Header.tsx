@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import logo from "../../assets/logo.png";
 import bars from "../../assets/bars.svg";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,10 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
 
   const navigateRegister = () => {
     navigate("/register");
+  };
+
+  const navigateHome = () => {
+    navigate("/");
   };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -120,7 +124,7 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
   return (
     <HeaderStyled>
       <div className="divContainer">
-        <img className="logo" alt="" src={logo} />
+        <img className="logo" alt="" src={logo} onClick={navigateHome} />
         <div className="menuIcon" onClick={toggleMenu}>
           <img src={bars} alt="Menu" />
         </div>
