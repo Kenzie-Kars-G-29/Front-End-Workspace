@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import bars from "../../assets/bars.svg";
 import { useNavigate } from "react-router-dom";
@@ -94,69 +94,3 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
     </HeaderStyled>
   );
 };
-/* export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
-  const navigate = useNavigate();
-  const navigateLogin = () => {
-    navigate("/signin");
-  };
-  console.log(isUserInfo);
-  const navigateRegister = () => {
-    navigate("/register");
-  };
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/signin");
-  };
-  const getInitials = (name: string) => {
-    const names = name.split(" ");
-    return names
-      .map((name) => name.charAt(0))
-      .join("")
-      .toUpperCase();
-  };
-  return (
-    <HeaderStyled>
-      <div className="divContainer">
-        <img className="logo" alt="" src={logo} onClick={navigateHome} />
-        <div className="menuIcon" onClick={toggleMenu}>
-          <img src={bars} alt="Menu" />
-        </div>
-        <div className={`menuWrapper ${isMenuOpen ? "show" : ""}`}>
-          <div className="menuButtons">
-            {isUserInfo ? (
-              <div className="userContainer">
-                <span className="initialsCircle">
-                  {getInitials(isUserInfo.name)}
-                </span>
-                <span className="username">{isUserInfo.name}</span>
-                <button className="buttonLogout" onClick={handleLogout}>
-                  <img className="logout" src={logout} alt="Menu" />
-                </button>
-              </div>
-            ) : (
-              <>
-                <button className="buttonLogin" onClick={navigateLogin}>
-                  Fazer Login
-                </button>
-                <Button
-                  className="buttonRegister"
-                  variant="white"
-                  onClick={navigateRegister}
-                >
-                  Cadastrar
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    </HeaderStyled>
-  );
-}; */
