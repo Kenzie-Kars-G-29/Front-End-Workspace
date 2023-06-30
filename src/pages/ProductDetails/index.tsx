@@ -27,9 +27,7 @@ const ProductDetailsPage: React.FC = () => {
   };
 
   const getProduct = async () => {
-    const car = await api.get(
-      "/announcement/292b3bb9-8ed8-4b56-ba8f-064050cab24d"
-    );
+    const car = await api.get(window.location.pathname);
 
     setCar(car.data);
     setUser(car.data.user);
