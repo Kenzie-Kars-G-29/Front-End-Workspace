@@ -1,42 +1,58 @@
 import React, { useContext, useEffect, useState } from "react";
 import StyledProductDetails from "./style";
-import ProductInfoCard from "../../components/ProductInfoCard/index";
+import ProductInfoCard, {
+  Images,
+} from "../../components/ProductInfoCard/index";
 import DescriptionCard from "../../components/DescriptionCard/index";
 import CommentsCard from "../../components/CommentsCard/index";
 import AuthorCard from "../../components/AuthorCard/index";
-import image1 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1.png";
-import image2 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg.png";
-import image3 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
-import image4 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import MainImage from "../../components/MainImage/index";
-import image5 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import ImageGallery from "../../components/ImageGallery";
-import image6 from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710.png";
 import { Header } from "../../components/Header/Header";
 import { UserContext } from "../../contexts/User";
+import api from "../../services/api";
+import { Car } from "../../components/ProductInfoCard";
+import { InfoUser } from "../../contexts/User/interfaces";
 
 const ProductDetailsPage: React.FC = () => {
-  const images = [image1, image2, image3, image4, image5, image6];
-
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [images, setImages] = useState(Array<string>);
   const { isUserInfo, infosUserLogged } = useContext(UserContext);
+  const [car, setCar] = useState({} as Car);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({} as InfoUser);
 
   const handleImageClick = (newImage: string) => {
     setSelectedImage(newImage);
   };
 
+  const getProduct = async () => {
+    const car = await api.get(window.location.pathname);
+
+    setCar(car.data);
+    setUser(car.data.user);
+    getImages(car.data.image);
+    setSelectedImage(car.data.image.coverImage);
+    setLoading(false);
+  };
+
+  const getImages = (images: Images) => {
+    setImages([]);
+    const imageValues = Object.values(images);
+
+    imageValues.forEach((value) => {
+      if (value !== null) {
+        setImages((imagesSeted) => [...imagesSeted, value]);
+      }
+    });
+  };
+
   useEffect(() => {
     infosUserLogged();
+    getProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const product = {
-    name: "Nome do produto",
-    year: 2023,
-    mileage: 10000,
-    price: 20000,
-  };
-  const description =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of";
   const comments = [
     {
       name: "João",
@@ -51,31 +67,33 @@ const ProductDetailsPage: React.FC = () => {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
   ];
-  const author = {
-    name: "Autor",
-    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
-  };
 
   return (
     <>
-      <Header isUserInfo={isUserInfo} />
-      <StyledProductDetails>
-        <div className="content">
-          <div className="left-column">
-            <MainImage image={selectedImage} />{" "}
-            <ProductInfoCard product={product} />
-            <DescriptionCard description={description} />
-            <CommentsCard comments={comments} />
-          </div>
-          <div className="right-column">
-            <ImageGallery
-              images={images.slice(1)}
-              onImageClick={handleImageClick}
-            />{" "}
-            <AuthorCard author={author} />
-          </div>
-        </div>
-      </StyledProductDetails>
+      {loading ? (
+        <></>
+      ) : (
+        <>
+          <Header isUserInfo={isUserInfo} />
+          <StyledProductDetails>
+            <div className="content">
+              <div className="left-column">
+                <MainImage image={selectedImage} />
+                <ProductInfoCard car={car} />
+                <DescriptionCard description={car.description} />
+                <CommentsCard comments={comments} />
+              </div>
+              <div className="right-column">
+                <ImageGallery
+                  images={images.slice(1)}
+                  onImageClick={handleImageClick}
+                />{" "}
+                <AuthorCard author={user} />
+              </div>
+            </div>
+          </StyledProductDetails>
+        </>
+      )}
     </>
   );
 };

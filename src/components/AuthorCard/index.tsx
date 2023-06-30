@@ -1,33 +1,31 @@
-import React from 'react';
-import StyledAuthorCard from './style';
-import Button from '../Button/Button';
-import { useNavigate } from 'react-router';
-
-interface Author {
-  name: string;
-  bio: string;
-}
+import React from "react";
+import StyledAuthorCard from "./style";
+import Button from "../Button/Button";
+import { useNavigate } from "react-router";
+import { InfoUser } from "../../contexts/User/interfaces";
 
 interface AuthorCardProps {
-  author: Author;
+  author: InfoUser;
 }
 
 const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <StyledAuthorCard>
       <div className="author-image">
-        <img src="profilePictureUrl" alt={`${author.name}`} /> 
+        <img src="profilePictureUrl" alt={`${author.name}`} />
       </div>
       <div className="author-name">
         <h2>{author.name}</h2>
       </div>
       <div className="author-bio">
-        <p>{author.bio}</p>
+        <p>{author.description}</p>
       </div>
       <div className="author-button">
-        <Button variant="black" onClick={() => navigate("/ProfileViewUser")}>Ver todos os anúncios</Button>
+        <Button variant="black" onClick={() => navigate("/ProfileViewUser")}>
+          Ver todos os anúncios
+        </Button>
       </div>
     </StyledAuthorCard>
   );
