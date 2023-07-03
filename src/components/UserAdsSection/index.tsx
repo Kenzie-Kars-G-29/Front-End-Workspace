@@ -9,7 +9,7 @@ const UserAdsSection = () => {
 
   useEffect(() => {
     infosUserLogged()
-  }, isAnnounUser);
+  }, [isAnnounUser, infosUserLogged]);
   
   return (
     <MainContainer>

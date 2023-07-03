@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import api from "../../services/api";
-import { AnnouncementInfo, InfoUser, InfoUserLogged } from "./interfaces";
+import { AnnouncementInfo, InfoUser, InfoUserLogged, iCar } from "./interfaces";
 
 interface UserContextProps {
   infosUserLogged: () => void;
@@ -18,6 +18,13 @@ interface UserContextProps {
   setIsAnnounUser: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
   isAnnouncements: AnnouncementInfo[];
   setIsAnnouncements: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
+  filteredAnnouncements: iCar[];
+  setFilteredAnnouncements: React.Dispatch<React.SetStateAction<[] | iCar[]>>;
+  listAnnouncements: () => Promise<void>;
+  isDataAnnouncement: AnnouncementInfo[];
+  setDataAnnouncement: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
+  isLoadingAnnouncement: boolean;
+  setIsLoadingAnnoucement: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface UserProviderProps {
@@ -32,17 +39,37 @@ const UserProvider = ({ children }: UserProviderProps) => {
   );
   const [isAnnounUser, setIsAnnounUser] = useState<AnnouncementInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingAnnouncement, setIsLoadingAnnoucement] = useState(true);
   const [isSeller, setIsSeller] = useState(false);
   const [isGetUser, setIsGetUser] = useState<InfoUser | undefined>(undefined);
   const [isAnnouncements, setIsAnnouncements] = useState<AnnouncementInfo[]>(
     []
   );
+  const [filteredAnnouncements, setFilteredAnnouncements] = useState<
+    [] | iCar[]
+  >([]);
+  const [isDataAnnouncement, setDataAnnouncement] = useState<
+    AnnouncementInfo[]
+  >([]);
+
+  const listAnnouncements = async () => {
+    try {
+      const response = await api.get("/announcement");
+
+      const announData = response.data;
+
+      setDataAnnouncement(announData);
+      setIsLoadingAnnoucement(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const infosUserLogged = async () => {
     const token = localStorage.getItem("token");
 
     try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await api.get("/users/userlogged");
 
       const userData = response.data;
@@ -63,7 +90,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await api.get(`/users/${id}`);
       const userData = response.data;
-      
+
       setIsGetUser(userData);
       setIsAnnouncements(userData.announcement);
       setIsLoading(false);
@@ -88,6 +115,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
         isGetUser,
         isAnnouncements,
         setIsAnnouncements,
+        filteredAnnouncements,
+        setFilteredAnnouncements,
+        listAnnouncements,
+        isDataAnnouncement,
+        setDataAnnouncement,
+        isLoadingAnnouncement,
+        setIsLoadingAnnoucement
       }}
     >
       {children}

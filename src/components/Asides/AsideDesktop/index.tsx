@@ -1,33 +1,29 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import Input from "../../Input";
 import { StyledAside } from "./style";
 import Button from "../../Button/Button";
-import { useState } from "react";
-import api from "../../../services/api";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../contexts/User";
+import { z } from "zod";
+import asideFormSchema from "./formSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type tAsideForm = z.infer<typeof asideFormSchema>;
 
 const AsideDesktop = () => {
+  const { isDataAnnouncement, filteredAnnouncements, setFilteredAnnouncements } =
+    useContext(UserContext);
+
   const [brandSelected, setBrandSelected] = useState<string>("");
   const [modelSelected, setModelSelected] = useState<string>("");
   const [colorSelected, setColorSelected] = useState<string>("");
   const [yearSelected, setYearSelected] = useState<string>("");
   const [fuelSelected, setFuelSelected] = useState<string>("");
 
-  const { handleSubmit, register } = useForm({});
+  const { handleSubmit, register } = useForm<tAsideForm>({
+    resolver: zodResolver(asideFormSchema),
+  });
 
-  //Request
-  const listAnnouncementWithFilter = async (data: any): Promise<void> => {
-    try {
-      const response = await api.get(
-        `/announcement?${data.brand}&${data.model}&${data.year}&${data.fuel}&${data.color}&${data.kmMin}&${data.kmMax}&${data.priceMin}&${data.priceMax}`
-      );
-
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const submit: SubmitHandler<any> = (formData) => {
+  const submit: SubmitHandler<tAsideForm> = (formData) => {
     const data = {
       ...formData,
       brand: brandSelected,
@@ -37,7 +33,12 @@ const AsideDesktop = () => {
       fuel: fuelSelected,
     };
 
-    listAnnouncementWithFilter(data);
+    // const announc = isDataAnnouncement.filter((el) => {
+    //   if(){}
+
+    // })
+
+    console.log(data);
   };
 
   return (
