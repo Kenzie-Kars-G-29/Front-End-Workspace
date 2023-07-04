@@ -12,7 +12,10 @@ const RoutesMain = () => {
     <Routes>
       <Route path="/register" element={<Register />} />
       <Route path="/" element={<Home />} />
-      <Route path="/announcement/:idProduct" element={<ProductDetailsPage />} />
+      <Route
+        path="/announcement/:announcementId"
+        element={<ProductDetailsPage />}
+      />
       <Route path="/signin" element={<Signin />} />
       <Route path="/ProfileViewAdmin" element={<ProfileViewAdmin />} />
       <Route path="/ProfileViewUser" element={<ProfileViewUser />} />

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StyledProductInfoCard from "./style";
 import Button from "../Button/Button";
 import { InfoUser } from "../../contexts/User/interfaces";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import api from "../../services/api";
 
 interface Car {
   id: string;
@@ -33,8 +35,31 @@ interface Images {
 interface CarInfoCardProps {
   car: Car;
 }
-
 const ProductInfoCard: React.FC<CarInfoCardProps> = ({ car }) => {
+  const navigate = useNavigate();
+  const { announcementId } = useParams<{ announcementId: string }>();
+  const [userPhone, setUserPhone] = useState<string>("");
+
+  useEffect(() => {
+    const fetchAnnouncementInfo = async () => {
+      try {
+        const response = await api.get(`/announcement/${announcementId}`);
+        const announcementInfo = response.data;
+        setUserPhone(announcementInfo.user.phone);
+      } catch (error) {
+        console.error("Failed to fetch announcement info:", error);
+      }
+    };
+
+    fetchAnnouncementInfo();
+  }, [announcementId]);
+
+  const handleBuyClick = () => {
+    window.open(
+      `https://wa.me/${userPhone}?text=Tenho interesse no anúncio ${announcementId}`
+    );
+  };
+
   return (
     <StyledProductInfoCard>
       <h2>{car.brand}</h2>
@@ -47,7 +72,9 @@ const ProductInfoCard: React.FC<CarInfoCardProps> = ({ car }) => {
         </div>
         <div className="price">R$ {car.price}</div>
       </div>
-      <Button variant="brand">Comprar</Button>
+      <Button variant="brand" onClick={handleBuyClick}>
+        Comprar
+      </Button>
     </StyledProductInfoCard>
   );
 };

@@ -21,14 +21,11 @@ const ProductDetailsPage: React.FC = () => {
   const [car, setCar] = useState({} as Car);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({} as InfoUser);
-
   const handleImageClick = (newImage: string) => {
     setSelectedImage(newImage);
   };
-
   const getProduct = async () => {
     const car = await api.get(window.location.pathname);
-
     setCar(car.data);
     setUser(car.data.user);
     getImages(car.data.image);
@@ -39,20 +36,17 @@ const ProductDetailsPage: React.FC = () => {
   const getImages = (images: Images) => {
     setImages([]);
     const imageValues = Object.values(images);
-
     imageValues.forEach((value) => {
       if (value !== null) {
         setImages((imagesSeted) => [...imagesSeted, value]);
       }
     });
   };
-
   useEffect(() => {
     infosUserLogged();
     getProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const comments = [
     {
       name: "João",
@@ -67,7 +61,6 @@ const ProductDetailsPage: React.FC = () => {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
   ];
-
   return (
     <>
       {loading ? (
@@ -97,5 +90,4 @@ const ProductDetailsPage: React.FC = () => {
     </>
   );
 };
-
 export default ProductDetailsPage;

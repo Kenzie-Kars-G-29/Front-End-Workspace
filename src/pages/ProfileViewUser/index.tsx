@@ -27,6 +27,7 @@ const ProfileViewUser = () => {
     infosUserLogged();
   }, []);
 
+  console.log(isUserInfo);
   return (
     <>
       <Header isUserInfo={isUserInfo} />
