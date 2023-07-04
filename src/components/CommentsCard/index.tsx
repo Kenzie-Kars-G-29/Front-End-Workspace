@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import StyledCommentsCard from "./style";
 import Button from "../Button/Button";
-
 import api from "../../services/api";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -42,16 +41,13 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
   useEffect(() => {
     setFetchedComments(comments);
   }, [comments]);
-  /*  useEffect(() => {
-    setFetchedComments(comments);
-  }, [comments]); */
 
   const handleCommentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setCommentText(event.target.value);
   };
-  console.log(isUserInfo);
+
   const handleCommentSubmit = async () => {
     try {
       const response = await api.post(`/comments/`, {
@@ -60,22 +56,11 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
         announcementId: announcementId,
       });
 
-      console.log(isUserInfo);
-
-      // Obter o novo comentário retornado pela API
       const newComment: Comment = response.data;
-
-      // Fazer uma nova requisição para obter as informações do usuário correspondente ao novo comentário
       const userResponse = await api.get(`/users/${newComment.user.id}`);
       const newUser = userResponse.data;
-
-      // Atualizar o nome do usuário no novo comentário
       newComment.user.name = newUser.name;
-
-      // Adicionar o novo comentário ao estado fetchedComments
       setFetchedComments([...fetchedComments, newComment]);
-
-      // Limpar o campo de comentário
       setCommentText("");
     } catch (error) {
       console.error("Failed to submit comment:", error);
@@ -83,8 +68,7 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
   };
 
   const quickMessages = ["Ótimo produto!", "Adorei!", "Vou comprar novamente."];
-  const teste = () => fetchedComments.map((comment) => console.log(comment));
-  teste();
+
   return (
     <StyledCommentsCard>
       <div className="comment">
@@ -96,13 +80,16 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
                 {getInitials(comment.user.name)}
               </span>
               <p className="name">{comment.user.name}</p>
-              <p>•</p>
-              <p>{`${formatDistanceToNow(new Date(comment.createdAt), {
-                addSuffix: true,
-                locale: ptBR,
-              })}`}</p>
+              <p className="pontinho">•</p>
+              <p className="date">{`${formatDistanceToNow(
+                new Date(comment.createdAt),
+                {
+                  addSuffix: true,
+                  locale: ptBR,
+                }
+              )}`}</p>
             </div>
-            <p>{comment.text}</p>
+            <p className="text">{comment.text}</p>
           </div>
         ))}
       </div>

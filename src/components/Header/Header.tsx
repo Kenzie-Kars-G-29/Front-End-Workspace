@@ -43,8 +43,7 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
       .map((name) => name.charAt(0))
       .join("")
       .toUpperCase();
-
-    return initials.substring(0, 2); // Limita as iniciais a no máximo 2 letras
+    return initials.substring(0, 2);
   };
 
   useEffect(() => {

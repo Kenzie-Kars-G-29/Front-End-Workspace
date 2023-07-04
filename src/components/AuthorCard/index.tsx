@@ -11,10 +11,19 @@ interface AuthorCardProps {
 const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
   const navigate = useNavigate();
 
+  const getInitials = (name: string) => {
+    const names = name.split(" ");
+    const initials = names
+      .map((name) => name.charAt(0))
+      .join("")
+      .toUpperCase();
+    return initials.substring(0, 2);
+  };
+
   return (
     <StyledAuthorCard>
       <div className="author-image">
-        <img src="profilePictureUrl" alt={`${author.name}`} />
+        <span>{getInitials(author.name)}</span>
       </div>
       <div className="author-name">
         <h2>{author.name}</h2>
@@ -23,7 +32,10 @@ const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
         <p>{author.description}</p>
       </div>
       <div className="author-button">
-        <Button variant="black" onClick={() => navigate(`/ProfileViewUser/${author.id}`)}>
+        <Button
+          variant="black"
+          onClick={() => navigate(`/ProfileViewUser/${author.id}`)}
+        >
           Ver todos os anúncios
         </Button>
       </div>
