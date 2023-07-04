@@ -13,14 +13,20 @@ import { UserContext } from "../../contexts/User";
 import api from "../../services/api";
 import { Car } from "../../components/ProductInfoCard";
 import { InfoUser } from "../../contexts/User/interfaces";
+import { useParams } from "react-router-dom";
+import { Comment } from "../../components/CommentsCard/index";
+import { CommentsCardProps } from "../../components/CommentsCard/index";
 
 const ProductDetailsPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [images, setImages] = useState(Array<string>);
+  const { announcementId } = useParams<{ announcementId: string }>();
+  const [comments, setComments] = useState<Comment[]>([]);
   const { isUserInfo, infosUserLogged } = useContext(UserContext);
   const [car, setCar] = useState({} as Car);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({} as InfoUser);
+
   const handleImageClick = (newImage: string) => {
     setSelectedImage(newImage);
   };
@@ -42,25 +48,19 @@ const ProductDetailsPage: React.FC = () => {
       }
     });
   };
+
   useEffect(() => {
     infosUserLogged();
     getProduct();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const comments = [
-    {
-      name: "João",
-      time: "1 hora atrás",
-      comment:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    },
-    {
-      name: "Maria",
-      time: "2 dias atrás",
-      comment:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    },
-  ];
+
+  useEffect(() => {
+    api
+      .get(`/comments/announcement/${announcementId}`)
+      .then((response) => setComments(response.data));
+  }, [announcementId]);
+  console.log(announcementId);
+
   return (
     <>
       {loading ? (
@@ -74,7 +74,10 @@ const ProductDetailsPage: React.FC = () => {
                 <MainImage image={selectedImage} />
                 <ProductInfoCard car={car} />
                 <DescriptionCard description={car.description} />
-                <CommentsCard comments={comments} />
+                <CommentsCard
+                  comments={comments}
+                  announcementId={announcementId || ""}
+                />
               </div>
               <div className="right-column">
                 <ImageGallery

@@ -42,7 +42,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     const token = localStorage.getItem("token");
 
     try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await api.get("/users/userlogged");
 
       const userData = response.data;
@@ -63,7 +63,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await api.get(`/users/${id}`);
       const userData = response.data;
-      
+
       setIsGetUser(userData);
       setIsAnnouncements(userData.announcement);
       setIsLoading(false);
