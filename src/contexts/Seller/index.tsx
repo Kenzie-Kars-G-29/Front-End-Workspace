@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import carsApi from "../../services/carsApi";
-import { iCar } from "./interfaces";
+import { iCar } from "../User/interfaces";
 
 interface iSellerContextProps {
   brand: string;
@@ -22,7 +22,7 @@ const SellerProvider = ({ children }: iSellerProviderProps) => {
   const listCarsByBrand = async (brand: string) => {
     try {
       const response = await carsApi.get(`/cars?brand=${brand}`);
-      setCars(response.data)
+      setCars(response.data);
     } catch (error) {
       console.log(error);
     }

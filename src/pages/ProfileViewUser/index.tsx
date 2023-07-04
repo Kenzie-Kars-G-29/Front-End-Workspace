@@ -22,12 +22,9 @@ const ProfileViewUser = () => {
   } = useContext(UserContext);
 
   useEffect(() => {
-    infosUserLogged();
-  });
-
-  useEffect(() => {
     const userId = "e56571b1-0265-4a3a-a4d6-a08c02b0c760";
     getUserId(userId);
+    infosUserLogged();
   }, []);
 
   console.log(isUserInfo);

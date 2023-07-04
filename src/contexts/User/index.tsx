@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import api from "../../services/api";
-import { AnnouncementInfo, InfoUser, InfoUserLogged } from "./interfaces";
+import { AnnouncementInfo, InfoUser, InfoUserLogged, iCar } from "./interfaces";
+import { useNavigate } from "react-router-dom";
 
 interface UserContextProps {
   infosUserLogged: () => void;
@@ -18,6 +19,15 @@ interface UserContextProps {
   setIsAnnounUser: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
   isAnnouncements: AnnouncementInfo[];
   setIsAnnouncements: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
+  filteredAnnouncements: AnnouncementInfo[];
+  setFilteredAnnouncements: React.Dispatch<
+    React.SetStateAction<AnnouncementInfo[]>
+  >;
+  listAnnouncements: () => Promise<void>;
+  isDataAnnouncement: AnnouncementInfo[];
+  setDataAnnouncement: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
+  isLoadingAnnouncement: boolean;
+  setIsLoadingAnnoucement: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface UserProviderProps {
@@ -27,33 +37,63 @@ interface UserProviderProps {
 const UserContext = createContext({} as UserContextProps);
 
 const UserProvider = ({ children }: UserProviderProps) => {
+  const navigate = useNavigate();
+
   const [isUserInfo, setIsUserInfo] = useState<InfoUserLogged | undefined>(
     undefined
   );
   const [isAnnounUser, setIsAnnounUser] = useState<AnnouncementInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingAnnouncement, setIsLoadingAnnoucement] = useState(true);
   const [isSeller, setIsSeller] = useState(false);
   const [isGetUser, setIsGetUser] = useState<InfoUser | undefined>(undefined);
   const [isAnnouncements, setIsAnnouncements] = useState<AnnouncementInfo[]>(
     []
   );
+  const [filteredAnnouncements, setFilteredAnnouncements] = useState<
+    AnnouncementInfo[]
+  >([]);
+  const [isDataAnnouncement, setDataAnnouncement] = useState<
+    AnnouncementInfo[]
+  >([]);
+
+  const listAnnouncements = async () => {
+    try {
+      const response = await api.get("/announcement");
+
+      const announData = response.data;
+
+      setDataAnnouncement(announData);
+      setIsLoadingAnnoucement(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const infosUserLogged = async () => {
     const token = localStorage.getItem("token");
 
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`
-      const response = await api.get("/users/userlogged");
+    
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${token}`;
+        const response = await api.get("/users/userlogged");
 
-      const userData = response.data;
-      const announData = response.data.announcement;
+        const userData = response.data;
+        const announData = response.data.announcements;
 
-      setIsUserInfo(userData);
-      setIsAnnounUser(announData);
-      setIsLoading(false);
-      setIsSeller(userData.isSeller);
-    } catch (error) {
-      console.log(error);
+        setIsUserInfo(userData);
+        setIsAnnounUser(announData);
+        setIsLoading(false);
+        setIsSeller(userData.isSeller);
+
+        if (response.status == 401) {
+          localStorage.clear();
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -63,9 +103,9 @@ const UserProvider = ({ children }: UserProviderProps) => {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await api.get(`/users/${id}`);
       const userData = response.data;
-      
+
       setIsGetUser(userData);
-      setIsAnnouncements(userData.announcement);
+      setIsAnnouncements(userData.announcements);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -88,6 +128,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
         isGetUser,
         isAnnouncements,
         setIsAnnouncements,
+        filteredAnnouncements,
+        setFilteredAnnouncements,
+        listAnnouncements,
+        isDataAnnouncement,
+        setDataAnnouncement,
+        isLoadingAnnouncement,
+        setIsLoadingAnnoucement,
       }}
     >
       {children}
