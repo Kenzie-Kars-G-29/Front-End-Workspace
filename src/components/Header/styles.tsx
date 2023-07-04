@@ -58,9 +58,8 @@ const HeaderStyled = styled.header`
 
   .menuButtons {
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
-    width: 90%;
+    width: 100%;
   }
 
   .buttonRegister {
@@ -72,7 +71,7 @@ const HeaderStyled = styled.header`
   }
 
   .buttonLogin {
-    width: 40%;
+    width: 100%;
     display: flex;
   }
 

@@ -1,20 +1,16 @@
 import React from "react";
 import StyledCommentsCard from "./style";
 import Button from "../Button/Button";
-
 interface Comment {
   name: string;
   time: string;
   comment: string;
 }
-
 interface CommentsCardProps {
   comments: Comment[];
 }
-
 const CommentsCard: React.FC<CommentsCardProps> = ({ comments }) => {
   const quickMessages = ["Ótimo produto!", "Adorei!", "Vou comprar novamente."];
-
   return (
     <StyledCommentsCard>
       <div className="comment">
@@ -48,5 +44,4 @@ const CommentsCard: React.FC<CommentsCardProps> = ({ comments }) => {
     </StyledCommentsCard>
   );
 };
-
 export default CommentsCard;

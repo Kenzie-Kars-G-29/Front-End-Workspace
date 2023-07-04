@@ -30,6 +30,7 @@ const ProfileViewUser = () => {
     getUserId(userId);
   }, []);
 
+  console.log(isUserInfo);
   return (
     <>
       <Header isUserInfo={isUserInfo} />
