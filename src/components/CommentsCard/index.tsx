@@ -32,10 +32,11 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
 
   const getInitials = (name: string) => {
     const names = name.split(" ");
-    return names
+    const initials = names
       .map((name) => name.charAt(0))
       .join("")
       .toUpperCase();
+    return initials.substring(0, 2);
   };
 
   useEffect(() => {
@@ -59,6 +60,8 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
         announcementId: announcementId,
       });
 
+      console.log(isUserInfo);
+
       // Obter o novo comentário retornado pela API
       const newComment: Comment = response.data;
 
@@ -80,7 +83,8 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
   };
 
   const quickMessages = ["Ótimo produto!", "Adorei!", "Vou comprar novamente."];
-
+  const teste = () => fetchedComments.map((comment) => console.log(comment));
+  teste();
   return (
     <StyledCommentsCard>
       <div className="comment">

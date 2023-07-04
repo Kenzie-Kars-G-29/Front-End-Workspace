@@ -50,6 +50,7 @@ const ProductDetailsPage: React.FC = () => {
   };
 
   useEffect(() => {
+    infosUserLogged();
     getProduct();
   }, []);
 
@@ -58,7 +59,6 @@ const ProductDetailsPage: React.FC = () => {
       .get(`/comments/announcement/${announcementId}`)
       .then((response) => setComments(response.data));
   }, [announcementId]);
-  console.log(announcementId);
 
   return (
     <>

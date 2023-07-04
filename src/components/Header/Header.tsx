@@ -8,6 +8,9 @@ import logout from "../../assets/logout.jpg";
 import api from "../../services/api";
 
 export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
+
   const navigate = useNavigate();
   const navigateLogin = () => {
     navigate("/signin");
@@ -25,9 +28,6 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
     navigate("/ProfileViewAdmin");
   };
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -39,15 +39,17 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
 
   const getInitials = (name: string) => {
     const names = name.split(" ");
-    return names
+    const initials = names
       .map((name) => name.charAt(0))
       .join("")
       .toUpperCase();
+
+    return initials.substring(0, 2); // Limita as iniciais a no máximo 2 letras
   };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-    const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       try {
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
         const response = await api.get("/users/userlogged");
@@ -64,7 +66,7 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
   return (
     <HeaderStyled>
       <div className="divContainer">
-        <img className="logo" alt="" src={logo} onClick={navigateHome}/>
+        <img className="logo" alt="" src={logo} onClick={navigateHome} />
         <div className="menuIcon" onClick={toggleMenu}>
           <img src={bars} alt="Menu" />
         </div>
@@ -75,7 +77,9 @@ export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
                 <span className="initialsCircle">
                   {getInitials(userInfo.name)}
                 </span>
-                <span className="username" onClick={navigateProfileUserLogged}>{userInfo.name}</span>
+                <span className="username" onClick={navigateProfileUserLogged}>
+                  {userInfo.name}
+                </span>
                 <button className="buttonLogout" onClick={handleLogout}>
                   <img className="logout" src={logout} alt="Menu" />
                 </button>
