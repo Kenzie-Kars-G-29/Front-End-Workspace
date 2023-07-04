@@ -23,7 +23,7 @@ const StyledAside = styled.aside`
   }
 
   > nav {
-    > from, section {
+    > form, section {
       > h3 {
         font-size: var(--font-heading-3);
         font-weight: var(--font-weight-600);

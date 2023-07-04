@@ -17,6 +17,7 @@ const Home = () => {
     isLoadingAnnouncement,
     listAnnouncements,
     isDataAnnouncement,
+    filteredAnnouncements,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -42,6 +43,16 @@ const Home = () => {
           ) : (
             <>
               <ul>
+                {/* {!filteredAnnouncements.length ? (
+                  <h3>
+                    A plataforma ainda não possui nenhum anuncio disponível
+                  </h3>
+                ) : (
+                  filteredAnnouncements.map((announcement) => {
+                    return <CardAd key={announcement.id} announcement={announcement} />;
+                  })
+                )} */}
+
                 {!isDataAnnouncement.length ? (
                   <h3>
                     A plataforma ainda não possui nenhum anuncio disponível

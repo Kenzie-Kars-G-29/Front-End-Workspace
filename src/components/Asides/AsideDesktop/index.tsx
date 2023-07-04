@@ -6,11 +6,12 @@ import { UserContext } from "../../../contexts/User";
 import { z } from "zod";
 import asideFormSchema from "./formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AnnouncementInfo } from "../../../contexts/User/interfaces";
 
 type tAsideForm = z.infer<typeof asideFormSchema>;
 
 const AsideDesktop = () => {
-  const { isDataAnnouncement, filteredAnnouncements, setFilteredAnnouncements } =
+  const { isDataAnnouncement, setFilteredAnnouncements } =
     useContext(UserContext);
 
   const [brandSelected, setBrandSelected] = useState<string>("");
@@ -33,12 +34,13 @@ const AsideDesktop = () => {
       fuel: fuelSelected,
     };
 
-    // const announc = isDataAnnouncement.filter((el) => {
-    //   if(){}
+    const announcList: AnnouncementInfo[] = [];
 
-    // })
+    // isDataAnnouncement.forEach((announc) => {
 
-    console.log(data);
+    // });
+
+    setFilteredAnnouncements(announcList);
   };
 
   return (
@@ -47,39 +49,39 @@ const AsideDesktop = () => {
         <section className="brand">
           <h3>Marca</h3>
           <ul>
-            <li onClick={() => setBrandSelected("Chevrolet")}>Chevrolet</li>
-            <li onClick={() => setBrandSelected("Citroën")}>Citroën</li>
-            <li onClick={() => setBrandSelected("Fiat")}>Fiat</li>
-            <li onClick={() => setBrandSelected("Ford")}>Ford</li>
-            <li onClick={() => setBrandSelected("Honda")}>Honda</li>
-            <li onClick={() => setBrandSelected("Hyundai")}>Hyundai</li>
-            <li onClick={() => setBrandSelected("Nissan")}>Nissan</li>
-            <li onClick={() => setBrandSelected("Peugeot")}>Peugeot</li>
-            <li onClick={() => setBrandSelected("Renault")}>Renault</li>
-            <li onClick={() => setBrandSelected("Toyota")}>Toyota</li>
-            <li onClick={() => setBrandSelected("Volkswagen")}>Volkswagen</li>
+            <li onClick={() => setBrandSelected("chevrolet")}>Chevrolet</li>
+            <li onClick={() => setBrandSelected("citroën")}>Citroën</li>
+            <li onClick={() => setBrandSelected("fiat")}>Fiat</li>
+            <li onClick={() => setBrandSelected("ford")}>Ford</li>
+            <li onClick={() => setBrandSelected("honda")}>Honda</li>
+            <li onClick={() => setBrandSelected("hyundai")}>Hyundai</li>
+            <li onClick={() => setBrandSelected("nissan")}>Nissan</li>
+            <li onClick={() => setBrandSelected("peugeot")}>Peugeot</li>
+            <li onClick={() => setBrandSelected("renault")}>Renault</li>
+            <li onClick={() => setBrandSelected("toyota")}>Toyota</li>
+            <li onClick={() => setBrandSelected("volkswagen")}>Volkswagen</li>
           </ul>
         </section>
         <section className="model">
           <h3>Modelo</h3>
           <ul>
-            <li onClick={() => setModelSelected("Civic")}>Civic</li>
-            <li onClick={() => setModelSelected("Colrolla")}>Colrolla</li>
-            <li onClick={() => setModelSelected("Cruze")}>Cruze</li>
-            <li onClick={() => setModelSelected("Fit")}>Fit</li>
-            <li onClick={() => setModelSelected("Gol")}>Gol</li>
-            <li onClick={() => setModelSelected("Ka")}>Ka</li>
-            <li onClick={() => setModelSelected("Onix")}>Onix</li>
-            <li onClick={() => setModelSelected("Pulse")}>Pulse</li>
+            <li onClick={() => setModelSelected("civic")}>Civic</li>
+            <li onClick={() => setModelSelected("colrolla")}>Colrolla</li>
+            <li onClick={() => setModelSelected("cruze")}>Cruze</li>
+            <li onClick={() => setModelSelected("fit")}>Fit</li>
+            <li onClick={() => setModelSelected("gol")}>Gol</li>
+            <li onClick={() => setModelSelected("ka")}>Ka</li>
+            <li onClick={() => setModelSelected("onix")}>Onix</li>
+            <li onClick={() => setModelSelected("pulse")}>Pulse</li>
           </ul>
         </section>
         <section className="color">
           <h3>Cor</h3>
           <ul>
-            <li onClick={() => setColorSelected("Azul")}>Azul</li>
-            <li onClick={() => setColorSelected("Branca")}>Branca</li>
-            <li onClick={() => setColorSelected("Cinza")}>Cinza</li>
-            <li onClick={() => setColorSelected("Prata")}>Prata</li>
+            <li onClick={() => setColorSelected("azul")}>Azul</li>
+            <li onClick={() => setColorSelected("branca")}>Branca</li>
+            <li onClick={() => setColorSelected("cinza")}>Cinza</li>
+            <li onClick={() => setColorSelected("prata")}>Prata</li>
             <li>Verde</li>
           </ul>
         </section>
@@ -98,10 +100,10 @@ const AsideDesktop = () => {
         <section className="fuel">
           <h3>Combutível</h3>
           <ul>
-            <li onClick={() => setFuelSelected("Diesel")}>Diesel</li>
-            <li onClick={() => setFuelSelected("Etanol")}>Etanol</li>
-            <li onClick={() => setFuelSelected("Gasolina")}>Gasolina</li>
-            <li onClick={() => setFuelSelected("Flex")}>Flex</li>
+            <li onClick={() => setFuelSelected("diesel")}>Diesel</li>
+            <li onClick={() => setFuelSelected("etanol")}>Etanol</li>
+            <li onClick={() => setFuelSelected("gasolina")}>Gasolina</li>
+            <li onClick={() => setFuelSelected("flex")}>Flex</li>
           </ul>
         </section>
         <form onSubmit={handleSubmit(submit)}>

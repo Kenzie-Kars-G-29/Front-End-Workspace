@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import api from "../../services/api";
 import { AnnouncementInfo, InfoUser, InfoUserLogged, iCar } from "./interfaces";
+import { useNavigate } from "react-router-dom";
 
 interface UserContextProps {
   infosUserLogged: () => void;
@@ -18,8 +19,10 @@ interface UserContextProps {
   setIsAnnounUser: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
   isAnnouncements: AnnouncementInfo[];
   setIsAnnouncements: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
-  filteredAnnouncements: iCar[];
-  setFilteredAnnouncements: React.Dispatch<React.SetStateAction<[] | iCar[]>>;
+  filteredAnnouncements: AnnouncementInfo[];
+  setFilteredAnnouncements: React.Dispatch<
+    React.SetStateAction<AnnouncementInfo[]>
+  >;
   listAnnouncements: () => Promise<void>;
   isDataAnnouncement: AnnouncementInfo[];
   setDataAnnouncement: React.Dispatch<React.SetStateAction<AnnouncementInfo[]>>;
@@ -34,6 +37,8 @@ interface UserProviderProps {
 const UserContext = createContext({} as UserContextProps);
 
 const UserProvider = ({ children }: UserProviderProps) => {
+  const navigate = useNavigate();
+
   const [isUserInfo, setIsUserInfo] = useState<InfoUserLogged | undefined>(
     undefined
   );
@@ -46,7 +51,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     []
   );
   const [filteredAnnouncements, setFilteredAnnouncements] = useState<
-    [] | iCar[]
+    AnnouncementInfo[]
   >([]);
   const [isDataAnnouncement, setDataAnnouncement] = useState<
     AnnouncementInfo[]
@@ -68,19 +73,26 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const infosUserLogged = async () => {
     const token = localStorage.getItem("token");
 
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get("/users/userlogged");
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${token}`;
+        const response = await api.get("/users/userlogged");
 
-      const userData = response.data;
-      const announData = response.data.announcement;
+        const userData = response.data;
+        const announData = response.data.announcements;
 
-      setIsUserInfo(userData);
-      setIsAnnounUser(announData);
-      setIsLoading(false);
-      setIsSeller(userData.isSeller);
-    } catch (error) {
-      console.log(error);
+        setIsUserInfo(userData);
+        setIsAnnounUser(announData);
+        setIsLoading(false);
+        setIsSeller(userData.isSeller);
+
+        if (response.status == 401) {
+          localStorage.clear();
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -92,7 +104,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       const userData = response.data;
 
       setIsGetUser(userData);
-      setIsAnnouncements(userData.announcement);
+      setIsAnnouncements(userData.announcements);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -121,7 +133,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         isDataAnnouncement,
         setDataAnnouncement,
         isLoadingAnnouncement,
-        setIsLoadingAnnoucement
+        setIsLoadingAnnoucement,
       }}
     >
       {children}
