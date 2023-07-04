@@ -32,6 +32,7 @@ const ProductDetailsPage: React.FC = () => {
     setSelectedImage(car.data.image.coverImage);
     setLoading(false);
   };
+
   const getImages = (images: Images) => {
     setImages([]);
     const imageValues = Object.values(images);

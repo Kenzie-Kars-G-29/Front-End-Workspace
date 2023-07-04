@@ -53,7 +53,6 @@ const ProductInfoCard: React.FC<CarInfoCardProps> = ({ car }) => {
 
     fetchAnnouncementInfo();
   }, [announcementId]);
-  console.log(announcementId);
 
   const handleBuyClick = () => {
     window.open(
@@ -79,23 +78,6 @@ const ProductInfoCard: React.FC<CarInfoCardProps> = ({ car }) => {
     </StyledProductInfoCard>
   );
 };
-/* const ProductInfoCard: React.FC<CarInfoCardProps> = ({ car }) => {
-  return (
-    <StyledProductInfoCard>
-      <h2>{car.brand}</h2>
-      <div className="info">
-        <div className="details">
-          <div className="span">
-            <span> {car.year}</span>
-            <span> {car.km} KM</span>
-          </div>
-        </div>
-        <div className="price">R$ {car.price}</div>
-      </div>
-      <Button variant="brand">Comprar</Button>
-    </StyledProductInfoCard>
-  );
-}; */
 
 export default ProductInfoCard;
 
