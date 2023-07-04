@@ -2,15 +2,14 @@ import styled from "styled-components";
 
 
 const StyledCommentsCard = styled.div`
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-</style>
-
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;400&display=swap');
   width: 80%;
   margin: auto;
   border-radius: 0.125rem;
   max-width: 500px;
   font-family: 'Lexend', sans-serif;
+  font-weight: 100;
+
 
   .comment {
     background-color: var(--color-grey10);
@@ -24,22 +23,29 @@ const StyledCommentsCard = styled.div`
       color: var(--color-grey1);
       margin-bottom: 1rem;
     }
+  
 
     .comment-box {
       background-color: var(--color-grey10);
       border-radius: 0.125rem;
-      padding: 1rem;
+      padding: 1rem 0;
       margin-bottom: 1rem;
-      
-
+ 
       .user-info-comment {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
 
         .pontinho{
-          margin: 0 10px
+          margin: 0 8px 0 5px;
+          color: var(--color-grey5);
         }
+
+        .date{
+          font-size: 12px;
+          color: var(--color-grey4);
+        }
+       
         img {
           width: 30px;
           height: 30px;
@@ -49,27 +55,29 @@ const StyledCommentsCard = styled.div`
 
         p {
           margin: 0;
-          font-family: Inter;
           font-size: 12px;
-          font-weight: 400;
           line-height: 24px;
           letter-spacing: 0em;
           text-align: left;
           color: var(--color-grey2);
+          font-size: 16px;
+          margin:0 5px;
         }
         .name {
           font-weight: 600;
         }
+        
       }
-
+      .text{
+        font-weight: 100
+        }
       p {
-        font-family: Inter;
         font-size: 14px;
-        font-weight: 400;
         line-height: 24px;
         letter-spacing: 0em;
         text-align: left;
         color: var(--color-grey2);
+        
       }
     }
   }
@@ -82,7 +90,7 @@ const StyledCommentsCard = styled.div`
   border-radius: 50%;
   background-color: #ccc;
   color: #fff;
-  margin-right: 8px;
+  margin-right: 2px;
   background-color: blue;
 }
 
@@ -115,10 +123,10 @@ const StyledCommentsCard = styled.div`
         color: var(--color-grey1);
         font-family: Inter;
         font-size: 14px;
-        font-weight: 500;
         line-height: 24px;
         letter-spacing: 0em;
         text-align: left;
+
       }
     }
 
@@ -153,7 +161,7 @@ const StyledCommentsCard = styled.div`
         width: auto;
         font-family: Inter;
         font-size: 12px;
-        font-weight: 500;
+        font-weight: 100;
         line-height: 24px;
         letter-spacing: 0em;
         text-align: left;
@@ -164,6 +172,7 @@ const StyledCommentsCard = styled.div`
         }
       }
     }
+
   }
 `;
 

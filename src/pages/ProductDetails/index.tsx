@@ -15,7 +15,6 @@ import { Car } from "../../components/ProductInfoCard";
 import { InfoUser } from "../../contexts/User/interfaces";
 import { useParams } from "react-router-dom";
 import { Comment } from "../../components/CommentsCard/index";
-import { CommentsCardProps } from "../../components/CommentsCard/index";
 
 const ProductDetailsPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState("");

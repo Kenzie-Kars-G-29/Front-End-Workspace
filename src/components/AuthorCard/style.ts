@@ -18,6 +18,19 @@ const StyledAuthorCard = styled.div`
     border: 3px solid var(--color-brand1); 
     background-color: var(--color-brand1);
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+
+    span{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      font-size: max(30px);
+  }
 
     img {
       width: 100%;
@@ -48,6 +61,7 @@ const StyledAuthorCard = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
+
 `;
 
 export default StyledAuthorCard;

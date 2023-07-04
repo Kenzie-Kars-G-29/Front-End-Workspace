@@ -7,6 +7,7 @@ const HeaderStyled = styled.header`
   border: 2px solid var(--color-grey6);
   display: flex;
   justify-content: center;
+  font-family: "Lexend", sans-serif;
 
   .username {
     cursor: pointer;
