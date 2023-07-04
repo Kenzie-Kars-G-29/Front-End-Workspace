@@ -50,7 +50,6 @@ const ProductDetailsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    infosUserLogged();
     getProduct();
   }, []);
 

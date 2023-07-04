@@ -4,64 +4,24 @@ import StyledHome from "./style";
 import AsideMobile from "../../components/Asides/AsideMobile";
 import Button from "../../components/Button/Button";
 import { AsideContext } from "../../contexts/AsideContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import AsideDesktop from "../../components/Asides/AsideDesktop";
-import api from "../../services/api";
 import { CardAd } from "../../components/Card";
 import { UserContext } from "../../contexts/User";
 
-interface AnnouncementInfo {
-  id: string;
-  description: string;
-  brand: string;
-  model: string;
-  color: string;
-  year: string;
-  fuel: string;
-  km: string;
-  price: string;
-  fipeTablePrice: string;
-  isPublic: boolean;
-  image: {
-    id: string;
-    coverImage: string;
-    firstImage: string | null;
-    secondImage: string | null;
-    thirdImage: string | null;
-    fourthImage: string | null;
-    fifthImage: string | null;
-    sixthImage: string | null;
-  };
-  user: {
-    id: string;
-    name: string;
-  };
-}
-
 const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
-  const [isDataAnnoun, setIsDataAnnoun] = useState<AnnouncementInfo[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { infosUserLogged, isUserInfo } = useContext(UserContext);
+  const {
+    infosUserLogged,
+    isUserInfo,
+    isLoadingAnnouncement,
+    listAnnouncements,
+    isDataAnnouncement,
+    filteredAnnouncements,
+  } = useContext(UserContext);
 
   useEffect(() => {
     infosUserLogged();
-  }, []);
-
-  const listAnnouncements = async () => {
-    try {
-      const response = await api.get("/announcement");
-
-      const announData = response.data;
-
-      setIsDataAnnoun(announData);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
     listAnnouncements();
   }, []);
 
@@ -78,17 +38,27 @@ const Home = () => {
 
         <section>
           <AsideDesktop />
-          {isLoading ? (
+          {isLoadingAnnouncement ? (
             <h1>Carregando</h1>
           ) : (
             <>
               <ul>
-                {!isDataAnnoun.length ? (
+                {/* {!filteredAnnouncements.length ? (
                   <h3>
                     A plataforma ainda não possui nenhum anuncio disponível
                   </h3>
                 ) : (
-                  isDataAnnoun.map((announcement) => {
+                  filteredAnnouncements.map((announcement) => {
+                    return <CardAd key={announcement.id} announcement={announcement} />;
+                  })
+                )} */}
+
+                {!isDataAnnouncement.length ? (
+                  <h3>
+                    A plataforma ainda não possui nenhum anuncio disponível
+                  </h3>
+                ) : (
+                  isDataAnnouncement.map((announcement) => {
                     return <CardAd announcement={announcement} />;
                   })
                 )}

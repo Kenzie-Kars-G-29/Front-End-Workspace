@@ -1,10 +1,33 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AsideContext } from "../../../contexts/AsideContext";
 import { StyledAside } from "./style";
 import Button from "../../Button/Button";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const AsideMobile = () => {
   const { setShowAside } = useContext(AsideContext);
+
+  const [brandSelected, setBrandSelected] = useState<string>("");
+  const [modelSelected, setModelSelected] = useState<string>("");
+  const [colorSelected, setColorSelected] = useState<string>("");
+  const [yearSelected, setYearSelected] = useState<string>("");
+  const [fuelSelected, setFuelSelected] = useState<string>("");
+
+  const { handleSubmit, register } = useForm({});
+
+  const submit: SubmitHandler<any> = (formData) => {
+    const data = {
+      ...formData,
+      brand: brandSelected,
+      model: modelSelected,
+      color: colorSelected,
+      year: yearSelected,
+      fuel: fuelSelected,
+    };
+    // Fazer request passando os paremetros
+    console.log(data);
+  };
+
   return (
     <StyledAside>
       <div>
@@ -15,78 +38,102 @@ const AsideMobile = () => {
         <section className="brand">
           <h3>Marca</h3>
           <ul>
-            <li>Chevrolet</li>
-            <li>Citroën</li>
-            <li>Fiat</li>
-            <li>Ford</li>
-            <li>Honda</li>
-            <li>Hyundai</li>
-            <li>Nissan</li>
-            <li>Peugeot</li>
-            <li>Renault</li>
-            <li>Toyota</li>
-            <li>Volkswagen</li>
+            <li onClick={() => setBrandSelected("Chevrolet")}>Chevrolet</li>
+            <li onClick={() => setBrandSelected("Citroën")}>Citroën</li>
+            <li onClick={() => setBrandSelected("Fiat")}>Fiat</li>
+            <li onClick={() => setBrandSelected("Ford")}>Ford</li>
+            <li onClick={() => setBrandSelected("Honda")}>Honda</li>
+            <li onClick={() => setBrandSelected("Hyundai")}>Hyundai</li>
+            <li onClick={() => setBrandSelected("Nissan")}>Nissan</li>
+            <li onClick={() => setBrandSelected("Peugeot")}>Peugeot</li>
+            <li onClick={() => setBrandSelected("Renault")}>Renault</li>
+            <li onClick={() => setBrandSelected("Toyota")}>Toyota</li>
+            <li onClick={() => setBrandSelected("Volkswagen")}>Volkswagen</li>
           </ul>
         </section>
         <section className="model">
           <h3>Modelo</h3>
           <ul>
-            <li>Civic</li>
-            <li>Colrolla</li>
-            <li>Cruze</li>
-            <li>Fit</li>
-            <li>Gol</li>
-            <li>Ka</li>
-            <li>Onix</li>
-            <li>Pulse</li>
+            <li onClick={() => setModelSelected("Civic")}>Civic</li>
+            <li onClick={() => setModelSelected("Colrolla")}>Colrolla</li>
+            <li onClick={() => setModelSelected("Cruze")}>Cruze</li>
+            <li onClick={() => setModelSelected("Fit")}>Fit</li>
+            <li onClick={() => setModelSelected("Gol")}>Gol</li>
+            <li onClick={() => setModelSelected("Ka")}>Ka</li>
+            <li onClick={() => setModelSelected("Onix")}>Onix</li>
+            <li onClick={() => setModelSelected("Pulse")}>Pulse</li>
           </ul>
         </section>
         <section className="color">
           <h3>Cor</h3>
           <ul>
-            <li>Azul</li>
-            <li>Branca</li>
-            <li>Cinza</li>
-            <li>Prata</li>
+            <li onClick={() => setColorSelected("Azul")}>Azul</li>
+            <li onClick={() => setColorSelected("Branca")}>Branca</li>
+            <li onClick={() => setColorSelected("Cinza")}>Cinza</li>
+            <li onClick={() => setColorSelected("Prata")}>Prata</li>
             <li>Verde</li>
           </ul>
         </section>
         <section className="year">
           <h3>Ano</h3>
           <ul>
-            <li>2022</li>
-            <li>2021</li>
-            <li>2018</li>
-            <li>2015</li>
-            <li>2013</li>
-            <li>2012</li>
-            <li>2010</li>
+            <li onClick={() => setYearSelected("2022")}>2022</li>
+            <li onClick={() => setYearSelected("2021")}>2021</li>
+            <li onClick={() => setYearSelected("2018")}>2018</li>
+            <li onClick={() => setYearSelected("2015")}>2015</li>
+            <li onClick={() => setYearSelected("2013")}>2013</li>
+            <li onClick={() => setYearSelected("2012")}>2012</li>
+            <li onClick={() => setYearSelected("2010")}>2010</li>
           </ul>
         </section>
         <section className="fuel">
           <h3>Combutível</h3>
           <ul>
-            <li>Diesel</li>
-            <li>Etanol</li>
-            <li>Gasolina</li>
-            <li>Flex</li>
+            <li onClick={() => setFuelSelected("Diesel")}>Diesel</li>
+            <li onClick={() => setFuelSelected("Etanol")}>Etanol</li>
+            <li onClick={() => setFuelSelected("Gasolina")}>Gasolina</li>
+            <li onClick={() => setFuelSelected("Flex")}>Flex</li>
           </ul>
         </section>
-        <section className="km">
-          <h3>Km</h3>
-          <div>
-            <input type="text" placeholder="Mínima" />
-            <input type="text" placeholder="Máxima" />
-          </div>
-        </section>
-        <section className="price">
-          <h3>Preço</h3>
-          <div>
-            <input type="text" placeholder="Mínima" />
-            <input type="text" placeholder="Máxima" />
-          </div>
-        </section>
-        <Button variant="brand">Ver Anúncios</Button>
+        <form onSubmit={handleSubmit(submit)}>
+          <section className="km">
+            <h3>Km</h3>
+            <div>
+              <input
+                type="number"
+                placeholder="Mínima"
+                id="kmMin"
+                {...register("kmMin")}
+              />
+              <input
+                type="number"
+                placeholder="Máxima"
+                id="kmMax"
+                {...register("kmMax")}
+              />
+            </div>
+          </section>
+          <section className="price">
+            <h3>Preço</h3>
+            <div>
+              <input
+                type="number"
+                placeholder="Mínima"
+                id="priceMin"
+                {...register("priceMin")}
+              />
+              <input
+                type="number"
+                placeholder="Máxima"
+                id="priceMax"
+                {...register("priceMax")}
+              />
+            </div>
+          </section>
+          <Button variant="brand" type="submit">
+            Ver anúncio
+          </Button>
+        </form>
       </nav>
     </StyledAside>
   );

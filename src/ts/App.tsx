@@ -8,12 +8,12 @@ const App = () => {
   return (
     <>
       <AsideProvider>
-        <SellerProvider>
-          <UserProvider>
+        <UserProvider>
+          <SellerProvider>
             <ToastContainer />
             <RoutesMain />
-          </UserProvider>
-        </SellerProvider>
+          </SellerProvider>
+        </UserProvider>
       </AsideProvider>
     </>
   );
