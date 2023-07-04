@@ -17,7 +17,7 @@ import { InfoUser } from "../../contexts/User/interfaces";
 const ProductDetailsPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [images, setImages] = useState(Array<string>);
-  const { isUserInfo, infosUserLogged } = useContext(UserContext);
+  const { isUserInfo } = useContext(UserContext);
   const [car, setCar] = useState({} as Car);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({} as InfoUser);
@@ -43,7 +43,6 @@ const ProductDetailsPage: React.FC = () => {
     });
   };
   useEffect(() => {
-    infosUserLogged();
     getProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -18,7 +18,7 @@ const RoutesMain = () => {
       />
       <Route path="/signin" element={<Signin />} />
       <Route path="/ProfileViewAdmin" element={<ProfileViewAdmin />} />
-      <Route path="/ProfileViewUser" element={<ProfileViewUser />} />
+      <Route path="/ProfileViewUser/:userId" element={<ProfileViewUser />} />
       <Route path="/forget-password/:token" element={<ForgetPassword />} />
     </Routes>
   );
