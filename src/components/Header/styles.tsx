@@ -85,7 +85,7 @@ const HeaderStyled = styled.header`
   }
 
   .initialsCircle {
-    width: 40px;
+    width: 46px;
     height: 40px;
     background-color: blue;
     border-radius: 50%;
@@ -94,10 +94,6 @@ const HeaderStyled = styled.header`
     align-items: center;
     margin-right: 10px;
     color: white;
-  }
-
-  .username {
-    margin-right: 10px;
   }
 
   .buttonLogout {
