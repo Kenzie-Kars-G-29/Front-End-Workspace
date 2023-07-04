@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import api from "../../services/api"
 import { toast } from "react-toastify"
+import { useContext } from "react"
+import { UserContext } from "../../contexts/User"
 
 interface ForgotPasswordData {
     password: string,
@@ -26,6 +28,9 @@ const ForgetPassword = () => {
 
     const navigate = useNavigate();
     const { token } = useParams()
+    const {
+        isUserInfo,
+      } = useContext(UserContext);
 
     const forgetPassword = async (data: ResetPassData) => {
         try {
@@ -52,7 +57,7 @@ const ForgetPassword = () => {
     }
     return (
         <>
-        <Header/>
+        <Header isUserInfo={isUserInfo}/>
         <ForgetPassContainer>
             <ContainerFormStyled>
                 <form onSubmit={handleSubmit(submit)}>

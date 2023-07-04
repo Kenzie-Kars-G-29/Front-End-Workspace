@@ -23,7 +23,7 @@ const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
         <p>{author.description}</p>
       </div>
       <div className="author-button">
-        <Button variant="black" onClick={() => navigate("/ProfileViewUser")}>
+        <Button variant="black" onClick={() => navigate(`/ProfileViewUser/${author.id}`)}>
           Ver todos os anúncios
         </Button>
       </div>

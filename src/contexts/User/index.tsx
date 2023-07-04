@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import api from "../../services/api";
-import { AnnouncementInfo, InfoUser, InfoUserLogged, iCar } from "./interfaces";
+import { AnnouncementInfo, InfoUser, InfoUserLogged } from "./interfaces";
 import { useNavigate } from "react-router-dom";
 
 interface UserContextProps {
