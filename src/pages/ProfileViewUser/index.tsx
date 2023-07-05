@@ -10,11 +10,13 @@ import {
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/User";
 import { CardAd } from "../../components/Card";
+import { useParams } from "react-router";
 
 const ProfileViewUser = () => {
+  const { userId } = useParams<{ userId: any }>();
+
   const {
     isUserInfo,
-    infosUserLogged,
     getUserId,
     isGetUser,
     isAnnouncements,
@@ -22,12 +24,9 @@ const ProfileViewUser = () => {
   } = useContext(UserContext);
 
   useEffect(() => {
-    const userId = "e56571b1-0265-4a3a-a4d6-a08c02b0c760";
     getUserId(userId);
-    infosUserLogged();
   }, []);
 
-  console.log(isUserInfo);
   return (
     <>
       <Header isUserInfo={isUserInfo} />

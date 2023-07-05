@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import api from "../../services/api";
-import { AnnouncementInfo, InfoUser, InfoUserLogged, iCar } from "./interfaces";
+import { AnnouncementInfo, InfoUser, InfoUserLogged } from "./interfaces";
 import { useNavigate } from "react-router-dom";
 
 interface UserContextProps {
@@ -73,7 +73,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const infosUserLogged = async () => {
     const token = localStorage.getItem("token");
 
-    
     if (token) {
       try {
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -86,6 +85,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         setIsAnnounUser(announData);
         setIsLoading(false);
         setIsSeller(userData.isSeller);
+        console.log(userData);
 
         if (response.status == 401) {
           localStorage.clear();
