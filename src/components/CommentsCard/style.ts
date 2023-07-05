@@ -45,6 +45,11 @@ const StyledCommentsCard = styled.div`
           font-size: 12px;
           color: var(--color-grey4);
         }
+
+        .editBtn{
+          font-size: 10px;
+          padding: 5px;
+        }
        
         img {
           width: 30px;

@@ -5,6 +5,7 @@ import api from "../../services/api";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { UserContext } from "../../contexts/User";
+import { ModalEditComment } from "../ModalEditComment";
 
 export interface Comment {
   id: string;
@@ -28,6 +29,10 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
   const { isUserInfo } = useContext(UserContext);
   const [fetchedComments, setFetchedComments] = useState<Comment[]>(comments);
   const [commentText, setCommentText] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInfoComment, setIsInfoComment] = useState(null)
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const getInitials = (name: string) => {
     const names = name.split(" ");
@@ -69,6 +74,11 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
 
   const quickMessages = ["Ótimo produto!", "Adorei!", "Vou comprar novamente."];
 
+  const handleInfos = (info: any) => {
+    setIsInfoComment(info)
+    toggleModal()
+  }
+
   return (
     <StyledCommentsCard>
       <div className="comment">
@@ -88,6 +98,7 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
                   locale: ptBR,
                 }
               )}`}</p>
+              <button onClick={() => handleInfos(comment)} id={comment.id} className="editBtn">Editar</button>
             </div>
             <p className="text">{comment.text}</p>
           </div>
@@ -112,6 +123,7 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
           ))}
         </div>
       </div>
+      {isModalOpen && (<ModalEditComment toggleModal={toggleModal} isInfoComment={isInfoComment}/>)}
     </StyledCommentsCard>
   );
 };
