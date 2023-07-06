@@ -7,9 +7,11 @@ import { StyledFormCreateAnnouncement, StyledSucess } from "./style";
 import { useContext, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SellerContext } from "../../contexts/Seller";
-import { iAnnouncementWithImage, iCar } from "../../contexts/Seller/interfaces";
+import { iAnnouncementWithImage } from "../../contexts/Seller/interfaces";
+import { iCar } from "../../contexts/User/interfaces";
 import announcementFormResolver from "./formSchema";
 import { toast } from "react-toastify";
+import { UserContext } from "../../contexts/User";
 
 type tAnnouncementForm = z.infer<typeof announcementFormResolver>;
 interface iFormCreateAnnouncementProps {
@@ -17,8 +19,9 @@ interface iFormCreateAnnouncementProps {
 }
 
 const FormCreateAnnouncement = ({ onClose }: iFormCreateAnnouncementProps) => {
-  const [sucess, setSucess] = useState(false);
+  const { infosUserLogged } = useContext(UserContext);
 
+  const [sucess, setSucess] = useState(false);
   const { setBrand, cars } = useContext(SellerContext);
   const [inputImageThird, setInputImageThird] = useState(false);
   const [inputImageFourth, setInputImageFourth] = useState(false);
@@ -85,6 +88,7 @@ const FormCreateAnnouncement = ({ onClose }: iFormCreateAnnouncementProps) => {
 
       if (response.status == 201) {
         setSucess(true);
+        infosUserLogged();
       }
     } catch (error) {
       console.log(error);

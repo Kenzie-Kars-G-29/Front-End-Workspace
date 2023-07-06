@@ -1,51 +1,35 @@
 import styled from "styled-components";
 
-export const ModalWrapper = styled.div`
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
+const StyledSucess = styled.div`
   width: 100%;
-  height: 100vh;
-  max-height: max-content;
-  background-color: rgba(0, 0, 0, 0.5);
+  height: 8.8125rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 
-`;
-export const ModalContent = styled.div`
-  background-color: var(--color-grey6);
-  width: 25rem;
-  max-width: 80%;
-  margin: 6.25rem auto;
-  padding: 1.25rem;
-  border-radius: 10px;
-  height: max-content;
-
-  .modalHeader{
-    display: flex;
-    justify-content: space-between;
-
-    h3 {
-      font-size: 15px;
-    }
+  h1 {
+    font-size: var(--font-body-1);
+    color: var(--color-grey1);
+    font-weight: var(--font-weight-500);
   }
-`
+  p {
+    font-size: var(--font-body-1);
+    color: var(--color-grey3);
+    font-weight: var(--font-weight-400);
+  }
+`;
 
 const StyledFormEditAnnouncement = styled.form`
-  /* display: flex;
+  display: flex;
   width: 100%;
   min-height: 72.125rem;
 
   flex-direction: column;
   justify-content: center;
-  gap: 24px; */
+  gap: 24px;
 
   h3 {
     font-size: 15px;
-  }
-
-  input {
-    background-color: red;
-    border: 1px solid black;
   }
 
   .inputContainer {
@@ -77,7 +61,6 @@ const StyledFormEditAnnouncement = styled.form`
 
   .buttonContainer {
     width: 100%;
-    max-width: 20.375rem;
     display: flex;
     gap: 7px;
   }
@@ -86,9 +69,9 @@ const StyledFormEditAnnouncement = styled.form`
     height: 48px;
     transition: all 0.5s;
   }
-  .buttonContainer button[type="button"] {
+  /* .buttonContainer button[type="button"] {
     max-width: 7.875rem;
-  }
+  } */
   .buttonContainer button[type="submit"] {
     max-width: 12.0625rem;
   }
@@ -98,4 +81,4 @@ const StyledFormEditAnnouncement = styled.form`
   }
 `;
 
-export {StyledFormEditAnnouncement};
+export { StyledFormEditAnnouncement, StyledSucess };

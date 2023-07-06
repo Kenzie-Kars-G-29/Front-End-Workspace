@@ -1,140 +1,208 @@
-import { ModalContent, ModalWrapper, StyledFormEditAnnouncement } from "./style";
+import { StyledFormEditAnnouncement, StyledSucess } from "./style";
 import Button from "../Button/Button";
-import { useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import api from "../../services/api";
 import { useContext, useState } from "react";
 import Input from "../Input";
 import { SellerContext } from "../../contexts/Seller";
-import { iCar } from "../../contexts/Seller/interfaces";
+import { iCar } from "../../contexts/User/interfaces";
 import { InfoAnnoun } from "../Card";
-import ModalDeleteAnnoun from "../../components/ModalDeleteAnnoun"
+import ModalDeleteAnnouncement from "../ModalDeleteAnnouncement";
 import announcementEditForm from "./formSchema";
 import { iAnnouncementWithImageOptional } from "./interfaces";
+import { z } from "zod";
+import Modal from "../modal";
+import { UserContext } from "../../contexts/User";
 
-interface ModalProps {
-    toggleModal: () => void,
-    isInfoAnnoun: InfoAnnoun | null
+type iAnnouncementEditForm = z.infer<typeof announcementEditForm>;
+
+interface iModalEditAnnouncementProps {
+  onClose: () => void;
+  isInfoAnnoun: InfoAnnoun | null;
 }
 
+export const ModalEditAnnouncement = ({
+  onClose,
+  isInfoAnnoun,
+}: iModalEditAnnouncementProps) => {
+  const { infosUserLogged } = useContext(UserContext);
 
-export const ModalEditAnnoun = ({ toggleModal, isInfoAnnoun }: ModalProps) => {
-  console.log(isInfoAnnoun)
-    const [isModalOpen, setIsModalOpen] = useState(false) 
-    const [sucess, setSucess] = useState(false);
-    const { setBrand, cars } = useContext(SellerContext);
-    const [inputImageThird, setInputImageThird] = useState(false);
-    const [inputImageFourth, setInputImageFourth] = useState(false);
-    const [inputImageFifth, setInputImageFifth] = useState(false);
-    const [inputImageSixth, setInputImageSixth] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+  const [sucess, setSucess] = useState(false);
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState<boolean>(false);
+  const { setBrand, cars } = useContext(SellerContext);
+  const [inputImageThird, setInputImageThird] = useState(false);
+  const [inputImageFourth, setInputImageFourth] = useState(false);
+  const [inputImageFifth, setInputImageFifth] = useState(false);
+  const [inputImageSixth, setInputImageSixth] = useState(false);
 
-    const { register, handleSubmit, reset, formState: {errors}} = useForm({
-      mode: "onBlur",  
-      resolver: zodResolver(announcementEditForm),
-      defaultValues: {
-        description: `${isInfoAnnoun?.description}`,
-        brand: `${isInfoAnnoun?.brand}`,
-        model: `${isInfoAnnoun?.model}`,
-        color: `${isInfoAnnoun?.color}`,
-        year: `${isInfoAnnoun?.year}`,
-        fuel: `${isInfoAnnoun?.fuel}`,
-        km: `${isInfoAnnoun?.km}`,
-        price: `${isInfoAnnoun?.price}`,
-        fipeTablePrice: `${isInfoAnnoun?.fipeTablePrice}`,
-        coverImage: `${isInfoAnnoun?.image?.coverImage}`,
-        firstImage: `${isInfoAnnoun?.image?.fifthImage}`,
-        secondImage: `${isInfoAnnoun?.image?.secondImage}`,
-        thirdImage: `${isInfoAnnoun?.image?.thirdImage}`,
-        fourthImage: `${isInfoAnnoun?.image?.fourthImage}`,
-        fifthImage: `${isInfoAnnoun?.image?.fifthImage}`,
-        sixthImage: `${isInfoAnnoun?.image?.sixthImage}`,
-        isPublic: `${isInfoAnnoun?.isPublic}`
-      }
-        
-    })
+  const handleOpenModalDeleteAnnouncement = () => setIsOpenModalDelete(true);
+  const handleCloseModalDeleteAnnouncement = () => setIsOpenModalDelete(false);
 
-    const toggleModalDelete = () => setIsModalOpen(!isModalOpen);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<iAnnouncementEditForm>({
+    resolver: zodResolver(announcementEditForm),
+    defaultValues: {
+      description: isInfoAnnoun?.description,
+      brand: isInfoAnnoun?.brand,
+      model: isInfoAnnoun?.model,
+      color: isInfoAnnoun?.color,
+      year: isInfoAnnoun?.year,
+      fuel: isInfoAnnoun?.fuel,
+      km: isInfoAnnoun?.km,
+      price: isInfoAnnoun?.price,
+      fipeTablePrice: isInfoAnnoun?.fipeTablePrice,
+      coverImage: isInfoAnnoun?.image?.coverImage,
+      firstImage: isInfoAnnoun?.image?.firstImage,
+      secondImage: isInfoAnnoun?.image?.secondImage,
+      thirdImage: isInfoAnnoun?.image?.thirdImage,
+      fourthImage: isInfoAnnoun?.image?.fourthImage,
+      fifthImage: isInfoAnnoun?.image?.fifthImage,
+      sixthImage: isInfoAnnoun?.image?.sixthImage,
+      isPublic: isInfoAnnoun?.isPublic,
+    },
+  });
 
-    const handleInputImages = () => {
-        if (!inputImageThird) {
-          return setInputImageThird(true);
-        }
-        if (!inputImageFourth) {
-          return setInputImageFourth(true);
-        }
-        if (!inputImageFifth) {
-          return setInputImageFifth(true);
-        }
-        if (!inputImageSixth) {
-          return setInputImageSixth(true);
-        }
-      };
-    
-      const selectCar = (car: string) => {
-        const findCar: iCar | undefined = cars.find((c) => c.name == car);
-    
-        if (findCar) {
-          setValue("year", findCar.year);
-          setValue("fipeTablePrice", findCar.value.toString());
-    
-          switch (findCar.fuel) {
-            case 1:
-              setValue("fuel", "flex");
-              break;
-            case 2:
-              setValue("fuel", "hibrido");
-              break;
-            case 3:
-              setValue("fuel", "eletrico");
-              break;
-          }
-        }
-      };
-
-      const updateAnnoucement = async (
-        data: iAnnouncementWithImageOptional, id: any
-      ): Promise<void> => {
-        const token = localStorage.getItem("token");
-    
-        try {
-          const response = await api.put(`/announcement/${id}`, data, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "Application/json",
-            },
-          });
-    
-          if (response.status == 201) {
-            setSucess(true);
-          }
-        } catch (error) {
-          console.log(error);
-          toast.error("Erro do servidor! Tente novamente mais tarde!");
-        }
-      };
-
-
-    const submit = (data: any, id: any) => {
-      console.log(data)
-      console.log(id)
-      // updateAnnoucement(data, id)
-      // toggleModal()
+  const handleInputImages = () => {
+    if (!inputImageThird) {
+      return setInputImageThird(true);
     }
+    if (!inputImageFourth) {
+      return setInputImageFourth(true);
+    }
+    if (!inputImageFifth) {
+      return setInputImageFifth(true);
+    }
+    if (!inputImageSixth) {
+      return setInputImageSixth(true);
+    }
+  };
+
+  const selectCar = (car: string) => {
+    const findCar: iCar | undefined = cars.find((c) => c.name == car);
+
+    if (findCar) {
+      setValue("year", findCar.year);
+      setValue("fipeTablePrice", findCar.value.toString());
+
+      switch (findCar.fuel) {
+        case 1:
+          setValue("fuel", "flex");
+          break;
+        case 2:
+          setValue("fuel", "hibrido");
+          break;
+        case 3:
+          setValue("fuel", "eletrico");
+          break;
+      }
+    }
+  };
+
+  const updateAnnoucement = async (
+    data: iAnnouncementWithImageOptional,
+    id: string
+  ): Promise<void> => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await api.put(`/announcement/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "Application/json",
+        },
+      });
+
+      if (response.status == 200) {
+        setSucess(true);
+        infosUserLogged();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Erro do servidor! Tente novamente mais tarde!");
+    }
+  };
+
+  const submit: SubmitHandler<iAnnouncementEditForm> = (formData) => {
+    const {
+      coverImage,
+      firstImage,
+      secondImage,
+      thirdImage,
+      fourthImage,
+      fifthImage,
+      sixthImage,
+      description,
+      year,
+      price,
+      fuel,
+      fipeTablePrice,
+      brand,
+      model,
+      color,
+      km,
+      isPublic,
+    } = formData;
+
+    const images = {
+      coverImage: coverImage,
+      firstImage: firstImage,
+      secondImage: secondImage,
+      thirdImage: thirdImage,
+      fourthImage: fourthImage,
+      fifthImage: fifthImage,
+      sixthImage: sixthImage,
+    };
+
+    const announcement: any = {
+      description: description,
+      year: year,
+      price: price,
+      fuel: fuel,
+      fipeTablePrice: fipeTablePrice,
+      brand: brand,
+      model: model,
+      color: color,
+      km: km,
+      isPublic: isPublic,
+      images: {
+        ...images,
+      },
+    };
+
+    updateAnnoucement(announcement, isInfoAnnoun.id);
+  };
 
   return (
-    <ModalWrapper>
-      <ModalContent>
-        <div className="modalHeader">
-            <h3>Editar Anuncio</h3>
-            <button onClick={() => toggleModal()}>X</button>
-        </div>
-        <form>
+    <>
+      <Modal
+        isOpen={isOpenModalDelete}
+        onClose={handleCloseModalDeleteAnnouncement}
+        title="Apagar anúncio"
+      >
+        <ModalDeleteAnnouncement
+          onCloseModalEdit={onClose}
+          onClose={handleCloseModalDeleteAnnouncement}
+          isInfoAnnoun={isInfoAnnoun}
+        />
+      </Modal>
+
+      {sucess ? (
+        <StyledSucess>
+          <h3>Seu anúncio foi editado com sucesso!</h3>
+          <p>Agora você poderá ver seus negócios crescendo em grande escala</p>
+        </StyledSucess>
+      ) : (
         <StyledFormEditAnnouncement onSubmit={handleSubmit(submit)}>
-            <h3>Infomações do veículo</h3>
-            <div className="inputContainer first">
+          <h3>Infomações do veículo</h3>
+
+          <div className="inputContainer first">
             <Input
               id="brand"
               type="select"
@@ -363,21 +431,28 @@ export const ModalEditAnnoun = ({ toggleModal, isInfoAnnoun }: ModalProps) => {
               </Button>
             </div>
           </div>
-            
 
-            <div className="buttonContainer">
-            <Button variant="gray" type="button" onClick={toggleModalDelete}>
-                Excluir Anuncio
+          <div className="buttonContainer">
+            <Button variant="gray" type="button" onClick={onClose}>
+              Cancelar
             </Button>
+
+            <Button
+              variant="gray"
+              type="button"
+              onClick={() => {
+                handleOpenModalDeleteAnnouncement();
+              }}
+            >
+              Excluir Anuncio
+            </Button>
+
             <Button variant="blue" type="submit">
-                Salvar Alterações
+              Salvar Alterações
             </Button>
-            </div>
+          </div>
         </StyledFormEditAnnouncement>
-      
-        </form>
-      </ModalContent>
-      {isModalOpen && (<ModalDeleteAnnoun toggleModal={toggleModal} isInfoAnnoun={isInfoAnnoun}/>)}
-    </ModalWrapper>
+      )}
+    </>
   );
 };

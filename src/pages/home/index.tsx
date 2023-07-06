@@ -6,7 +6,7 @@ import Button from "../../components/Button/Button";
 import { AsideContext } from "../../contexts/AsideContext";
 import { useContext, useEffect } from "react";
 import AsideDesktop from "../../components/Asides/AsideDesktop";
-import { CardAd } from "../../components/Card";
+import CardAd from "../../components/Card";
 import { UserContext } from "../../contexts/User";
 
 const Home = () => {
@@ -59,7 +59,7 @@ const Home = () => {
                   </h3>
                 ) : (
                   isDataAnnouncement.map((announcement) => {
-                    return <CardAd announcement={announcement} />;
+                    return <CardAd key={announcement.id} announcement={announcement} />;
                   })
                 )}
               </ul>

@@ -9,7 +9,7 @@ import {
 } from "../../components/UserAdsSection/style";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/User";
-import { CardAd } from "../../components/Card";
+import CardAd from "../../components/Card";
 import { useParams } from "react-router";
 
 const ProfileViewUser = () => {

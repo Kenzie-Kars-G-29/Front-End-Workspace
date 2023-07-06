@@ -85,7 +85,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
         setIsAnnounUser(announData);
         setIsLoading(false);
         setIsSeller(userData.isSeller);
-        console.log(userData);
 
         if (response.status == 401) {
           localStorage.clear();
