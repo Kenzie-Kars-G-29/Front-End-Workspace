@@ -7,6 +7,9 @@ import Input from "../Input";
 import Button from "../Button/Button";
 import api from "../../services/api";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/User";
+import { useNavigate } from "react-router-dom";
 
 type tAddressUpdate = z.infer<typeof userAddressUpdateFormSchema>;
 interface iFormAddressUpdateProps {
@@ -14,6 +17,9 @@ interface iFormAddressUpdateProps {
 }
 
 const FormAddressUpdate = ({ onClose }: iFormAddressUpdateProps) => {
+  const { isUserInfo } = useContext(UserContext)
+  const navigate = useNavigate()
+
   const {
     handleSubmit,
     register,
@@ -22,24 +28,22 @@ const FormAddressUpdate = ({ onClose }: iFormAddressUpdateProps) => {
     resolver: zodResolver(userAddressUpdateFormSchema),
   });
 
-  //id do usuario mockado
+
   const updateUser = async (data: tAddressUpdate): Promise<void> => {
     const token = localStorage.getItem("token");
-    const userId = "01ba16d9-66b7-4ffb-987e-8625c17c7194";
 
     try {
-      const response = await api.patch(`/users/${userId}`, data, {
+      const response = await api.patch(`/users/${isUserInfo?.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
 
-      //Fechar o modal e exibir toast de sucesso!
-      console.log(response);
       if (response.status == 200) {
         onClose();
         toast.success("Endereço atualizado!");
+        location.reload()
       }
     } catch (error) {
       //Mostra toast com mensagem de erro

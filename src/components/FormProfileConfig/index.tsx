@@ -8,6 +8,8 @@ import { z } from "zod";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/User";
 
 type tUserUpdateForm = z.infer<typeof userUpdateFormSchema>;
 
@@ -17,6 +19,7 @@ interface iUserUpdateFormProps {
 
 const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
   const navigate = useNavigate();
+  const { isUserInfo } = useContext(UserContext);
 
   const {
     handleSubmit,
@@ -26,13 +29,11 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
     resolver: zodResolver(userUpdateFormSchema),
   });
 
-  //id do usuario mockado
   const updateUser = async (data: tUserUpdateForm): Promise<void> => {
     const token = localStorage.getItem("token");
-    const userId = "fdc05ba9-1c55-4223-8aaa-06a39a240d74";
 
     try {
-      const response = await api.patch(`/users/${userId}`, data, {
+      const response = await api.patch(`/users/${isUserInfo?.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -42,6 +43,7 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
       if (response.status == 200) {
         onClose();
         toast.success("Perfil atualizado!");
+        location.reload()
       }
     } catch (error) {
       console.log(error);
@@ -49,13 +51,11 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
     }
   };
 
-  //id do usuario mockado
   const deleteUser = async (): Promise<void> => {
     const token = localStorage.getItem("token");
-    const userId = "01ba16d9-66b7-4ffb-987e-8625c17c7194";
 
     try {
-      const response = await api.delete(`/users/${userId}`, {
+      const response = await api.delete(`/users/${isUserInfo?.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const FormProfileConfig = ({ onClose }: iUserUpdateFormProps) => {
 
       if (response.status == 204) {
         onClose();
-        localStorage.clear()
+        localStorage.clear();
         navigate("/");
       }
     } catch (error) {

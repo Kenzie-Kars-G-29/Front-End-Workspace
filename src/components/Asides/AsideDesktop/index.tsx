@@ -34,13 +34,13 @@ const AsideDesktop = () => {
       fuel: fuelSelected,
     };
 
-    const announcList: AnnouncementInfo[] = [];
+    console.log(data)
 
-    // isDataAnnouncement.forEach((announc) => {
+    // const announcementList: AnnouncementInfo[] = [];
 
-    // });
+    isDataAnnouncement.forEach((announc) => {});
 
-    setFilteredAnnouncements(announcList);
+    // setFilteredAnnouncements(announcementList);
   };
 
   return (
