@@ -1,10 +1,9 @@
 import api from "../../services/api"
 import Button from "../Button/Button"
-import { InfoAnnoun } from "../Card"
-import { ModalContent, ModalWrapper } from "../ModalEditAnnoun/style"
 import { toast } from "react-toastify";
 import {useForm} from'react-hook-form'
 import FormDeleteAnnounStyled from "./style";
+import { ModalContent, ModalWrapper } from "../ModalResetPass/style";
 
 
 interface ModalProps {
