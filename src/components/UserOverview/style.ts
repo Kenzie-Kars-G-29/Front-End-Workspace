@@ -21,7 +21,12 @@ const StyledUserOverview = styled.div`
     background: var(--color-brand2);
     border-radius: 50%;
     margin-right: 2em; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
   }
+  
 
   .user-info {
     text-align: left;

@@ -16,7 +16,6 @@ const ProfileViewUser = () => {
   const { userId } = useParams<{ userId: any }>();
 
   const {
-    isUserInfo,
     getUserId,
     isGetUser,
     isAnnouncements,
@@ -27,9 +26,11 @@ const ProfileViewUser = () => {
     getUserId(userId);
   }, []);
 
+  const firstLetter = isGetUser?.name.charAt(0).toUpperCase();
+
   return (
     <>
-      <Header isUserInfo={isUserInfo} />
+      <Header/>
       <Background />
       <StyledProfileView>
         <StyledUserOverview>
@@ -37,7 +38,7 @@ const ProfileViewUser = () => {
             <h2>Carregando</h2>
           ) : (
             <>
-              <div className="user-image" />
+              <div className="user-image">{firstLetter}</div>
               <div className="user-info">
                 <h2>
                   {isGetUser?.name}

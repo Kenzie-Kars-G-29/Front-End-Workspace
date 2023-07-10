@@ -31,7 +31,7 @@ const SellerProvider = ({ children }: iSellerProviderProps) => {
   const listAllCars = async () => {
     try {
       const response = await carsApi.get(`/cars`);
-      console.log(response.data);
+      
     } catch (error) {
       console.log(error);
     }
