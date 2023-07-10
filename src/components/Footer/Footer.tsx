@@ -1,5 +1,3 @@
-import React from "react";
-import styled from "styled-components";
 import logo from "../../assets/logo-branca.png";
 import seta from "../../assets/botao-seta.png";
 import FooterStyled from "./styles";
