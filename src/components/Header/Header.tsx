@@ -7,7 +7,7 @@ import HeaderStyled from "./styles";
 import logout from "../../assets/logout.jpg";
 import api from "../../services/api";
 
-export const Header = ({ isUserInfo }: { isUserInfo: any }) => {
+export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
 

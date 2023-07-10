@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ModalRegister } from "./styles";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";

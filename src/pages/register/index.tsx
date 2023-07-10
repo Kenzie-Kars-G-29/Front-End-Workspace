@@ -68,7 +68,7 @@ const Register = () => {
     data.isSeller = isSeller;
 
     try {
-      const response = await api.post("/users", data);
+      await api.post("/users", data);
       reset();
       setIsModalOpen(true);
     } catch (error) {
