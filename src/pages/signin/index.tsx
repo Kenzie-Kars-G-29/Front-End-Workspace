@@ -8,6 +8,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import api from "../../services/api";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   email: z.string().nonempty("Email obrigatório").email("Email inválido"),
@@ -27,9 +28,9 @@ const Signin = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false)
-  
+
   const toggleModal = () => setIsModalOpen(!isModalOpen);
-  
+
   const {
     register,
     handleSubmit,
@@ -44,7 +45,8 @@ const Signin = () => {
       api.defaults.headers.common.Authorization = `Bearer ${token}`
       navigate("/");
     } catch (error) {
-      setServerError("Erro no servidor!");
+      toast.error("Erro ao fazer login, tente novamente")
+      console.log(error)
     }
   };
 
@@ -61,7 +63,6 @@ const Signin = () => {
             border={true}
             id="email"
             register={register}
-            error={errors.email?.message}
           />
           <Input
             type="password"
@@ -71,7 +72,6 @@ const Signin = () => {
             border={true}
             id="password"
             register={register}
-            error={errors.password?.message}
           />
           <button onClick={toggleModal}>Esqueci minha senha</button>
           <Button variant="brand">Entrar</Button>
@@ -82,7 +82,7 @@ const Signin = () => {
             Cadastrar
           </Button>
         </form>
-        {serverError && <p>{serverError}</p>}
+        {/* {serverError && <p>{serverError}</p>} */}
         {isModalOpen && (<ModalResetPass toggleModal={toggleModal} />)}
       </StyledFormContainer>
     </SigninContainer>
