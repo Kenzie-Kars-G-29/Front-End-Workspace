@@ -67,10 +67,9 @@ export interface InfoAnnoun {
 const CardAd = ({ announcement, isSeller }: cardProps) => {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState<boolean>(false);
   const [isInfoAnnoun, setIsInfoAnnoun] = useState<InfoAnnoun | null>(null);
-  const { isUserInfo } = useContext(UserContext);
+  const { isUserInfo } = useContext(UserContext); //info do usuario logado
   const navigate = useNavigate();
-  const firstLetter = isUserInfo?.name.charAt(0);
-  const firstLetter2 = announcement.user?.name.charAt(0);
+  const firstLetter = isUserInfo?.name.charAt(0).toUpperCase();
 
   const handleOpenModalUpdateAnnouncement = () => setIsOpenModalUpdate(true);
   const handleCloseModalUpdateAnnouncement = () => setIsOpenModalUpdate(false);
@@ -86,10 +85,9 @@ const CardAd = ({ announcement, isSeller }: cardProps) => {
     }
   };
 
-  const infoAnnouncement = async (id: any) => {
+  const infoAnnouncement = async (id: string) => {
     try {
       const response = await api.get(`/announcement/${id}`);
-      console.log(response.data);
       setIsInfoAnnoun(response.data);
     } catch (error) {
       console.log(error);
@@ -98,6 +96,7 @@ const CardAd = ({ announcement, isSeller }: cardProps) => {
 
   useEffect(() => {
     infoAnnouncement(announcement.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -131,12 +130,12 @@ const CardAd = ({ announcement, isSeller }: cardProps) => {
         </div>
 
         <div className="infoUser">
-          <span>{firstLetter ? firstLetter : firstLetter2}</span>
+          <span>{firstLetter}</span>
 
           <p onClick={() => navigate(`/announcement/${announcement.id}`)}>
             {announcement.user?.name
               ? announcement.user.name
-              : isUserInfo?.name}
+              : isInfoAnnoun?.user.name}
           </p>
         </div>
 
