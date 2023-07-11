@@ -9,7 +9,6 @@ import api from "../../services/api";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/User";
-import { useNavigate } from "react-router-dom";
 
 type tAddressUpdate = z.infer<typeof userAddressUpdateFormSchema>;
 interface iFormAddressUpdateProps {
@@ -18,7 +17,6 @@ interface iFormAddressUpdateProps {
 
 const FormAddressUpdate = ({ onClose }: iFormAddressUpdateProps) => {
   const { isUserInfo } = useContext(UserContext)
-  const navigate = useNavigate()
 
   const {
     handleSubmit,

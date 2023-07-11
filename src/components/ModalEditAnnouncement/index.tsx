@@ -45,7 +45,7 @@ export const ModalEditAnnouncement = ({
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<iAnnouncementEditForm>({
     resolver: zodResolver(announcementEditForm),
     defaultValues: {
@@ -175,8 +175,8 @@ export const ModalEditAnnouncement = ({
         ...images,
       },
     };
-
-    updateAnnoucement(announcement, isInfoAnnoun.id);
+    
+    if (isInfoAnnoun?.id) updateAnnoucement(announcement, isInfoAnnoun.id);
   };
 
   return (

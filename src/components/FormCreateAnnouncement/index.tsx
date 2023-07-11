@@ -32,7 +32,7 @@ const FormCreateAnnouncement = ({ onClose }: iFormCreateAnnouncementProps) => {
     handleSubmit,
     register,
     setValue,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<tAnnouncementForm>({
     resolver: zodResolver(announcementFormResolver),
   });

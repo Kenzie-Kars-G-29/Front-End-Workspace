@@ -1,18 +1,18 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { StyledAside } from "./style";
 import Button from "../../Button/Button";
-import { useContext, useState } from "react";
-import { UserContext } from "../../../contexts/User";
+import { useState } from "react";
+// import { UserContext } from "../../../contexts/User";
 import { z } from "zod";
 import asideFormSchema from "./formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AnnouncementInfo } from "../../../contexts/User/interfaces";
+// import { AnnouncementInfo } from "../../../contexts/User/interfaces";
 
 type tAsideForm = z.infer<typeof asideFormSchema>;
 
 const AsideDesktop = () => {
-  const { isDataAnnouncement, setFilteredAnnouncements } =
-    useContext(UserContext);
+  // const { isDataAnnouncement, setFilteredAnnouncements } =
+  //   useContext(UserContext);
 
   const [brandSelected, setBrandSelected] = useState<string>("");
   const [modelSelected, setModelSelected] = useState<string>("");
@@ -38,7 +38,7 @@ const AsideDesktop = () => {
 
     // const announcementList: AnnouncementInfo[] = [];
 
-    isDataAnnouncement.forEach((announc) => {});
+    // isDataAnnouncement.forEach((announc) => {});
 
     // setFilteredAnnouncements(announcementList);
   };
