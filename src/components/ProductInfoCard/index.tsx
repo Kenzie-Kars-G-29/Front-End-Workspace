@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import StyledProductInfoCard from "./style";
 import Button from "../Button/Button";
 import { InfoUser } from "../../contexts/User/interfaces";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import api from "../../services/api";
 
 interface Car {
@@ -36,7 +36,6 @@ interface CarInfoCardProps {
   car: Car;
 }
 const ProductInfoCard: React.FC<CarInfoCardProps> = ({ car }) => {
-  const navigate = useNavigate();
   const { announcementId } = useParams<{ announcementId: string }>();
   const [userPhone, setUserPhone] = useState<string>("");
 

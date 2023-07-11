@@ -17,7 +17,6 @@ const Home = () => {
     isLoadingAnnouncement,
     listAnnouncements,
     isDataAnnouncement,
-    filteredAnnouncements,
   } = useContext(UserContext);
 
   useEffect(() => {
