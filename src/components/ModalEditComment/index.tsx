@@ -56,9 +56,7 @@ export const ModalEditComment = ({ toggleModal, isInfoComment }: ModalProps) => 
         editComment(newData, idComment)
         reset()
         toggleModal()
-      
-        // console.log(newData)
-       
+  
     }
 
   return (
