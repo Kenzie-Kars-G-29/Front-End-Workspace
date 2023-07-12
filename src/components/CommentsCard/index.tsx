@@ -6,6 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { UserContext } from "../../contexts/User";
 import { ModalEditComment } from "../ModalEditComment";
+import { InfoUser } from "../../contexts/User/interfaces";
 
 export interface Comment {
   id: string;
@@ -26,11 +27,11 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
   comments,
   announcementId,
 }) => {
-  const { isUserInfo } = useContext(UserContext);
+  const [isUserInfo, setIsUserInfo] = useState<InfoUser | null>(null);
   const [fetchedComments, setFetchedComments] = useState<Comment[]>(comments);
   const [commentText, setCommentText] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isInfoComment, setIsInfoComment] = useState(null)
+  const [isInfoComment, setIsInfoComment] = useState(null);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -44,8 +45,34 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
   };
 
   useEffect(() => {
+    console.log("Comments received:", comments);
     setFetchedComments(comments);
   }, [comments]);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await api.get("/users/userlogged");
+        setIsUserInfo(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    console.log(announcementId);
+    const fetchComments = async () => {
+      try {
+        const response = await api.get(
+          `/comments/announcement/${announcementId}`
+        );
+        setFetchedComments(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserInfo();
+    fetchComments();
+  }, [announcementId]);
 
   const handleCommentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -75,9 +102,12 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
   const quickMessages = ["Ótimo produto!", "Adorei!", "Vou comprar novamente."];
 
   const handleInfos = (info: any) => {
-    setIsInfoComment(info)
-    toggleModal()
-  }
+    setIsInfoComment(info);
+    toggleModal();
+  };
+  const testes = () => fetchedComments.map((comment) => console.log(comment));
+  testes();
+  console.log(isUserInfo);
 
   return (
     <StyledCommentsCard>
@@ -89,7 +119,9 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
               <span className="initialsCircle">
                 {getInitials(comment.user.name)}
               </span>
-              <p className="name">{comment.user.name}</p>
+              <p className="name">
+                {isUserInfo !== null ? isUserInfo.name : "Carregando..."}
+              </p>
               <p className="pontinho">•</p>
               <p className="date">{`${formatDistanceToNow(
                 new Date(comment.createdAt),
@@ -98,7 +130,13 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
                   locale: ptBR,
                 }
               )}`}</p>
-              <button onClick={() => handleInfos(comment)} id={comment.id} className="editBtn">Editar</button>
+              <button
+                onClick={() => handleInfos(comment)}
+                id={comment.id}
+                className="editBtn"
+              >
+                Editar
+              </button>
             </div>
             <p className="text">{comment.text}</p>
           </div>
@@ -123,7 +161,12 @@ const CommentsCard: React.FC<CommentsCardProps> = ({
           ))}
         </div>
       </div>
-      {isModalOpen && (<ModalEditComment toggleModal={toggleModal} isInfoComment={isInfoComment}/>)}
+      {isModalOpen && (
+        <ModalEditComment
+          toggleModal={toggleModal}
+          isInfoComment={isInfoComment}
+        />
+      )}
     </StyledCommentsCard>
   );
 };

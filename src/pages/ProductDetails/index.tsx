@@ -59,6 +59,19 @@ const ProductDetailsPage: React.FC = () => {
       .then((response) => setComments(response.data));
   }, [announcementId]);
 
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await api.get("/users/userlogged");
+        setUser(response.data);
+      } catch (error) {
+        console.error("Failed to fetch user info:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
   return (
     <>
       {loading ? (
