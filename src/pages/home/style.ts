@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import bmwAzul from "../../assets/bmwAzul.png";
+import bmwAzul from "../../assets/bmwAzul.svg";
 
 const StyledHome = styled.main`
   > section {
