@@ -7,8 +7,7 @@ const StyledCard = styled.li`
     gap: 1.25rem;
     padding: 0.625rem;
     width: 19.5rem;
-    height: max-content;
-
+    height: 500px;
 
 .divImgCar {
     background-color: var(--color-grey5);
@@ -17,10 +16,14 @@ const StyledCard = styled.li`
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
+    position: relative;
+    height: 150px;
 }
 
 .divImgCar > img {
-    width: 80%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .goodAnnoun {
@@ -29,6 +32,9 @@ const StyledCard = styled.li`
     width: max-content;
     padding: 5px;
     border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .badAnnoun {
