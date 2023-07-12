@@ -74,16 +74,16 @@ const CardAd = ({ announcement, isSeller }: cardProps) => {
   const handleOpenModalUpdateAnnouncement = () => setIsOpenModalUpdate(true);
   const handleCloseModalUpdateAnnouncement = () => setIsOpenModalUpdate(false);
 
-  const isGoodAnnouncement = (value1: string, value2: string) => {
-    const difference = Math.abs(Number(value1) - Number(value2));
-    const fivePerCent = 0.05 * Math.max(Number(value1), Number(value2));
+  const isGoodAnnouncement = (valueFipe: string, valueVenda: string) => {
+    const descontoPercentual = ((Number(valueFipe) - Number(valueVenda)) / Number(valueFipe)) * 100;
 
-    if (difference >= fivePerCent) {
+    if (descontoPercentual >= 5) {
       return <span className="goodAnnoun">$</span>;
     } else {
       return <span className="badAnnoun">"não é um bom negocio"</span>;
     }
   };
+
 
   const infoAnnouncement = async (id: string) => {
     try {
