@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <>
-      <Header isUserInfo={isUserInfo} />
+      <Header />
       <StyledHome>
         {showAside && <AsideMobile />}
 

@@ -21,7 +21,7 @@ const ProductDetailsPage: React.FC = () => {
   const [images, setImages] = useState(Array<string>);
   const { announcementId } = useParams<{ announcementId: string }>();
   const [comments, setComments] = useState<Comment[]>([]);
-  const { isUserInfo, infosUserLogged } = useContext(UserContext);
+  const { infosUserLogged } = useContext(UserContext);
   const [car, setCar] = useState({} as Car);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({} as InfoUser);
@@ -65,7 +65,7 @@ const ProductDetailsPage: React.FC = () => {
         <></>
       ) : (
         <>
-          <Header isUserInfo={isUserInfo} />
+          <Header />
           <StyledProductDetails>
             <div className="content">
               <div className="left-column">

@@ -48,11 +48,11 @@ export interface InfoAnnoun {
   price: string;
   fipeTablePrice: string;
   isPublic: boolean;
-  image?: {
+  image: {
     id: string;
     coverImage?: string;
-    firstImage?: string | null;
-    secondImage?: string | null;
+    firstImage?: string;
+    secondImage?: string;
     thirdImage?: string | null;
     fourthImage?: string | null;
     fifthImage?: string | null;

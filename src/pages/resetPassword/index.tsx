@@ -57,7 +57,7 @@ const ForgetPassword = () => {
     }
     return (
         <>
-        <Header isUserInfo={isUserInfo}/>
+        <Header />
         <ForgetPassContainer>
             <ContainerFormStyled>
                 <form onSubmit={handleSubmit(submit)}>

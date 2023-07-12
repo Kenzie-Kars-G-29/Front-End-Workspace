@@ -26,7 +26,6 @@ type ApiResponse = {
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -34,7 +33,6 @@ const Signin = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<LoginData>({ resolver: zodResolver(formSchema) });
 
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
