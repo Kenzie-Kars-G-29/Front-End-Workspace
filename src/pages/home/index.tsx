@@ -13,7 +13,6 @@ const Home = () => {
   const { showAside, setShowAside } = useContext(AsideContext);
   const {
     infosUserLogged,
-    isUserInfo,
     isLoadingAnnouncement,
     listAnnouncements,
     isDataAnnouncement,
