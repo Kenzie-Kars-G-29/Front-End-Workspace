@@ -59,6 +59,7 @@ const Register = () => {
     formState: { errors },
     reset,
   } = useForm<formData>({
+    mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
   console.log(errors);
