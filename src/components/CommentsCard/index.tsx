@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledCommentsCard from "./style";
 import Button from "../Button/Button";
 import api from "../../services/api";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { UserContext } from "../../contexts/User";
 import { ModalEditComment } from "../ModalEditComment";
 import { InfoUser } from "../../contexts/User/interfaces";
 
