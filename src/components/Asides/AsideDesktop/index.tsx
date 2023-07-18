@@ -1,18 +1,21 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { StyledAside } from "./style";
 import Button from "../../Button/Button";
-import { useState } from "react";
-// import { UserContext } from "../../../contexts/User";
+import { useState, useContext } from "react";
+import { UserContext } from "../../../contexts/User";
 import { z } from "zod";
 import asideFormSchema from "./formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { AnnouncementInfo } from "../../../contexts/User/interfaces";
+import { AnnouncementInfo } from "../../../contexts/User/interfaces";
 
 type tAsideForm = z.infer<typeof asideFormSchema>;
 
 const AsideDesktop = () => {
-  // const { isDataAnnouncement, setFilteredAnnouncements } =
-  //   useContext(UserContext);
+  const {
+    isDataAnnouncement,
+    setFilteredAnnouncements,
+    filteredAnnouncements,
+  } = useContext(UserContext);
 
   const [brandSelected, setBrandSelected] = useState<string>("");
   const [modelSelected, setModelSelected] = useState<string>("");
@@ -25,7 +28,7 @@ const AsideDesktop = () => {
   });
 
   const submit: SubmitHandler<tAsideForm> = (formData) => {
-    const data = {
+    const carDetails = {
       ...formData,
       brand: brandSelected,
       model: modelSelected,
@@ -34,13 +37,24 @@ const AsideDesktop = () => {
       fuel: fuelSelected,
     };
 
-    console.log(data)
+    console.log("Caracteristicas do carro a ser filtrado:", carDetails);
 
-    // const announcementList: AnnouncementInfo[] = [];
+    const announcementList: AnnouncementInfo[] = [];
 
-    // isDataAnnouncement.forEach((announc) => {});
+    isDataAnnouncement.forEach((announc) => {
+      if (
+        announc.brand == carDetails.brand ||
+        announc.model == carDetails.model ||
+        announc.color == carDetails.color ||
+        announc.year == carDetails.year
+        // announc.fuel == carDetails.fuel
+      ) {
+        console.log("Carro encontrado:", announc);
+        announcementList.push(announc);
+      }
+    });
 
-    // setFilteredAnnouncements(announcementList);
+    setFilteredAnnouncements(announcementList);
   };
 
   return (
@@ -82,7 +96,7 @@ const AsideDesktop = () => {
             <li onClick={() => setColorSelected("branca")}>Branca</li>
             <li onClick={() => setColorSelected("cinza")}>Cinza</li>
             <li onClick={() => setColorSelected("prata")}>Prata</li>
-            <li>Verde</li>
+            <li onClick={() => setColorSelected("verde")}>Verde</li>
           </ul>
         </section>
         <section className="year">
@@ -141,9 +155,19 @@ const AsideDesktop = () => {
               />
             </div>
           </section>
-          <Button variant="brand" type="submit">
-            Filtrar
-          </Button>
+          {filteredAnnouncements.length > 0 ? (
+            <Button
+              variant="brand"
+              type="button"
+              onClick={() => setFilteredAnnouncements([])}
+            >
+              Limpar filtro
+            </Button>
+          ) : (
+            <Button variant="brand" type="submit">
+              Filtrar
+            </Button>
+          )}
         </form>
       </nav>
     </StyledAside>
