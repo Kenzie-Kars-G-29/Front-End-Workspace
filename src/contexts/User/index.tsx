@@ -51,7 +51,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     []
   );
   const [filteredAnnouncements, setFilteredAnnouncements] = useState<
-    AnnouncementInfo[]
+    AnnouncementInfo[] | []
   >([]);
   const [isDataAnnouncement, setDataAnnouncement] = useState<
     AnnouncementInfo[]
