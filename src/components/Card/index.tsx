@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import StyledCard from "./style";
 import { ModalEditAnnouncement } from "../ModalEditAnnouncement";
 import api from "../../services/api";
-import { UserContext } from "../../contexts/User";
 import { useNavigate } from "react-router";
 import Modal from "../modal";
 
@@ -67,9 +66,9 @@ export interface InfoAnnoun {
 const CardAd = ({ announcement, isSeller }: cardProps) => {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState<boolean>(false);
   const [isInfoAnnoun, setIsInfoAnnoun] = useState<InfoAnnoun | null>(null);
-  const { isUserInfo } = useContext(UserContext); //info do usuario logado
+  // const { isUserInfo } = useContext(UserContext); //info do usuario logado
   const navigate = useNavigate();
-  const firstLetter = isUserInfo?.name.charAt(0).toUpperCase();
+  const firstLetter = isInfoAnnoun?.user.name.charAt(0).toUpperCase();
 
   const handleOpenModalUpdateAnnouncement = () => setIsOpenModalUpdate(true);
   const handleCloseModalUpdateAnnouncement = () => setIsOpenModalUpdate(false);
