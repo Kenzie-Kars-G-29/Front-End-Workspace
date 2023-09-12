@@ -28,21 +28,14 @@ const SellerProvider = ({ children }: iSellerProviderProps) => {
     }
   };
 
-  // const listAllCars = async () => {
-  //   try {
-  //     const response = await carsApi.get(`/cars`);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
     listCarsByBrand(brand);
   }, [brand]);
 
   return (
-    <SellerContext.Provider value={{ brand, setBrand, cars, setCars }}>
+    <SellerContext.Provider
+      value={{ brand, setBrand, cars, setCars }}
+    >
       {children}
     </SellerContext.Provider>
   );
